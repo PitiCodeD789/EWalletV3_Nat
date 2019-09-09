@@ -17,7 +17,7 @@ namespace EWalletV2.Domain.Interfaces
 
         CheckPinDto GetUserByEmail(string email);
 
-        bool CheckUserByEmailAndBirthday(object email, object birthday);
+        bool CheckUserByEmailAndBirthday(string email, DateTime birthday);
 
     }
 }
