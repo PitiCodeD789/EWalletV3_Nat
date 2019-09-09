@@ -28,7 +28,20 @@ namespace EWalletV2.Api.Controllers
 
         //GetUser
         //GetBalance
-        //GetAccountName
+        //GetAccountName ==> dev_pop
+        [HttpGet("GetAccount")]
+        public IActionResult GetAccount([FromBody]AccountCommand command)
+        {
+            string accountNumber = command.AccountNumber;
+            string accountName = _userService.GetAccountNameByAccountNumber(accountNumber);
+            if (accountName == null)
+                return NotFound();
+            AccountViewModel account = new AccountViewModel()
+            {
+                AccountName = accountName
+            };
+            return Ok(account);
+        }
         //UpdateUser
         [Authorize]
         [HttpPost("UpdateUser")]
