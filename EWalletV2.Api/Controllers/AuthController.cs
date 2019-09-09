@@ -38,7 +38,7 @@ namespace EWalletV2.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
             }
 
-            //TODO: Con not send otp without otp, maybe move to service
+            //TODO: Can not send otp without otp, maybe move to service
             Task.Run(() => SendOtp(email));
 
             CheckEmailViewModel viewModel = new CheckEmailViewModel
