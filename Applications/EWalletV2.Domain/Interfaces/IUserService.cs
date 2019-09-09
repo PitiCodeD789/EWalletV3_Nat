@@ -7,5 +7,6 @@ namespace EWalletV2.Domain.Interfaces
     public interface IUserService
     {
         bool ExistingEmail(string email);
+        string GetAccountNameByAccountNumber(string accountNumber);
     }
 }
