@@ -1,4 +1,5 @@
 ﻿using EWalletV2.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,19 @@ namespace EWalletV2.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<OtpEntity> e)
         {
+            e.ToTable("Otps");
+
+            e.Property(p => p.Otp)
+                .HasColumnName("otp")
+                .HasMaxLength(100);
+
+            e.Property(p => p.Reference)
+                .HasColumnName("reference")
+                .HasMaxLength(100);
+
+            e.Property(p => p.Email)
+                .HasColumnName("email")
+                .HasMaxLength(100);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace EWalletV2.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<UserEntity> e)
         {
+            e.ToTable("Users");
+
             e.Property(p => p.FirstName)
                 .HasColumnName("firstname")
                 .HasMaxLength(100);
@@ -19,7 +21,7 @@ namespace EWalletV2.DataAccess.Configurations
                 .HasMaxLength(100);
             e.Property(p => p.BirthDate)
                 .HasColumnName("birthdate")
-                .HasDefaultValue("")
+                .HasDefaultValue("01/01/0001")
                 .HasMaxLength(100);
             e.Property(p => p.MobileNumber)
                 .HasColumnName("mobile_number")
@@ -34,9 +36,6 @@ namespace EWalletV2.DataAccess.Configurations
                 .HasMaxLength(100);
             e.Property(p => p.Salt)
                 .HasColumnName("salt")
-                .HasMaxLength(100);
-            e.Property(p => p.Password)
-                .HasColumnName("password")
                 .HasMaxLength(100);
             e.Property(p => p.Balance)
                 .HasColumnName("balance");

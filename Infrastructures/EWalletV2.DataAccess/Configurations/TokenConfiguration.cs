@@ -11,6 +11,8 @@ namespace EWalletV2.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<TokenEntity> e)
         {
+            e.ToTable("Tokens");
+
             e.Property(p => p.RefreshToken)
                 .HasMaxLength(100)
                 .HasColumnName("refresh_token");

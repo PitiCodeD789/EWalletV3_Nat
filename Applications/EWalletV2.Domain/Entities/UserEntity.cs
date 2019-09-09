@@ -14,8 +14,7 @@ namespace EWalletV2.Domain.Entities
         public EW_Enumerations.EW_GenderEnum Gender { get; set; }
         public string Email { get; set; }
         public string Pin { get; set; }
-        public string Salt { get; internal set; }
-        public string Password { get; internal set; }
+        public string Salt { get; set; }
         public decimal Balance { get; set; }
         public string Account { get; set; }
     }
