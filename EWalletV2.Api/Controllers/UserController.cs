@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -27,7 +28,19 @@ namespace EWalletV2.Api.Controllers
         }
 
         //GetUser
+
         //GetBalance
+        [HttpPost]
+        public IActionResult GetBalance([EmailAddress]string email)
+        {
+            AccountViewModel accountViewModel = _userService.GetAccountDetailByEmail(email);
+            if (accountViewModel == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
+            }
+            return Ok(accountViewModel);
+        }
+
         //GetAccountName ==> dev_pop
         [HttpGet("GetAccount")]
         public IActionResult GetAccount([FromBody]AccountCommand command)
