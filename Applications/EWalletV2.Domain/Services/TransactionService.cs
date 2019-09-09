@@ -50,16 +50,15 @@ namespace EWalletV2.Domain.Services
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public TransactionDto GetDetailTransaction(string email, string transectionId)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<TransactionDetailDto> GetTransaction30Days(string email)
         {
             UserEntity userEntity = _userRepository.GetUserByEmail(email);
             int customerId = userEntity.Id;
             List<TransactionEntity> transactionEntities = _transactionRepository.GetTransactionByCustomerId(customerId);
+            if(transactionEntities == null)
+            {
+                return null;
+            }
             List<TransactionDetailDto> transactionDetails = transactionEntities.Select(x => new TransactionDetailDto()
             {
 
@@ -145,6 +144,15 @@ namespace EWalletV2.Domain.Services
                 };
             }
             
+        }
+
+        public TransactionDto GetDetailTransaction(string email, int transactionId)
+        {
+            TransactionEntity transactionEntity = _transactionRepository.GetTransactionByTransactionId(transactionId);
+            if(transactionEntity == null)
+            {
+                return null;
+            }
         }
     }
 }
