@@ -98,6 +98,8 @@ namespace EWalletV2.Domain.Services
             UserEntity userEntity = _mapper.Map<UserEntity>(registerDto);
             userEntity.Salt = Generator.GenerateRandomString(12);
             userEntity.Pin = Generator.HashPassword(registerDto.Pin, userEntity.Salt);
+            userEntity.CreateDateTime = DateTime.UtcNow;
+            userEntity.UpdateDateTime = DateTime.UtcNow;
             string account = _userRepository.AddUserAndGetAccount(userEntity);
             return account;
         }
