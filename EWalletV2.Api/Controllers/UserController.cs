@@ -23,9 +23,7 @@ namespace EWalletV2.Api.Controllers
         {
             _userService = userService;
             _mapper = mapper;
-
         }
-
         //GetUser
         [HttpGet("GetUser")]
         public IActionResult GetUser([EmailAddress]string email)
