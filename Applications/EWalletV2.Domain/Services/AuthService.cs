@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EWalletV2.Domain.DtoModels.Auth;
-using EWalletV2.Domain.Entity;
+using EWalletV2.Domain.Entities;
 using EWalletV2.Domain.Helpers;
 using EWalletV2.Domain.Interfaces;
 using EWalletV2.Domain.Repositories;
@@ -169,19 +169,16 @@ namespace EWalletV2.Domain.Services
         public bool ValidateOtp(string email, string otp, string refNumber)
         {
             OtpEntity otpValidate = _otpRepository.GetOtpByEmail(email);
-            if (otpValidate == null || (otpValidate.OTP != otp || otpValidate.Reference != refNumber))
+            if (otpValidate == null || (otpValidate.Otp != otp || otpValidate.Reference != refNumber))
                 return false;
             _otpRepository.Delete(otpValidate);
-            if (otpValidate.CreateDate > DateTime.UtcNow.AddMinutes(-15))
+            if (otpValidate.CreateDateTime > DateTime.UtcNow.AddMinutes(-15))
             {
                 return false;
             }
             return true;
         }
 
-        public bool GetUserByEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
+ 
     }
 }

@@ -1,5 +1,5 @@
 ﻿using EWalletV2.DataAccess.Contexts;
-using EWalletV2.Domain.Entity;
+using EWalletV2.Domain.Entities;
 using EWalletV2.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
