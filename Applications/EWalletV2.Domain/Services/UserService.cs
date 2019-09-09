@@ -1,4 +1,5 @@
-﻿using EWalletV2.Api.ViewModels.User;
+﻿using AutoMapper;
+using EWalletV2.Api.ViewModels.User;
 using EWalletV2.Domain.DtoModels.Auth;
 using EWalletV2.Domain.DtoModels.User;
 using EWalletV2.Domain.Interfaces;
@@ -12,15 +13,17 @@ namespace EWalletV2.Domain.Services
     public class UserService :IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public bool CheckUserByEmailAndBirthday(string email, DateTime birthday)
         {
-            var existingUser = _userRepository.GetUserByEmail(email);
-            if(existingUser == null|| existingUser.BirthDate != birthday)
+            var userData = _userRepository.GetUserByEmail(email);
+            if(userData == null|| userData.BirthDate != birthday)
             {
                 return false;
             }
@@ -41,7 +44,17 @@ namespace EWalletV2.Domain.Services
 
         public AccountViewModel GetAccountDetailByEmail(string email)
         {
-            throw new NotImplementedException();
+            var userData = _userRepository.GetUserByEmail(email);
+            if(userData == null)
+            {
+                return null;
+            }
+            AccountViewModel accountDetail = new AccountViewModel()
+            {
+                AccountName = userData.FirstName + " " + userData.LastName,
+                Balance = userData.Balance
+            };
+            return accountDetail;
         }
 
         public string GetAccountNameByAccountNumber(string accountNumber)
@@ -56,7 +69,18 @@ namespace EWalletV2.Domain.Services
 
         public bool UpdateUser(UpdateUserDtoCommand userDto)
         {
-            throw new NotImplementedException();
+            var userData = _userRepository.GetUserByEmail(userDto.Email);
+            if(userData == null)
+            {
+                return false;
+            }
+            userData.FirstName = userDto.FirstName;
+            userData.LastName = userDto.LastName;
+            userData.MobileNumber = userDto.MobileNumber;
+            userData.BirthDate = userDto.BitrhDate;
+            userData.Gender = userDto.Gender;
+            bool result = _userRepository.Update(userData);
+            return result;
         }
     }
 }
