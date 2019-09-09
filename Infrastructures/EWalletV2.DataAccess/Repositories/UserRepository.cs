@@ -19,7 +19,8 @@ namespace EWalletV2.DataAccess.Repositories
 
         public UserEntity GetUserByAccountNumber(string merchantAccNo)
         {
-            throw new NotImplementedException();
+            UserEntity user = _context.User.FirstOrDefault(x => x.Account == merchantAccNo.ToLower());
+            return user;
         }
 
         public UserEntity GetUserByEmail(string email)
