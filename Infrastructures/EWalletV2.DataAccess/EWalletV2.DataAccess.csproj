@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Entitys\" />
+    <Compile Remove="Entitys\**" />
+    <Compile Remove="Interfaces\**" />
+    <None Remove="Entitys\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Context\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
@@ -14,6 +19,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Applications\EWalletV2.Domain\EWalletV2.Domain.csproj" />
   </ItemGroup>
 
 </Project>

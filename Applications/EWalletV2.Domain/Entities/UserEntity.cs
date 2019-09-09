@@ -8,7 +8,7 @@ namespace EWalletV2.Domain.Entities
     public class UserEntity : BaseEntity
     {
         public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string LastName { get; set; } = "";
         public DateTime BirthDate { get; set; }
         public string MobileNumber { get; set; }
         public EW_Enumerations.EW_GenderEnum Gender { get; set; }

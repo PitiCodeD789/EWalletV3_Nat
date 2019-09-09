@@ -28,5 +28,26 @@ namespace EWalletV2.DataAccess.Repositories
             UserEntity user = _context.User.FirstOrDefault(x => x.Email == email.ToLower());
             return user;
         }
+
+        public bool Update(UserEntity userData)
+        {
+            try
+            {
+                UserEntity user = _context.User.FirstOrDefault(x => x.Email == userData.Email.ToLower());
+                user.FirstName = userData.FirstName;
+                user.LastName = userData.LastName;
+                user.MobileNumber = userData.MobileNumber;
+                user.BirthDate = userData.BirthDate;
+                user.Gender = userData.Gender;
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
     }
 }

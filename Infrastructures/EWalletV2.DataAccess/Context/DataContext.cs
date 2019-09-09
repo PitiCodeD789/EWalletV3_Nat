@@ -6,8 +6,8 @@ using System.Text;
 
 namespace EWalletV2.DataAccess.Context
 {
-    public class DataContext
+    public class DataContext : DbContext
     {
         public DbSet<UserEntity> User { get; set; }
     }
-}
+}   
