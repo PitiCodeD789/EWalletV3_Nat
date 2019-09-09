@@ -179,7 +179,7 @@ namespace EWalletV2.Domain.Services
             return true;
         }
 
-        public CheckPinDto GetUserByEmail(string email)
+        public bool GetUserByEmail(string email)
         {
             throw new NotImplementedException();
         }
