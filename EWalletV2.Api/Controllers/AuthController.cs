@@ -109,6 +109,31 @@ namespace EWalletV2.Api.Controllers
 
         }
 
+        //GetTokenByRefreshToken
+        [AllowAnonymous]
+        [HttpPost("GetTokenByRefreshToken")]
+        public IActionResult GetTokenByRefreshToken([FromBody] GetTokenByRefreshTokenCommand command)
+        {
+            string refeshToken = command.RefreshToken;
+            string email = command.Email?.ToLower();
+
+            bool isCorrectRefreshToken = _authService.CheckRefreshToken(email, refeshToken);
+
+            if (isCorrectRefreshToken)
+            {
+                GetToken getToken = new GetToken(_configuration);
+                var token = getToken.Token;
+
+                GetTokenByRefreshTokenViewModel viewModel = new GetTokenByRefreshTokenViewModel()
+                {
+                    Token = token
+                };
+
+                return Ok(viewModel);
+            }
+
+            return BadRequest();
+        }
 
         //Login
         [AllowAnonymous]

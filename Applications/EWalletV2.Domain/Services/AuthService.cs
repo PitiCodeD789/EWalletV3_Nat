@@ -181,6 +181,16 @@ namespace EWalletV2.Domain.Services
             return true;
         }
 
- 
+        public bool CheckRefreshToken(string email, string refeshToken)
+        {
+            TokenEntity refresh = _tokenRepository.GetTokenByEmail(email);
+
+            if (refresh.RefreshToken == refeshToken)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
