@@ -1,6 +1,6 @@
 ﻿using EWalletV2.DataAccess.Contexts;
 using EWalletV2.Domain.Entities;
-using EWalletV2.Domain.Repoitories;
+using EWalletV2.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

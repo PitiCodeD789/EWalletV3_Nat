@@ -3,7 +3,7 @@ using EWalletV2.Api.ViewModels.User;
 using EWalletV2.Domain.DtoModels.Auth;
 using EWalletV2.Domain.DtoModels.User;
 using EWalletV2.Domain.Interfaces;
-using EWalletV2.Domain.Repoitories;
+using EWalletV2.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
