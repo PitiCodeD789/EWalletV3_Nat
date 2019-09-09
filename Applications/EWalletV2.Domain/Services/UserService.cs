@@ -13,11 +13,9 @@ namespace EWalletV2.Domain.Services
     public class UserService :IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
         }
 
         public bool CheckUserByEmailAndBirthday(string email, DateTime birthday)
