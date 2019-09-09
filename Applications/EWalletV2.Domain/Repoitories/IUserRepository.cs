@@ -10,5 +10,7 @@ namespace EWalletV2.Domain.Repoitories
         UserEntity GetUserByEmail(string email);
         UserEntity GetUserByAccountNumber(string merchantAccNo);
         bool Update(UserEntity userData);
+        bool ChangeBalance(string email, decimal amount);
+        string AddUserAndGetAccount(UserEntity userData);
     }
 }
