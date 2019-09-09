@@ -14,5 +14,15 @@ namespace EWalletV2.Api.ViewModels
             Men = 0,
             Women = 1
         }
+
+        /// <summary>
+        /// Customer = 0, Merchant = 1, Admin = 2
+        /// </summary>
+        public enum EW_UserTypeEnum
+        {
+            Customer,
+            Merchant,
+            Admin
+        }
     }
 }
