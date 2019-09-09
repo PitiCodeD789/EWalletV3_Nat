@@ -32,12 +32,12 @@ namespace EWalletV2.Api.Controllers
         [HttpPost("CheckPin")]
         public IActionResult CheckPin([FromBody] CheckPinCommand checkPin)
         {
-            CheckPinDto user = _userService.GetUserByEmail((string)checkPin.Email);
+            CheckPinDto user = _userService.GetUserByEmail(checkPin.Email);
             if (user == null)
             {
                 return BadRequest();
             }
-            bool isCorrect = _authService.CheckPin((string)checkPin.Pin, (string)checkPin.Email);
+            bool isCorrect = _authService.CheckPin(checkPin.Pin, checkPin.Email);
             return isCorrect ? Ok() : (IActionResult)BadRequest();
         }
         //UpdatePin
