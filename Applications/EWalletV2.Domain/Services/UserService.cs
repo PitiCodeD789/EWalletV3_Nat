@@ -78,6 +78,7 @@ namespace EWalletV2.Domain.Services
             userData.MobileNumber = userDto.MobileNumber;
             userData.BirthDate = userDto.BitrhDate;
             userData.Gender = userDto.Gender;
+            userData.UpdateDateTime = DateTime.UtcNow;
             bool result = _userRepository.Update(userData);
             return result;
         }
