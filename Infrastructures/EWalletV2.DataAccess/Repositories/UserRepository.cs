@@ -22,6 +22,7 @@ namespace EWalletV2.DataAccess.Repositories
             try
             {
                 _context.Add(userData);
+                _context.SaveChanges();
 
                 UserEntity user = _context.Users.FirstOrDefault(x => x.Email == userData.Email);
                 string account = GenerateUserAccount(user.Id);
