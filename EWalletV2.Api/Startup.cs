@@ -76,6 +76,8 @@ namespace EWalletV2.Api
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
+
             //app.UseHttpsRedirection();
             app.UseMvc();
         }
