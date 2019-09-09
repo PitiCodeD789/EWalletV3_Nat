@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using EWalletV2.DataAccess.Contexts;
+using EWalletV2.DataAccess.Repositories;
+using EWalletV2.Domain.Interfaces;
+using EWalletV2.Domain.Repoitories;
+using EWalletV2.Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +48,9 @@ namespace EWalletV2.Api
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                };
            });
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<DataContext>();
             services.AddAutoMapper(typeof(AutoMapperConfig.AutoMapperProfile));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

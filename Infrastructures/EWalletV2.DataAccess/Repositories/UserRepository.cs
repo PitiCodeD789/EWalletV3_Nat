@@ -26,6 +26,7 @@ namespace EWalletV2.DataAccess.Repositories
                 UserEntity user = _context.Users.FirstOrDefault(x => x.Email == userData.Email);
                 string account = GenerateUserAccount(user.Id);
                 user.Account = account;
+                user.UpdateDateTime = DateTime.UtcNow;
 
                 _context.SaveChanges();
 
@@ -76,13 +77,7 @@ namespace EWalletV2.DataAccess.Repositories
         {
             try
             {
-                //UserEntity user = _context.Users.FirstOrDefault(x => x.Email == userData.Email.ToLower());
-                //user.FirstName = userData.FirstName;
-                //user.LastName = userData.LastName;
-                //user.MobileNumber = userData.MobileNumber;
-                //user.BirthDate = userData.BirthDate;
-                //user.Gender = userData.Gender;
-                //user.Pin = userData.Pin;
+           
                 _context.SaveChanges();
 
                 return true;
