@@ -13,11 +13,11 @@ namespace EWalletV2.DataAccess.Configurations
         {
             e.ToTable("Transactions");
 
-            e.Property(p => p.ReceiveId)
-                .HasColumnName("receiver_id");
+            e.Property(p => p.CustomerId)
+                .HasColumnName("customer_id");
 
-            e.Property(p => p.PayerId)
-                .HasColumnName("payer_id");
+            e.Property(p => p.OtherId)
+                .HasColumnName("other_id");
 
             e.Property(p => p.Amount)
                 .HasColumnName("Amount");

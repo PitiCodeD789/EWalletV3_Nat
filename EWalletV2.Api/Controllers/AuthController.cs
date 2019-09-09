@@ -6,6 +6,12 @@ using EWalletV2.Api.ViewModels.Auth;
 using EWalletV2.Domain.Interfaces;
 using EWalletV2.Domain.DtoModels.Auth;
 using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using EWalletV2.Api.Helpers;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -16,14 +22,19 @@ namespace EWalletV2.Api.Controllers
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
+
 
         public AuthController(IAuthService authService,
                               IUserService userService,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IConfiguration configuration
+                              )
         {
             _authService = authService;
             _userService = userService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         //CheckEmail
@@ -49,6 +60,7 @@ namespace EWalletV2.Api.Controllers
             return Ok(viewModel);
         }
 
+        //P'Sert == > will implement
         private void SendOtp(string email)
         {
             //TODO: send otp via email
@@ -89,10 +101,12 @@ namespace EWalletV2.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
             }
 
+            GetToken getToken = new GetToken(_configuration);
+
             RegisterViewModel viewModel = new RegisterViewModel
             {
                 RefreshToken = _authService.GetRefreshToken(email),
-                Token = GetToken(),
+                Token = getToken.Token,
                 Account = accountNumber
             };
 
@@ -100,10 +114,6 @@ namespace EWalletV2.Api.Controllers
 
         }
 
-        private string GetToken()
-        {
-            return "";
-        }
 
         //Login
         [HttpPost("Login")]
@@ -116,10 +126,10 @@ namespace EWalletV2.Api.Controllers
 
             if (loginUserAndPassDto == null)
                 return NotFound();
-
+            GetToken getToken = new GetToken(_configuration);
             LoginUserAndPassViewModel model = _mapper.Map<LoginUserAndPassViewModel>(loginUserAndPassDto);
 
-            model.Token = GetToken();
+            model.Token = getToken.Token;
             model.RefreshToken = _authService.GetRefreshToken(username);
 
             return Ok(model);
