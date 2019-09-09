@@ -1,7 +1,7 @@
-﻿using System;
+﻿using EWalletV2.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using EWalletV2.Domain.Entity;
 
 namespace EWalletV2.Domain.Repositories
 {

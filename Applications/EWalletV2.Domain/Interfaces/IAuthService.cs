@@ -20,6 +20,5 @@ namespace EWalletV2.Domain.Interfaces
         string Register(RegisterDtoCommand registerDto);
         bool CheckPin(string pin, string email);
         bool UpdatePin(string email, string oldPin, string newPin);
-        CheckPinDto GetUserByEmail(string email);
     }
 }
