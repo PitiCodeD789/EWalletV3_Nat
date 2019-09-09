@@ -11,6 +11,7 @@ using EWalletV2.Api.ViewModels.Pin;
 using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -21,22 +22,36 @@ namespace EWalletV2.Api.Controllers
 
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
-        public PinController(IUserService userService, IAuthService authService)
+        private readonly IMapper _mapper;
+        public PinController(IUserService userService, IAuthService authService, IMapper mapper)
         {
             _userService = userService;
             _authService = authService;
+            _mapper = mapper;
         }
 
         //LoginByPin
+        [HttpPost("LoginByPin")]
+        public IActionResult LoginByPin([FromBody]LoginPinCommand command)
+        {
+            string email = command.Email;
+            string pin = command.Pin;
+
+            var loginPinDto = _authService.CheckPin(pin,email);
+            if (!loginPinDto)
+                return NotFound();
+            LoginPinViewModel model = _mapper.Map<LoginPinViewModel>(loginPinDto);
+
+            //P'Sert will Implement get Token() method
+            model.Token = GetToken();
+            model.RefreshToken = _authService.GetRefreshToken(email);
+            return Ok(model);
+        }
+
         //CheckPin
         [HttpPost("CheckPin")]
         public IActionResult CheckPin([FromBody] CheckPinCommand checkPin)
-        {
-            CheckPinDto user = _userService.GetUserByEmail((string)checkPin.Email);
-            if (user == null)
-            {
-                return BadRequest();
-            }
+        {      
             bool isCorrect = _authService.CheckPin((string)checkPin.Pin, (string)checkPin.Email);
             return isCorrect ? Ok() : (IActionResult)BadRequest();
         }

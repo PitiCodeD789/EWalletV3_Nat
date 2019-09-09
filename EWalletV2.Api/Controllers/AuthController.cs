@@ -50,6 +50,7 @@ namespace EWalletV2.Api.Controllers
             return Ok(viewModel);
         }
 
+        //P'Sert == > will implement
         private void SendOtp(string email)
         {
             //TODO: send otp via email
@@ -101,6 +102,7 @@ namespace EWalletV2.Api.Controllers
 
         }
 
+        //P'Sert == > will implement
         private string GetToken()
         {
             return "";
