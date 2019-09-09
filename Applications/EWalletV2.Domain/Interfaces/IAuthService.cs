@@ -18,5 +18,6 @@ namespace EWalletV2.Domain.Interfaces
         LoginUserAndPassDto LoginWithUsernameAndPassword(string username, string password);
         bool Logout(string email);
         string Register(RegisterDtoCommand registerDto);
+        bool UpdatePin(string email, string oldPin, string newPin);
     }
 }
