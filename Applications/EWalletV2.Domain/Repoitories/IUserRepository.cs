@@ -8,5 +8,6 @@ namespace EWalletV2.Domain.Repoitories
     public interface IUserRepository
     {
         UserEntity GetUserByEmail(string email);
+        UserEntity GetUserByAccountNumber(string merchantAccNo);
     }
 }

@@ -29,7 +29,8 @@ namespace EWalletV2.Domain.Services
 
         public bool ExistAccountNo(string merchantAccNo)
         {
-            throw new NotImplementedException();
+            var existingAccountNo = _userRepository.GetUserByAccountNumber(merchantAccNo);
+            return existingAccountNo != null;
         }
 
         public bool ExistingEmail(string email)
