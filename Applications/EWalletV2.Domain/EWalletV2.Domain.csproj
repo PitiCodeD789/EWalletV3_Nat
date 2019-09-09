@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\EWalletV2.Api.ViewModels\EWalletV2.Api.ViewModels.csproj" />
   </ItemGroup>
 
