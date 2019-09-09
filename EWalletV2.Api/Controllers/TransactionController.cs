@@ -51,6 +51,11 @@ namespace EWalletV2.Api.Controllers
 
             PaymentDto payment = _transactionService.Payment(email, merchantAccNo, pay);
 
+            if(payment == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
             PaymentViewModel result = new PaymentViewModel()
             {
                 Reference = payment.Reference,
