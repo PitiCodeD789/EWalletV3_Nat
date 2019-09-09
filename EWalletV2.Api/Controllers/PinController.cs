@@ -11,6 +11,9 @@ using EWalletV2.Api.ViewModels.Pin;
 using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using EWalletV2.Api.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -21,22 +24,38 @@ namespace EWalletV2.Api.Controllers
 
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
-        public PinController(IUserService userService, IAuthService authService)
+        private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
+        public PinController(IUserService userService, IAuthService authService, IMapper mapper, IConfiguration configuration)
         {
             _userService = userService;
             _authService = authService;
+            _mapper = mapper;
+            _configuration = configuration;
         }
 
         //LoginByPin
+        [HttpPost("LoginByPin")]
+        public IActionResult LoginByPin([FromBody]LoginPinCommand command)
+        {
+            string email = command.Email;
+            string pin = command.Pin;
+
+            var loginPinDto = _authService.CheckPin(pin,email);
+            if (!loginPinDto)
+                return NotFound();
+            LoginPinViewModel model = _mapper.Map<LoginPinViewModel>(loginPinDto);
+            GetToken getToken = new GetToken(_configuration);
+            //P'Sert will Implement get Token() method
+            model.Token = getToken.Token;
+            model.RefreshToken = _authService.GetRefreshToken(email);
+            return Ok(model);
+        }
+
         //CheckPin
         [HttpPost("CheckPin")]
         public IActionResult CheckPin([FromBody] CheckPinCommand checkPin)
-        {
-            CheckPinDto user = _userService.GetUserByEmail((string)checkPin.Email);
-            if (user == null)
-            {
-                return BadRequest();
-            }
+        {      
             bool isCorrect = _authService.CheckPin((string)checkPin.Pin, (string)checkPin.Email);
             return isCorrect ? Ok() : (IActionResult)BadRequest();
         }
@@ -69,7 +88,6 @@ namespace EWalletV2.Api.Controllers
             }
 
             return Ok(refNumber);
-
         }
 
     }

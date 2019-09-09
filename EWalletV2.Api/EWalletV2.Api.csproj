@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -9,12 +9,14 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Applications\EWalletV2.Domain\EWalletV2.Domain.csproj" />
     <ProjectReference Include="..\EWalletV2.Api.ViewModels\EWalletV2.Api.ViewModels.csproj" />
+    <ProjectReference Include="..\Infrastructures\EWalletV2.DataAccess\EWalletV2.DataAccess.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="http://json.schemastore.org/avro-avsc" /></VisualStudio></ProjectExtensions>

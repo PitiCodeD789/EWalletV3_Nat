@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructures", "Infrastr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentations", "Presentations", "{6E9FE41D-E59C-4A95-861B-7255C3C421B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWalletV2.Api", "EWalletV2.Api\EWalletV2.Api.csproj", "{FAEFB25A-4485-4448-B8DB-CCE9E36EB70B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EWalletV2.Api", "EWalletV2.Api\EWalletV2.Api.csproj", "{FAEFB25A-4485-4448-B8DB-CCE9E36EB70B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWalletV2.DataAccess", "Infrastructures\EWalletV2.DataAccess\EWalletV2.DataAccess.csproj", "{68A6411B-DA97-4139-851C-22830689BC7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EWalletV2.DataAccess", "Infrastructures\EWalletV2.DataAccess\EWalletV2.DataAccess.csproj", "{68A6411B-DA97-4139-851C-22830689BC7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWalletV2.Domain", "Applications\EWalletV2.Domain\EWalletV2.Domain.csproj", "{545ED663-3B05-4D99-9C27-A73AE3D6ACA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EWalletV2.Domain", "Applications\EWalletV2.Domain\EWalletV2.Domain.csproj", "{545ED663-3B05-4D99-9C27-A73AE3D6ACA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWalletV2.Api.ViewModels", "EWalletV2.Api.ViewModels\EWalletV2.Api.ViewModels.csproj", "{B506ADF0-F296-42EB-AFE5-D49E586EEE22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EWalletV2.Api.ViewModels", "EWalletV2.Api.ViewModels\EWalletV2.Api.ViewModels.csproj", "{B506ADF0-F296-42EB-AFE5-D49E586EEE22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

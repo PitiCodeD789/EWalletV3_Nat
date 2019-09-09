@@ -24,5 +24,14 @@ namespace EWalletV2.Api.ViewModels
             Merchant,
             Admin
         }
+
+        /// <summary>
+        /// TopUp = 0, Payment = 1
+        /// </summary>
+        public enum EW_TypeTransectionEnum
+        {
+            TopUp,
+            Payment
+        }
     }
 }

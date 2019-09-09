@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EWalletV2.Api.ViewModels.Auth
+namespace EWalletV2.Domain.Entities
 {
-    public class CheckPinCommand
+    public class TokenEntity : BaseEntity
     {
+        public string RefreshToken { get; set; }
         public string Email { get; set; }
-        public string Pin { get; set; }
     }
 }
