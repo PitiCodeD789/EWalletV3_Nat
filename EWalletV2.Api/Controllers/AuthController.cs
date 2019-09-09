@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using EWalletV2.Api.Helpers;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -59,6 +60,7 @@ namespace EWalletV2.Api.Controllers
             return Ok(viewModel);
         }
 
+        //P'Sert == > will implement
         private void SendOtp(string email)
         {
             //TODO: send otp via email
@@ -99,10 +101,12 @@ namespace EWalletV2.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
             }
 
+            GetToken getToken = new GetToken(_configuration);
+
             RegisterViewModel viewModel = new RegisterViewModel
             {
                 RefreshToken = _authService.GetRefreshToken(email),
-                Token = GetToken(),
+                Token = getToken.Token,
                 Account = accountNumber
             };
 
@@ -110,18 +114,6 @@ namespace EWalletV2.Api.Controllers
 
         }
 
-        private string GetToken()
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var tokendata = new JwtSecurityToken(_configuration["Jwt:Issuer"],
-              _configuration["Jwt:Issuer"], null,
-              DateTime.Now,
-              expires: DateTime.Now.AddMinutes(5),
-              signingCredentials: credentials);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokendata);
-            return token;
-        }
 
         //Login
         [HttpPost("Login")]
@@ -134,10 +126,10 @@ namespace EWalletV2.Api.Controllers
 
             if (loginUserAndPassDto == null)
                 return NotFound();
-
+            GetToken getToken = new GetToken(_configuration);
             LoginUserAndPassViewModel model = _mapper.Map<LoginUserAndPassViewModel>(loginUserAndPassDto);
 
-            model.Token = GetToken();
+            model.Token = getToken.Token;
             model.RefreshToken = _authService.GetRefreshToken(username);
 
             return Ok(model);
