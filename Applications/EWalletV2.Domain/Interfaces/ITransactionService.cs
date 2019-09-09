@@ -11,7 +11,7 @@ namespace EWalletV2.Domain.Interfaces
         TopupDto Topup(string email, string referenceNumber);
         string GenerateTopUp(string email, string amount);
         PaymentDto Payment(string email, string merchantAccNo, decimal pay);
-        List<TransactionDetailViewModel> GetTransaction30Days(string email);
         TransactionDto GetDetailTransaction(string email, int transactionId);
+        List<TransactionDetailDto> GetTransaction30Days(string email);
     }
 }
