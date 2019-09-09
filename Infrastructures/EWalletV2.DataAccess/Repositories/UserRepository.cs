@@ -1,4 +1,4 @@
-﻿using EWalletV2.DataAccess.Context;
+﻿using EWalletV2.DataAccess.Contexts;
 using EWalletV2.Domain.Entities;
 using EWalletV2.Domain.Repoitories;
 using System;
@@ -23,7 +23,7 @@ namespace EWalletV2.DataAccess.Repositories
             {
                 _context.Add(userData);
 
-                UserEntity user = _context.User.FirstOrDefault(x => x.Email == userData.Email);
+                UserEntity user = _context.Users.FirstOrDefault(x => x.Email == userData.Email);
                 string account = GenerateUserAccount(user.Id);
                 user.Account = account;
 
@@ -47,7 +47,7 @@ namespace EWalletV2.DataAccess.Repositories
         {
             try
             {
-                UserEntity user = _context.User.FirstOrDefault(x => x.Email == email);
+                UserEntity user = _context.Users.FirstOrDefault(x => x.Email == email);
                 user.Balance = amount;
                 _context.SaveChanges();
                 return true;
@@ -62,13 +62,13 @@ namespace EWalletV2.DataAccess.Repositories
 
         public UserEntity GetUserByAccountNumber(string merchantAccNo)
         {
-            UserEntity user = _context.User.FirstOrDefault(x => x.Account == merchantAccNo.ToLower());
+            UserEntity user = _context.Users.FirstOrDefault(x => x.Account == merchantAccNo.ToLower());
             return user;
         }
 
         public UserEntity GetUserByEmail(string email)
         {
-            UserEntity user = _context.User.FirstOrDefault(x => x.Email == email.ToLower());
+            UserEntity user = _context.Users.FirstOrDefault(x => x.Email == email.ToLower());
             return user;
         }
 
@@ -76,13 +76,13 @@ namespace EWalletV2.DataAccess.Repositories
         {
             try
             {
-                UserEntity user = _context.User.FirstOrDefault(x => x.Email == userData.Email.ToLower());
-                user.FirstName = userData.FirstName;
-                user.LastName = userData.LastName;
-                user.MobileNumber = userData.MobileNumber;
-                user.BirthDate = userData.BirthDate;
-                user.Gender = userData.Gender;
-                user.Pin = userData.Pin;
+                //UserEntity user = _context.Users.FirstOrDefault(x => x.Email == userData.Email.ToLower());
+                //user.FirstName = userData.FirstName;
+                //user.LastName = userData.LastName;
+                //user.MobileNumber = userData.MobileNumber;
+                //user.BirthDate = userData.BirthDate;
+                //user.Gender = userData.Gender;
+                //user.Pin = userData.Pin;
                 _context.SaveChanges();
 
                 return true;
