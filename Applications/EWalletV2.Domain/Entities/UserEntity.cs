@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EWalletV2.Domain.Entities
 {
-    public class UserEntity
+    public class UserEntity : BaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
