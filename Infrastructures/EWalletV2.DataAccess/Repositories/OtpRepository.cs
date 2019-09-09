@@ -1,6 +1,7 @@
 ﻿
 using EWalletV2.DataAccess.Contexts;
 using EWalletV2.Domain.Entities;
+using EWalletV2.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace EWalletV2.DataAccess.Repositories
 {
-    public class OtpRepository
+    public class OtpRepository : IOtpRepository
     {
         private readonly DataContext _context;
         public OtpRepository(DataContext context)
@@ -35,7 +36,7 @@ namespace EWalletV2.DataAccess.Repositories
                 return false;
             }
         }
-        public OtpEntity GetOtpEntity(string email)
+        public OtpEntity GetOtpByEmail(string email)
         {
             try
             {

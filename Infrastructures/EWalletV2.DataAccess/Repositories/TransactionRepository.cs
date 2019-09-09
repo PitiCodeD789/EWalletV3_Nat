@@ -1,6 +1,7 @@
 ﻿using EWalletV2.Api.ViewModels;
 using EWalletV2.DataAccess.Contexts;
 using EWalletV2.Domain.Entities;
+using EWalletV2.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace EWalletV2.DataAccess.Repositories
 {
-    public class TransactionRepository
+    public class TransactionRepository : ITransactionRepository
     {
         private readonly DataContext _context;
         public TransactionRepository(DataContext context)
@@ -56,7 +57,7 @@ namespace EWalletV2.DataAccess.Repositories
                 TransactionEntity transaction = _context.Transactions.FirstOrDefault(x => x.TransactionReference == referenceNumber);
                 transaction.CustomerId = customerId;
                 transaction.Status = true;
-                transaction.UpdateDateTime = DateTime.Now;
+                transaction.UpdateDateTime = DateTime.UtcNow;
                 _context.Transactions.Update(transaction);
                 _context.SaveChanges();
                 return true;
