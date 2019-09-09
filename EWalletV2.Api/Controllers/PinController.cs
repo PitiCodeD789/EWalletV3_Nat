@@ -44,15 +44,14 @@ namespace EWalletV2.Api.Controllers
             string email = command.Email;
             string pin = command.Pin;
 
-            var loginPinDto = _authService.CheckPin(pin,email);
-            if (!loginPinDto)
-                return NotFound();
-            LoginPinViewModel model = _mapper.Map<LoginPinViewModel>(loginPinDto);
-            GetToken getToken = new GetToken(_configuration);
-            //P'Sert will Implement get Token() method
-            model.Token = getToken.Token;
-            model.RefreshToken = _authService.GetRefreshToken(email);
-            return Ok(model);
+            bool loginPinDto = _authService.CheckPin(pin, email);
+
+            LoginByPinViewModel viewmodel = new LoginByPinViewModel()
+            {
+                IsLogin = loginPinDto
+            };
+
+            return Ok(viewmodel);
         }
 
         //CheckPin
