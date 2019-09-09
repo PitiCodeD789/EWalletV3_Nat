@@ -59,12 +59,13 @@ namespace EWalletV2.Domain.Services
 
         public string GetAccountNameByAccountNumber(string accountNumber)
         {
-            throw new NotImplementedException();
-        }
-
-        public CheckPinDto GetUserByEmail(string email)
-        {
-            throw new NotImplementedException();
+            var userData = _userRepository.GetUserByAccountNumber(accountNumber);
+            if(userData == null)
+            {
+                return null;
+            }
+            var accountName = userData.FirstName + " " + userData.LastName;
+            return accountName;
         }
 
         public bool UpdateUser(UpdateUserDtoCommand userDto)
