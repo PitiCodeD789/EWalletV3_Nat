@@ -30,12 +30,14 @@ namespace EWalletV2.Api.Controllers
         [HttpPost("GetListTransaction/{email}")]
         public IActionResult GetTransaction30Days([FromBody]string email)
         {
+            List<TransactionDetailDto> transactionDetailDtos;
             bool isExist = _userService.ExistingEmail(email);
             if (isExist)
             {
                 List<TransactionDetailViewModel> transactionList = new List<TransactionDetailViewModel>();
+                transactionDetailDtos = _transactionService.GetTransaction30Days(email);
 
-                transactionList = _transactionService.GetTransaction30Days(email);
+                transactionList = _mapper.Map<List<TransactionDetailViewModel>>(transactionDetailDtos);
 
                 return Ok(transactionList);
             }
