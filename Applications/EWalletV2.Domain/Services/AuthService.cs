@@ -8,7 +8,7 @@ namespace EWalletV2.Domain.Services
 {
     public class AuthService : IAuthService
     {
-
+       
         
 
         public bool CheckPin(string pin, string email)
