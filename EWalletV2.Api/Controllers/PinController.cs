@@ -14,9 +14,11 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using EWalletV2.Api.Helpers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EWalletV2.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PinController : ControllerBase
@@ -35,6 +37,7 @@ namespace EWalletV2.Api.Controllers
         }
 
         //LoginByPin
+        [AllowAnonymous]
         [HttpPost("LoginByPin")]
         public IActionResult LoginByPin([FromBody]LoginPinCommand command)
         {
@@ -53,6 +56,7 @@ namespace EWalletV2.Api.Controllers
         }
 
         //CheckPin
+
         [HttpPost("CheckPin")]
         public IActionResult CheckPin([FromBody] CheckPinCommand checkPin)
         {      

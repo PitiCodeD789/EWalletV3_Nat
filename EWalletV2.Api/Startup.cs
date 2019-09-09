@@ -50,25 +50,16 @@ namespace EWalletV2.Api
            });
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<DataContext>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IOtpRepository, OtpRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<DataContext>(); 
             services.AddAutoMapper(typeof(AutoMapperConfig.AutoMapperProfile));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ValidateAudience = false,
-                        ValidateIssuerSigningKey = true,
-                        //ClockSkew = TimeSpan.Zero,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                    };
-                });
+       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
