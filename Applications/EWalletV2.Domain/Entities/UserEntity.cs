@@ -16,5 +16,7 @@ namespace EWalletV2.Domain.Entities
         public string Pin { get; set; }
         public string Salt { get; internal set; }
         public string Password { get; internal set; }
+        public decimal Balance { get; set; }
+
     }
 }
