@@ -28,6 +28,7 @@ namespace EWalletV2.Api.Controllers
         }
         //GetTransaction30Days
 
+
         //Payment
         [HttpPost("payment")]
         public IActionResult Payment([FromBody]PaymentCommand command)
