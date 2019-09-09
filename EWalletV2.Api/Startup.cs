@@ -53,6 +53,7 @@ namespace EWalletV2.Api
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IOtpRepository, OtpRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<DataContext>(); 
             services.AddAutoMapper(typeof(AutoMapperConfig.AutoMapperProfile));
