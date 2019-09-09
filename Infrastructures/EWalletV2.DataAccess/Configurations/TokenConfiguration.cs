@@ -11,7 +11,13 @@ namespace EWalletV2.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<TokenEntity> e)
         {
+            e.Property(p => p.RefreshToken)
+                .HasMaxLength(100)
+                .HasColumnName("refresh_token");
 
+            e.Property(p => p.Email)
+                .HasMaxLength(100)
+                .HasColumnName("email");
         }
     }
 }
