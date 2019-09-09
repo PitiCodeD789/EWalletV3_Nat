@@ -1,4 +1,5 @@
-﻿using EWalletV2.DataAccess.Contexts;
+﻿using EWalletV2.Api.ViewModels;
+using EWalletV2.DataAccess.Contexts;
 using EWalletV2.Domain.Entities;
 using EWalletV2.Domain.Repositories;
 using System;
@@ -42,7 +43,7 @@ namespace EWalletV2.DataAccess.Repositories
 
         private string GenerateUserAccount(int id)
         {
-            return "01" + id.ToString("D8");
+            return (int)EW_Enumerations.EW_UserTypeEnum.Customer > 9 ? "" : "0"  + id.ToString("D8");
         }
 
         public bool ChangeBalance(string email, decimal amount)
