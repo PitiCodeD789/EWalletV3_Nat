@@ -16,12 +16,12 @@ namespace EWalletV2.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userservice;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
         public UserController(IUserService userService, IMapper mapper)
         {
 
-            _userservice = userService;
+            _userService = userService;
             _mapper = mapper;
 
         }
@@ -50,7 +50,7 @@ namespace EWalletV2.Api.Controllers
 
             UpdateUserDtoCommand userDto = _mapper.Map<UpdateUserDtoCommand>(user);
 
-            bool IsUpdated = _userservice.UpdateUser(userDto);
+            bool IsUpdated = _userService.UpdateUser(userDto);
 
             if (!IsUpdated)
             {
