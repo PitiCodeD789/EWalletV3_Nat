@@ -2,19 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-<<<<<<< HEAD
 using AutoMapper;
-using EWalletV2.Api.ViewModels.Auth;
-using EWalletV2.Api.ViewModels.Transaction;
-using EWalletV2.Domain.DtoModels.Transaction;
-using EWalletV2.Domain.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-=======
 using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Transaction;
 using EWalletV2.Domain.DtoModels.Transaction;
 using EWalletV2.Domain.Interfaces;
->>>>>>> controller_transaction_payment
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,31 +17,18 @@ namespace EWalletV2.Api.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-<<<<<<< HEAD
-        ITransactionService _transactionService;
-        IUserService _userService;
-        IMapper _mapper;
-        public TransactionController(ITransactionService transactionService, IUserService userService, IMapper mapper)
-        {
-            _transactionService = transactionService;
-            _userService = userService;
-            _mapper = mapper;
-        }
-
-=======
         private readonly IUserService _userService;
         private readonly ITransactionService _transactionService;
-        public TransactionController(IUserService userService, ITransactionService transactionService)
+        private readonly IMapper _mapper;
+        public TransactionController(IUserService userService, ITransactionService transactionService, IMapper mapper)
         {
             _userService = userService;
             _transactionService = transactionService;
+            _mapper = mapper;
         }
->>>>>>> controller_transaction_payment
         //GetTransaction30Days
 
         //Payment
-<<<<<<< HEAD
-=======
         [HttpPost("payment")]
         public IActionResult Payment([FromBody]PaymentCommand command)
         {
@@ -80,7 +60,6 @@ namespace EWalletV2.Api.Controllers
             return Ok(result);
 
         }
->>>>>>> controller_transaction_payment
 
         //Topup
         [Authorize]
