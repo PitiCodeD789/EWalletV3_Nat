@@ -8,9 +8,9 @@ namespace EWalletV2.Domain.Repositories
     public interface ITransactionRepository
     {
         bool CheckReference(string referenceNumber);
-        bool CreatNewTopUp(string referenceNumber, int otherId, string amount);
+        bool CreateNewTopUp(string referenceNumber, int otherId, decimal amount);
         List<TransactionEntity> GetTransactionByCustomerId(int customerId);
-        bool CreatNewPayment(int otherId, int customerId, decimal amount, string referenceNumber);
+        bool CreateNewPayment(int otherId, int customerId, decimal amount, string referenceNumber);
         TransactionEntity GetTransactionByReferenceNumber(string referenceNumber);
         bool CustomerTopup(int customerId, string referenceNumber);
         TransactionEntity GetTransactionByTransactionId(int transactionId);

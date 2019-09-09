@@ -33,8 +33,9 @@ namespace EWalletV2.Domain.Services
                 }
             }
             UserEntity userEntity = _userRepository.GetUserByEmail(email);
+            decimal deAmount = Decimal.Parse(amount);
             int otherId = userEntity.Id;
-            bool isCreateTopUP = _transactionRepository.CreatNewTopUp(referenceNumber, otherId, amount);
+            bool isCreateTopUP = _transactionRepository.CreateNewTopUp(referenceNumber, otherId, deAmount);
             if (!isCreateTopUP)
             {
                 return null;
@@ -59,10 +60,16 @@ namespace EWalletV2.Domain.Services
             {
                 return null;
             }
+            string fullName = userEntity.FirstName + " " + userEntity.LastName;
             List<TransactionDetailDto> transactionDetails = transactionEntities.Select(x => new TransactionDetailDto()
             {
-
+                TransactionId = x.Id,
+                TransactionType = x.TransactionType,
+                Name = fullName,
+                Balance = x.Amount,
+                CreateDate = x.CreateDateTime
             }).ToList();
+            return transactionDetails;
         }
 
         public PaymentDto Payment(string email, string merchantAccNo, decimal pay)
@@ -84,7 +91,7 @@ namespace EWalletV2.Domain.Services
             int customerId = customer.Id;
             decimal amount = pay;
 
-            bool isPayment = _transactionRepository.CreatNewPayment(otherId, customerId, amount, referenceNumber);
+            bool isPayment = _transactionRepository.CreateNewPayment(otherId, customerId, amount, referenceNumber);
             if (!isPayment)
             {
                 return null;
@@ -96,7 +103,7 @@ namespace EWalletV2.Domain.Services
             }
             return new PaymentDto()
             {
-                Reference = transactionEntity.Reference,
+                Reference = transactionEntity.TransactionReference,
                 CreateDatetime = transactionEntity.CreateDateTime
             };
         }
@@ -148,11 +155,22 @@ namespace EWalletV2.Domain.Services
 
         public TransactionDto GetDetailTransaction(string email, int transactionId)
         {
+            UserEntity userEntity = _userRepository.GetUserByEmail(email);
             TransactionEntity transactionEntity = _transactionRepository.GetTransactionByTransactionId(transactionId);
             if(transactionEntity == null)
             {
                 return null;
             }
+            string fullName = userEntity.FirstName + " " + userEntity.LastName;
+            TransactionDto transaction = new TransactionDto()
+            {
+                TransactionId = transactionEntity.Id,
+                TransactionType = transactionEntity.TransactionType,
+                Name = fullName,
+                Balance = transactionEntity.Amount,
+                AccountNo = userEntity.Account
+            };
+            return transaction;
         }
     }
 }
