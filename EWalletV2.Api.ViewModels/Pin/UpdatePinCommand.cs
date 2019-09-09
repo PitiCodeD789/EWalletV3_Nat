@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace EWalletV2.Api.ViewModels.Auth
+namespace EWalletV2.Api.ViewModels.Pin
 {
     public class UpdatePinCommand
     {

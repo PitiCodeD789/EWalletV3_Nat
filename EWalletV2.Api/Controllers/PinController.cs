@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EWalletV2.Api.ViewModels.Auth;
+using EWalletV2.Api.ViewModels.Pin;
 using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@ namespace EWalletV2.Api.Controllers
     [ApiController]
     public class PinController : ControllerBase
     {
-        IAuthService _authService;
+        private readonly IAuthService _authService;
         public PinController(IAuthService authService)
         {
             _authService = authService;
