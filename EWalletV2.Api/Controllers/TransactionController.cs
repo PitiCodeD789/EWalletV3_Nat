@@ -27,7 +27,23 @@ namespace EWalletV2.Api.Controllers
             _mapper = mapper;
         }
         //GetTransaction30Days
+        [HttpPost("GetListTransaction/{email}")]
+        public IActionResult GetTransaction30Days([FromBody]string email)
+        {
+            bool isExist = _userService.ExistingEmail(email);
+            if (isExist)
+            {
+                List<TransactionDetailViewModel> transactionList = new List<TransactionDetailViewModel>();
 
+                transactionList = _transactionService.GetTransaction30Days(email);
+
+                return Ok(transactionList);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
         //Payment
         [HttpPost("payment")]
         public IActionResult Payment([FromBody]PaymentCommand command)
@@ -82,7 +98,23 @@ namespace EWalletV2.Api.Controllers
         }
 
         //GetDetailTransaction
+        [HttpPost("DetailTransaction")]
+        public IActionResult DetailTransaction([FromBody]TransactionCommand command)
+        {
+            bool isExist = _userService.ExistingEmail(command.Email);
+            if (isExist)
+            {
+                TransactionDto transactionDto = _transactionService.GetDetailTransaction(command.Email, command.TransactionId);
 
+                TransactionViewModel model = _mapper.Map<TransactionViewModel>(transactionDto);
+
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
         //GenerateTopup
         [Authorize]
         [HttpPost("GenerateTopup")]
