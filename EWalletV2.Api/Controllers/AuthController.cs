@@ -31,14 +31,13 @@ namespace EWalletV2.Api.Controllers
         public IActionResult CheckEmail([EmailAddress]string email)
         {
             bool isExist = _userService.ExistingEmail(email);
-
             string refNumer = _authService.SaveOtp(email);
             if (string.IsNullOrEmpty(refNumer))
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
             }
 
-            //TODO: Con not send otp without otp, maybe move to service
+            //TODO: Can not send otp without otp, maybe move to service
             Task.Run(() => SendOtp(email));
 
             CheckEmailViewModel viewModel = new CheckEmailViewModel

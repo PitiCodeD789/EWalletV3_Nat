@@ -21,12 +21,9 @@ namespace EWalletV2.Api.Controllers
         private readonly IMapper _mapper;
         public UserController(IUserService userService, IMapper mapper)
         {
-
             _userService = userService;
             _mapper = mapper;
-
         }
-
         //GetUser
 
         //GetBalance
