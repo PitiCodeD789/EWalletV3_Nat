@@ -12,6 +12,8 @@ using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using EWalletV2.Api.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -22,12 +24,14 @@ namespace EWalletV2.Api.Controllers
 
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
+        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public PinController(IUserService userService, IAuthService authService, IMapper mapper)
+        public PinController(IUserService userService, IAuthService authService, IMapper mapper, IConfiguration configuration)
         {
             _userService = userService;
             _authService = authService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         //LoginByPin
@@ -41,9 +45,9 @@ namespace EWalletV2.Api.Controllers
             if (!loginPinDto)
                 return NotFound();
             LoginPinViewModel model = _mapper.Map<LoginPinViewModel>(loginPinDto);
-
+            GetToken getToken = new GetToken(_configuration);
             //P'Sert will Implement get Token() method
-            model.Token = GetToken();
+            model.Token = getToken.Token;
             model.RefreshToken = _authService.GetRefreshToken(email);
             return Ok(model);
         }
