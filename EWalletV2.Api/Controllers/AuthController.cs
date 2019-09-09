@@ -31,7 +31,6 @@ namespace EWalletV2.Api.Controllers
         public IActionResult CheckEmail([EmailAddress]string email)
         {
             bool isExist = _userService.ExistingEmail(email);
-
             string refNumer = _authService.SaveOtp(email);
             if (string.IsNullOrEmpty(refNumer))
             {
