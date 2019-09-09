@@ -7,7 +7,7 @@ using AutoMapper;
 using EWalletV2.DataAccess.Contexts;
 using EWalletV2.DataAccess.Repositories;
 using EWalletV2.Domain.Interfaces;
-using EWalletV2.Domain.Repoitories;
+using EWalletV2.Domain.Repositories;
 using EWalletV2.Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -55,20 +55,7 @@ namespace EWalletV2.Api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ValidateAudience = false,
-                        ValidateIssuerSigningKey = true,
-                        //ClockSkew = TimeSpan.Zero,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                    };
-                });
+       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
