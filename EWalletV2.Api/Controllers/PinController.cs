@@ -23,10 +23,7 @@ namespace EWalletV2.Api.Controllers
         private readonly IAuthService _authService;
         public PinController(IUserService userService, IAuthService authService)
         {
-            _userService = userService;      
-
-        
-            
+            _userService = userService;
             _authService = authService;
         }
 
