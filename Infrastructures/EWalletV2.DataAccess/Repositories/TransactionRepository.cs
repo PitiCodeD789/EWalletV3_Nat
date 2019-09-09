@@ -1,4 +1,5 @@
-﻿using EWalletV2.DataAccess.Contexts;
+﻿using EWalletV2.Api.ViewModels;
+using EWalletV2.DataAccess.Contexts;
 using EWalletV2.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace EWalletV2.DataAccess.Repositories
             _context = context;
         }
 
-        public bool CheckReference(string referenceTopUp)
+        public bool CheckReference(string reference)
         {            
-            var transactionRef = _context.Transactions.Where(x => x.TransactionReference == referenceTopUp);
+            var transactionRef = _context.Transactions.Where(x => x.TransactionReference == reference);
             if(transactionRef != null)
             {
                 return false;
@@ -32,7 +33,7 @@ namespace EWalletV2.DataAccess.Repositories
                 var transaction = new TransactionEntity
                 {
                     TransactionReference = referenceNumber,
-                    TransactionType = 0,
+                    TransactionType = EW_Enumerations.EW_TypeTransectionEnum.TopUp,
                     CustomerId = 0,
                     OtherId = adminId,
                     Status = false,
@@ -66,12 +67,6 @@ namespace EWalletV2.DataAccess.Repositories
             }
         }
 
-        public decimal GetAmonutByReferenceNumber(string referenceNumber)
-        {
-            TransactionEntity transaction = _context.Transactions.FirstOrDefault(x => x.TransactionReference == referenceNumber);
-            return transaction.Amount;
-        }
-
         public bool CreateNewPayment(int customerId, int merchantId, decimal amount, string referenceNumber)
         {
             try
@@ -79,7 +74,7 @@ namespace EWalletV2.DataAccess.Repositories
                 var transaction = new TransactionEntity
                 {
                     TransactionReference = referenceNumber,
-                    TransactionType = 1,
+                    TransactionType = EW_Enumerations.EW_TypeTransectionEnum.Payment,
                     CustomerId = customerId,
                     OtherId = merchantId,
                     Status = true,
@@ -98,6 +93,11 @@ namespace EWalletV2.DataAccess.Repositories
         public List<TransactionEntity> GetTransactionByEmail(int customerId)
         {
             return _context.Transactions.Where(x => x.CustomerId == customerId).ToList();
+        }
+
+        public TransactionEntity GetTransactionByReferenceNumber(string referenceNumber)
+        {
+            return _context.Transactions.FirstOrDefault(x => x.TransactionReference == referenceNumber);
         }
 
         public TransactionEntity GetTransactionById(int transactionId)
