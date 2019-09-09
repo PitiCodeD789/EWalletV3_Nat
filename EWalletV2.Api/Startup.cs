@@ -7,7 +7,7 @@ using AutoMapper;
 using EWalletV2.DataAccess.Contexts;
 using EWalletV2.DataAccess.Repositories;
 using EWalletV2.Domain.Interfaces;
-using EWalletV2.Domain.Repoitories;
+using EWalletV2.Domain.Repositories;
 using EWalletV2.Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

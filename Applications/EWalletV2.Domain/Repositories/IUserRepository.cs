@@ -8,7 +8,9 @@ namespace EWalletV2.Domain.Repositories
     public interface IUserRepository
     {
         UserEntity GetUserByEmail(string email);
-        string AddUserAndGetAccount(UserEntity userEntity);
-        bool Update(UserEntity user);
+        UserEntity GetUserByAccountNumber(string merchantAccNo);
+        bool Update(UserEntity userData);
+        bool ChangeBalance(string email, decimal amount);
+        string AddUserAndGetAccount(UserEntity userData);
     }
 }
