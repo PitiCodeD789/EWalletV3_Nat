@@ -4,8 +4,8 @@ using System.Text;
 
 namespace EWalletV2.Api.ViewModels.User
 {
-    public class AccountViewModel
+    public class AccountCommand
     {
-        public string AccountName { get; set; }
+        public string AccountNumber { get; set; }
     }
 }

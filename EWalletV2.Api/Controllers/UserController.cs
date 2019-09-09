@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using EWalletV2.Api.ViewModels.Auth;
 using EWalletV2.Api.ViewModels.User;
 using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -15,25 +15,26 @@ namespace EWalletV2.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
-
         //GetUser
         //GetBalance
-        [HttpPost]
-        public IActionResult GetBalance([EmailAddress]string email)
+        //GetAccountName ==> dev_pop
+        [HttpGet("GetAccount")]
+        public IActionResult GetAccount([FromBody]AccountCommand command)
         {
-            AccountViewModel accountViewModel = _userService.GetAccountDetailByEmail(email);
-            if (accountViewModel == null)
+            string accountNumber = command.AccountNumber;
+            string accountName = _userService.GetAccountNameByAccountNumber(accountNumber);
+            if (accountName == null)
+                return NotFound();
+            AccountViewModel account = new AccountViewModel()
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
-            }
-            return Ok(accountViewModel);
+                AccountName = accountName
+            };
+            return Ok(account);
         }
-        //GetAccountName
         //UpdateUser
     }
 }
