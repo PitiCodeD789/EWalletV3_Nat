@@ -1,7 +1,7 @@
 ﻿using EWalletV2.Domain.DtoModels.Transaction;
 using EWalletV2.Domain.Entities;
 using EWalletV2.Domain.Interfaces;
-using EWalletV2.Domain.Repoitories;
+using EWalletV2.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
