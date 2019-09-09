@@ -10,5 +10,6 @@ namespace EWalletV2.Domain.Entities
         public int CustomerId { get; set; }
         public int OtherId { get; set; }
         public decimal Amount { get; set; }
+        public string Reference { get; set; }
     }
 }
