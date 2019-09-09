@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EWalletV2.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

@@ -12,9 +12,11 @@ using System;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using EWalletV2.Api.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EWalletV2.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -38,6 +40,7 @@ namespace EWalletV2.Api.Controllers
         }
 
         //CheckEmail
+        [AllowAnonymous]
         [HttpGet("CheckEmail/{email}")]
         public IActionResult CheckEmail([EmailAddress]string email)
         {
@@ -48,9 +51,6 @@ namespace EWalletV2.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
             }
 
-            //TODO: Can not send otp without otp, maybe move to service
-            Task.Run(() => SendOtp(email));
-
             CheckEmailViewModel viewModel = new CheckEmailViewModel
             {
                 IsExist = isExist,
@@ -60,14 +60,8 @@ namespace EWalletV2.Api.Controllers
             return Ok(viewModel);
         }
 
-        //P'Sert == > will implement
-        private void SendOtp(string email)
-        {
-            //TODO: send otp via email
-            //throw new NotImplementedException();
-        }
-
         //CheckOtp
+        [AllowAnonymous]
         [HttpPost("CheckOtp")]
         public IActionResult CheckOtp([FromBody]CheckOtpCommand command)
         {
@@ -86,6 +80,7 @@ namespace EWalletV2.Api.Controllers
         }
 
         //Register
+        [AllowAnonymous]
         [HttpPost("Register")]
         public IActionResult Register([FromBody]RegisterCommand command)
         {
@@ -116,6 +111,7 @@ namespace EWalletV2.Api.Controllers
 
 
         //Login
+        [AllowAnonymous]
         [HttpPost("Login")]
         public IActionResult LoginWithUsernameAndPassword([FromBody] LoginUserAndPassCommand command)
         {
