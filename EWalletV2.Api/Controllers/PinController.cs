@@ -26,6 +26,18 @@ namespace EWalletV2.Api.Controllers
         //LoginByPin
         //CheckPin
         //UpdatePin
+        [HttpPost("updatepin")]
+        public IActionResult UpdatePin([FromBody]UpdatePinCommand updatePin)
+        {
+            bool isUpdatePinSuccess = _authService.UpdatePin(updatePin.Email
+                , updatePin.OldPin
+                , updatePin.NewPin);
+            if (!isUpdatePinSuccess)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
         //CheckForgotPin
         [HttpPost("CheckForgotPin")]
         public IActionResult CheckForgotPin([FromBody] CheckForgotPinCommand forgotPinCommand)
