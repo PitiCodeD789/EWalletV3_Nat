@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-<<<<<<< HEAD
+
 using EWalletV2.Api.ViewModels.Auth;
 using EWalletV2.Domain.DtoModels.Auth;
-=======
+
 using EWalletV2.Api.ViewModels.Pin;
->>>>>>> 0d88fc19fc9b37f24785771712b03422dfa5081f
+
 using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,19 +18,18 @@ namespace EWalletV2.Api.Controllers
     [ApiController]
     public class PinController : ControllerBase
     {
-<<<<<<< HEAD
+
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
         public PinController(IUserService userService, IAuthService authService)
         {
-            _userService = userService;
-=======
-        private readonly IAuthService _authService;
-        public PinController(IAuthService authService)
-        {
->>>>>>> 0d88fc19fc9b37f24785771712b03422dfa5081f
+            _userService = userService;      
+
+        
+            
             _authService = authService;
         }
+
         //LoginByPin
         //CheckPin
         [HttpPost("CheckPin")]
@@ -58,5 +57,23 @@ namespace EWalletV2.Api.Controllers
             return NoContent();
         }
         //CheckForgotPin
+        [HttpPost("CheckForgotPin")]
+        public IActionResult CheckForgotPin([FromBody] CheckForgotPinCommand forgotPinCommand)
+        {
+            bool isUser = _userService.CheckUserByEmailAndBirthday(forgotPinCommand.Email, forgotPinCommand.Birthday);
+            if (!isUser)
+            {
+                return NoContent();
+            }
+            string refNumber = _authService.SaveOtp(forgotPinCommand.Email);
+            if (string.IsNullOrEmpty(refNumber))
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
+            }
+
+            return Ok(refNumber);
+
+        }
+
     }
 }
