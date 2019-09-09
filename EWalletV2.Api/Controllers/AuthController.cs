@@ -6,6 +6,11 @@ using EWalletV2.Api.ViewModels.Auth;
 using EWalletV2.Domain.Interfaces;
 using EWalletV2.Domain.DtoModels.Auth;
 using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -16,14 +21,19 @@ namespace EWalletV2.Api.Controllers
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
+
 
         public AuthController(IAuthService authService,
                               IUserService userService,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IConfiguration configuration
+                              )
         {
             _authService = authService;
             _userService = userService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         //CheckEmail
@@ -103,7 +113,15 @@ namespace EWalletV2.Api.Controllers
 
         private string GetToken()
         {
-            return "";
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var tokendata = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+              _configuration["Jwt:Issuer"], null,
+              DateTime.Now,
+              expires: DateTime.Now.AddMinutes(5),
+              signingCredentials: credentials);
+            var token = new JwtSecurityTokenHandler().WriteToken(tokendata);
+            return token;
         }
 
         //Login

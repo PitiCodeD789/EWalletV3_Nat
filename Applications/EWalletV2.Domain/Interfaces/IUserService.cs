@@ -14,10 +14,7 @@ namespace EWalletV2.Domain.Interfaces
         string GetAccountNameByAccountNumber(string accountNumber);
         AccountViewModel GetAccountDetailByEmail(string email);
         bool ExistAccountNo(string merchantAccNo);
-
-        CheckPinDto GetUserByEmail(string email);
-
-        bool CheckUserByEmailAndBirthday(object email, object birthday);
+        bool CheckUserByEmailAndBirthday(string email, DateTime birthday);
 
     }
 }
