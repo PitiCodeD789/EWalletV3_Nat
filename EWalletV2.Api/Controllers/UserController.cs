@@ -21,16 +21,25 @@ namespace EWalletV2.Api.Controllers
         private readonly IMapper _mapper;
         public UserController(IUserService userService, IMapper mapper)
         {
-
             _userService = userService;
             _mapper = mapper;
 
         }
 
         //GetUser
+        [HttpGet("GetUser")]
+        public IActionResult GetUser([EmailAddress]string email)
+        {
+            AccountViewModel accountViewModel = _userService.GetAccountDetailByEmail(email);
+            if (accountViewModel == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
+            }
+            return Ok(accountViewModel);
+        }
 
         //GetBalance
-        [HttpPost]
+        [HttpPost("GetBalance")]
         public IActionResult GetBalance([EmailAddress]string email)
         {
             AccountViewModel accountViewModel = _userService.GetAccountDetailByEmail(email);
