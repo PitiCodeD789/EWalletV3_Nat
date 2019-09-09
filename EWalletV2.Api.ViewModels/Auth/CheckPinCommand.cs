@@ -6,7 +6,7 @@ namespace EWalletV2.Api.ViewModels.Auth
 {
     public class CheckPinCommand
     {
-        public object Email { get; set; }
-        public object Pin { get; set; }
+        public string Email { get; set; }
+        public string Pin { get; set; }
     }
 }

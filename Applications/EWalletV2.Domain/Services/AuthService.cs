@@ -131,6 +131,8 @@ namespace EWalletV2.Domain.Services
 
                 SmtpServer.Send(mail);
 
+                SmtpServer.Dispose();
+
             }
             catch (Exception ex)
             {
@@ -151,7 +153,7 @@ namespace EWalletV2.Domain.Services
             string checkPassword = Generator.HashPassword(oldPin, user.Salt);
             if (checkPassword == user.Pin)
             {
-                LoginUserAndPassDto loginUser = _mapper.Map<LoginUserAndPassDto>(user);
+                //LoginUserAndPassDto loginUser = _mapper.Map<LoginUserAndPassDto>(user);
                 string salt = Generator.GenerateRandomString(12);
                 string hashPass = Generator.HashPassword(newPin, salt);
                 user.Pin = hashPass;
@@ -175,6 +177,11 @@ namespace EWalletV2.Domain.Services
                 return false;
             }
             return true;
+        }
+
+        public CheckPinDto GetUserByEmail(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }
