@@ -1,15 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\..\EWalletV2.Api.ViewModels\EWalletV2.Api.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\EWalletV2.Api.ViewModels\EWalletV2.Api.ViewModels.csproj" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
