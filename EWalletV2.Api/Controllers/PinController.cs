@@ -28,6 +28,8 @@ namespace EWalletV2.Api.Controllers
         }
 
         //LoginByPin
+
+
         //CheckPin
         [HttpPost("CheckPin")]
         public IActionResult CheckPin([FromBody] CheckPinCommand checkPin)
