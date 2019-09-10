@@ -90,7 +90,10 @@ namespace EWalletV2.Domain.Services
             int otherId = merchant.Id;
             int customerId = customer.Id;
             decimal amount = pay;
-
+            if(amount < customer.Balance)
+            {
+                return null;
+            }
             bool isPayment = _transactionRepository.CreateNewPayment(otherId, customerId, amount, referenceNumber);
             if (!isPayment)
             {
