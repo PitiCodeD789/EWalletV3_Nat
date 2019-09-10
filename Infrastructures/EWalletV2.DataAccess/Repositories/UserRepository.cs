@@ -43,7 +43,8 @@ namespace EWalletV2.DataAccess.Repositories
 
         private string GenerateUserAccount(int id)
         {
-            return (int)EW_Enumerations.EW_UserTypeEnum.Customer > 9 ? "" : "0"  + id.ToString("D8");
+            int account_type = (int)EW_Enumerations.EW_UserTypeEnum.Customer;
+            return account_type > 9 ? "" : "0" + account_type + id.ToString("D8");
         }
 
         public bool ChangeBalance(string email, decimal amount)
