@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="EV.Customer.Views.ChildHomeTabPage">
+    <ContentPage.Content>
+        <StackLayout>
+                <Grid>
+                    <Image Source="https://sv1.picz.in.th/images/2019/09/01/ZsSakW.jpg"
+                       Aspect="AspectFill" HeightRequest="250"/>
+                    <StackLayout Margin="0,20,0,0">
+                        <!--<Label Text="{Binding FullName,StringFormat='ยินดีตอนรับ {0}'} " LineBreakMode="WordWrap"-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="ยินดีต้อนรับ ดำรงเดช ลลิหกดฟหกดหฟห" LineBreakMode="WordWrap" 
+                           FontSize="30" TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="EndAndExpand"
+                           HorizontalOptions="Center"/>
+                        <Label Text="สวัสดีตอนเช้า" TextColor="white" FontSize="15"
+                           FontAttributes="Bold"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Center"/>
+                        
+                        <BoxView BackgroundColor="Black" Opacity="0.6" Grid.Row="0"
+                                 HorizontalOptions="Fill"
+                                 HeightRequest="80"/>
+                        <StackLayout Orientation="Horizontal" Grid.Row="0">
+                            <Label Text="ยอดเงินคงเหลือ" TextColor="White" FontSize="15"
+                                   VerticalTextAlignment="Center" HorizontalOptions="Start"
+                                   Margin="10"/>
+                            <!--<Label Text="{Binding CurrentBalance,StringFormat='{0:n} THB'}" TextColor="Orange" FontSize="25"-->
+                                <Label Text="3,800.50" TextColor="#EAA200" FontSize="25"
+                                   VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand"
+                                   FontAttributes="Bold"/>
+                                <Label Text="THB" TextColor="#EAA200" FontSize="12"
+                                       Margin="0,25,10,0"
+                                       VerticalTextAlignment="Start"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+                </Grid>
+                <Grid VerticalOptions="CenterAndExpand"
+                  HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="0"
+                       Grid.Row="0"
+                       Margin="10,5,5,10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapPayment" NumberOfTapsRequired="1" 
+                                              Tapped="TapPayment_Tapped"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout>
+                            <Image Source="qr_code_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                            <Label Text="สแกนจ่าย"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="0"
+                       Grid.Row="1"
+                       Margin="10,5,5,10">
+                        <StackLayout>
+                            <Image Source="touchscreen_smartphone_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                            <Label Text="Coming soon"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="1"
+                       Grid.Row="0"
+                       Margin="10,5,5,10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapTopupFromAdminApp" NumberOfTapsRequired="1" 
+                                              Tapped="TapTopupFromAdminApp_Tapped"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout>
+                            <Image Source="touchscreen_smartphone_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                            <Label Text="เติมเงิน"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       Margin="10,5,5,10">
+                        <StackLayout>
+                            <Image Source="touchscreen_smartphone_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                            <Label Text="Coming soon"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
