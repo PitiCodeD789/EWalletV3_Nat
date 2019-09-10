@@ -12,7 +12,7 @@ namespace EV.Service.Services
     {
         public async Task<ResultServiceModel<CheckOtpViewModel>> CheckOtp(string email, string otp, string refNumber)
         {
-            string url = Constant.BaseUrl + "auth/CheckOtp";
+            string url = Helper.BaseUrl + "auth/CheckOtp";
             CheckOtpCommand otpCommand = new CheckOtpCommand
             {
                 Email = email,
@@ -27,7 +27,7 @@ namespace EV.Service.Services
         public async Task<ResultServiceModel<GetTokenByRefreshTokenViewModel>> GetTokenByRefreshToken(string email, string refreshToken)
         {
 
-            string url = Constant.BaseUrl + "auth/GetTokenByRefreshToken";
+            string url = Helper.BaseUrl + "auth/GetTokenByRefreshToken";
 
             GetTokenByRefreshTokenCommand tokenCommand = new GetTokenByRefreshTokenCommand
             {
@@ -43,7 +43,7 @@ namespace EV.Service.Services
 
         public async Task<ResultServiceModel<LoginUserAndPassViewModel>> LoginUserAndPass(string username, string password)
         {
-            string url = Constant.BaseUrl + "auth/Login";
+            string url = Helper.BaseUrl + "auth/Login";
 
             LoginUserAndPassCommand loginUser = new LoginUserAndPassCommand { Username = username, Password = password };
 
@@ -53,19 +53,19 @@ namespace EV.Service.Services
 
         public async Task<ResultServiceModel<DummyModel>> Logout(string email)
         {
-            string url = Constant.BaseUrl + "auth/Logout?email=" +email;
+            string url = Helper.BaseUrl + "auth/Logout?email=" +email;
             return await Get<DummyModel>(url);
         }
 
         public async Task<ResultServiceModel<RegisterViewModel>> Register(RegisterCommand register)
         {
-            string url = Constant.BaseUrl + "auth/Register";
+            string url = Helper.BaseUrl + "auth/Register";
             return await Post<RegisterViewModel>(url, register);
         }
 
         public async Task<ResultServiceModel<CheckEmailViewModel>> SignIn(string email)
         {
-            string url = Constant.BaseUrl + "auth/CheckEmail/" + email;
+            string url = Helper.BaseUrl + "auth/CheckEmail/" + email;
             return await Get<CheckEmailViewModel>(url);
         }
 
