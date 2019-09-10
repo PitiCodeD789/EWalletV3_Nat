@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Customer.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,8 @@ namespace EV.Customer
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
+            MainPage = new NavigationPage(new SavedProfile());
         }
 
         protected override void OnStart()
