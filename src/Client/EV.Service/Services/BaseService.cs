@@ -72,6 +72,36 @@ namespace EV.Service.Services
             return resultService;
         }
 
+        protected async Task<ResultServiceListModel<T>> GetList<T>(string url) where T : class
+        {
+            ResultServiceListModel<T> resultService = new ResultServiceListModel<T>();
+            try
+            {
+                HttpClient client = new HttpClient();
+
+                var result = await client.GetAsync(url);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var json_result = await result.Content.ReadAsStringAsync();
+
+                    List<T> obj = GetListModelFormResult<T>(json_result);
+
+                    resultService.IsError = false;
+
+                    resultService.Model = obj;
+
+                    return resultService;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                resultService.IsError = true;
+            }
+            return resultService;
+        }
+
         protected HttpContent GetHttpContent(object model)
         {
             string json = JsonConvert.SerializeObject(model);
@@ -82,6 +112,12 @@ namespace EV.Service.Services
         {
 
             return JsonConvert.DeserializeObject<T>(json_result);
+        }
+
+        protected List<T> GetListModelFormResult<T>(string json_result) where T : class
+        {
+
+            return JsonConvert.DeserializeObject<List<T>>(json_result);
         }
     }
 }
