@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EV.Admin.Views.TopupPage"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Margin="0,10,0,0">
+                <ImageButton Source="Back" 
+                                 BackgroundColor="Transparent" 
+                                 WidthRequest="30" 
+                                 HeightRequest="30" 
+                                 Margin="20,0" 
+                                 HorizontalOptions="Start"
+                                 Command="{Binding GobackCommand}"
+                                 ></ImageButton>
+                <Label Text="เติมเงิน" HorizontalOptions="CenterAndExpand" FontSize="20" TextColor="Black" FontAttributes="Bold"/>
+            </Grid>
+            <Image Source="qricon"  WidthRequest="200" HeightRequest="200" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="ใส่จำนวนเงิน" FontSize="25" TextColor="#7F7F7F"  HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
+            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal" >
+                <Entry Placeholder="0.00" FontSize="40" 
+                       Keyboard="Numeric" 
+                       HorizontalTextAlignment="End"/>
+                <Label Text="THB" Margin="0,20,0,0"/>
+            </StackLayout>
+            <Button VerticalOptions="EndAndExpand" Margin="10,20"
+                    Text="ตกลง"
+                    Command="{Binding NextPageCommand}"
+                    IsEnabled="{Binding ButtonEnable}"
+                    TextColor="White"
+                    CornerRadius="10"
+                    />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

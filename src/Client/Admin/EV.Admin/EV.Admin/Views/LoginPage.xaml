@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="EV.Merchant.Views.LoginPage"
+             x:Class="EV.Admin.Views.LoginPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundImageSource="Splash"
              >
@@ -56,5 +56,4 @@
             </ContentView>
         </Grid>
     </ContentPage.Content>
-
 </ContentPage>
