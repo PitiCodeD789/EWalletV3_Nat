@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EV.Customer.Views.RegisterPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" HeightRequest="60" VerticalOptions="Center" Padding="0">
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="icon_left_black" Grid.Column="0" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0"/>
+                    <Label Text="สร้างรหัสผ่าน" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
+            <ScrollView Grid.Row="1" Padding="10,10,10,20">
+                <StackLayout>
+                    <Label Text="ชื่อ"/>
+                    <Entry/>
+                    <Label Text="นามสกุล"/>
+                    <Entry/>
+                    <Label Text="เบอร์โทรศัพท์"/>
+                    <Entry/>
+                    <Label Text="วันเกิด"/>
+                    <Entry/>
+                    <Label Text="เพศ"/>
+                    <Entry/>
+                    <Label Text="อีเมลล์"/>
+                    <Entry/>
+                    <Button BackgroundColor="#EAA200" Text="ถัดไป" FontAttributes="Bold" TextColor="White"/>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
