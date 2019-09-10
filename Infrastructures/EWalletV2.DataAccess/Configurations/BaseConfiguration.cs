@@ -7,23 +7,19 @@ using System.Text;
 
 namespace EWalletV2.DataAccess.Configurations
 {
-    public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : class
+    public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEntity
     {
-        public void Configure(EntityTypeBuilder<BaseEntity> e)
+        public virtual void Configure(EntityTypeBuilder<T> e)
         {
             e.HasKey(p => p.Id);
 
             e.Property(p => p.CreateDateTime)
                 .ValueGeneratedOnAddOrUpdate()
-                .HasDefaultValueSql("GetDate()");
+                .HasDefaultValueSql("GetUtcDate()");
 
             e.Property(p => p.UpdateDateTime)
                 .ValueGeneratedOnAddOrUpdate()
-                .HasDefaultValueSql("GetDate()");
-        }
-
-        public virtual void Configure(EntityTypeBuilder<T> builder)
-        {
+                .HasDefaultValueSql("GetUtcDate()");
         }
     }
 }

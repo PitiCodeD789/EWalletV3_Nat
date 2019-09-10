@@ -11,6 +11,8 @@ namespace EWalletV2.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<TransactionEntity> e)
         {
+            base.Configure(e);
+
             e.ToTable("Transactions");
 
             e.Property(p => p.CustomerId)
@@ -21,6 +23,14 @@ namespace EWalletV2.DataAccess.Configurations
 
             e.Property(p => p.Amount)
                 .HasColumnName("Amount");
+
+            e.HasOne(x => x.UserEntity)
+                .WithMany(x => x.TransactionEntities)
+                .HasForeignKey(x => x.CustomerId);
+
+            e.HasOne(x => x.UserEntity)
+                .WithMany(x => x.TransactionEntities)
+                .HasForeignKey(x => x.OtherId);
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace EWalletV2.DataAccess.Repositories
 {
@@ -27,7 +28,7 @@ namespace EWalletV2.DataAccess.Repositories
             return true;
         }
 
-        public bool CreateNewTopUp(string referenceNumber, int adminId, decimal amount)
+        public bool CreateNewTopUp(string referenceNumber, int otherId, decimal amount)
         {
             try
             {
@@ -36,7 +37,7 @@ namespace EWalletV2.DataAccess.Repositories
                     TransactionReference = referenceNumber,
                     TransactionType = EW_Enumerations.EW_TypeTransectionEnum.TopUp,
                     CustomerId = 0,
-                    OtherId = adminId,
+                    OtherId = otherId,
                     Status = false,
                     Amount = amount
                 };
@@ -44,7 +45,7 @@ namespace EWalletV2.DataAccess.Repositories
                 _context.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
@@ -68,7 +69,7 @@ namespace EWalletV2.DataAccess.Repositories
             }
         }
 
-        public bool CreateNewPayment(int customerId, int merchantId, decimal amount, string referenceNumber)
+        public bool CreateNewPayment(int otherId, int customerId, decimal amount, string referenceNumber)
         {
             try
             {
@@ -77,7 +78,7 @@ namespace EWalletV2.DataAccess.Repositories
                     TransactionReference = referenceNumber,
                     TransactionType = EW_Enumerations.EW_TypeTransectionEnum.Payment,
                     CustomerId = customerId,
-                    OtherId = merchantId,
+                    OtherId = otherId,
                     Status = true,
                     Amount = amount
                 };
@@ -91,9 +92,14 @@ namespace EWalletV2.DataAccess.Repositories
             }
         }
 
-        public List<TransactionEntity> GetTransactionByEmail(int customerId)
+        public List<TransactionEntity> Get30TransactionByCustomerId(int customerId)
         {
-            return _context.Transactions.Where(x => x.CustomerId == customerId).ToList();
+
+            var transactions = _context.Transactions
+                .Where(x => x.CustomerId == customerId || x.OtherId == customerId)
+                .ToList();
+
+            return transactions;
         }
 
         public TransactionEntity GetTransactionByReferenceNumber(string referenceNumber)
@@ -101,7 +107,7 @@ namespace EWalletV2.DataAccess.Repositories
             return _context.Transactions.FirstOrDefault(x => x.TransactionReference == referenceNumber);
         }
 
-        public TransactionEntity GetTransactionById(int transactionId)
+        public TransactionEntity GetTransactionByTransactionId(int transactionId)
         {
             return _context.Transactions.FirstOrDefault(x => x.Id == transactionId);
         }

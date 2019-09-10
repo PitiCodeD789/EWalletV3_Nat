@@ -6,5 +6,6 @@ namespace EWalletV2.Domain.DtoModels.Transaction
 {
     public class TopupDto
     {
+        public bool IsSuccess { get; set; }
     }
 }

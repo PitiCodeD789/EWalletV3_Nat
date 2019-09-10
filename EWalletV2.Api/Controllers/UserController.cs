@@ -26,7 +26,7 @@ namespace EWalletV2.Api.Controllers
             _mapper = mapper;
         }
         //GetUser
-        [HttpGet("GetUser")]
+        [HttpGet("GetUser/{email}")]
         public IActionResult GetUser([EmailAddress]string email)
         {
             AccountViewModel accountViewModel = _userService.GetAccountDetailByEmail(email);

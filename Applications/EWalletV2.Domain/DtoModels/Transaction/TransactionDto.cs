@@ -4,7 +4,8 @@ using System.Text;
 
 namespace EWalletV2.Domain.DtoModels.Transaction
 {
-    public class TransactionDto
+    public class TransactionDto : BaseTransaction
     {
+        public string AccountNo { get; set; }
     }
 }

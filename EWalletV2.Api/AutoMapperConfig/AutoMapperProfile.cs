@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EWalletV2.Domain.Entities;
 
 namespace EWalletV2.Api.AutoMapperConfig
 {
@@ -23,6 +24,9 @@ namespace EWalletV2.Api.AutoMapperConfig
             CreateMap<UpdateUserCommand, UpdateUserDtoCommand>();
             CreateMap<TransactionDto, TransactionViewModel>();
             CreateMap<TransactionDetailDto,TransactionDetailViewModel>();
+            CreateMap<RegisterCommand, RegisterDtoCommand>();
+            CreateMap<RegisterDtoCommand, UserEntity>();
+            CreateMap<TopupDto, TopupViewModel>();
 
         }
     }

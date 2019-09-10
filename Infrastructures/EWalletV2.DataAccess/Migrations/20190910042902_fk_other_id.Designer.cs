@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EWalletV2.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190909085605_CompletedConfigurations")]
-    partial class CompletedConfigurations
+    [Migration("20190910042902_fk_other_id")]
+    partial class fk_other_id
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,9 @@ namespace EWalletV2.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreateDateTime");
+                    b.Property<DateTime>("CreateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
                     b.Property<string>("Email")
                         .HasColumnName("email")
@@ -41,7 +43,9 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasColumnName("reference")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime>("UpdateDateTime");
+                    b.Property<DateTime>("UpdateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
                     b.HasKey("Id");
 
@@ -54,7 +58,9 @@ namespace EWalletV2.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreateDateTime");
+                    b.Property<DateTime>("CreateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
                     b.Property<string>("Email")
                         .HasColumnName("email")
@@ -64,7 +70,9 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasColumnName("refresh_token")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime>("UpdateDateTime");
+                    b.Property<DateTime>("UpdateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
                     b.HasKey("Id");
 
@@ -80,19 +88,29 @@ namespace EWalletV2.DataAccess.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnName("Amount");
 
-                    b.Property<DateTime>("CreateDateTime");
+                    b.Property<DateTime>("CreateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<int>("PayerId")
-                        .HasColumnName("payer_id");
+                    b.Property<int>("CustomerId")
+                        .HasColumnName("customer_id");
 
-                    b.Property<int>("ReceiveId")
-                        .HasColumnName("receiver_id");
+                    b.Property<int>("OtherId")
+                        .HasColumnName("other_id");
 
-                    b.Property<string>("TransactionType");
+                    b.Property<bool>("Status");
 
-                    b.Property<DateTime>("UpdateDateTime");
+                    b.Property<string>("TransactionReference");
+
+                    b.Property<int>("TransactionType");
+
+                    b.Property<DateTime>("UpdateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OtherId");
 
                     b.ToTable("Transactions");
                 });
@@ -116,7 +134,9 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-                    b.Property<DateTime>("CreateDateTime");
+                    b.Property<DateTime>("CreateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
                     b.Property<string>("Email")
                         .HasColumnName("email")
@@ -145,11 +165,21 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasColumnName("salt")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime>("UpdateDateTime");
+                    b.Property<DateTime>("UpdateDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetUtcDate()");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("EWalletV2.Domain.Entities.TransactionEntity", b =>
+                {
+                    b.HasOne("EWalletV2.Domain.Entities.UserEntity", "UserEntity")
+                        .WithMany("TransactionEntities")
+                        .HasForeignKey("OtherId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

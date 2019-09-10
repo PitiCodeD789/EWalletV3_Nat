@@ -4,14 +4,16 @@ using EWalletV2.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EWalletV2.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190910030318_new_db")]
+    partial class new_db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,8 +110,6 @@ namespace EWalletV2.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OtherId");
-
                     b.ToTable("Transactions");
                 });
 
@@ -170,14 +170,6 @@ namespace EWalletV2.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("EWalletV2.Domain.Entities.TransactionEntity", b =>
-                {
-                    b.HasOne("EWalletV2.Domain.Entities.UserEntity", "UserEntity")
-                        .WithMany("TransactionEntities")
-                        .HasForeignKey("OtherId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

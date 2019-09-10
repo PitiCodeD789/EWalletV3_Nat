@@ -53,6 +53,7 @@ namespace EWalletV2.Api
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IOtpRepository, OtpRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<DataContext>(); 
             services.AddAutoMapper(typeof(AutoMapperConfig.AutoMapperProfile));
@@ -74,6 +75,8 @@ namespace EWalletV2.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
 
             //app.UseHttpsRedirection();
             app.UseMvc();

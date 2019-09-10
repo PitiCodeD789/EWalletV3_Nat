@@ -1,4 +1,5 @@
-﻿using EWalletV2.DataAccess.Contexts;
+﻿using EWalletV2.Api.ViewModels;
+using EWalletV2.DataAccess.Contexts;
 using EWalletV2.Domain.Entities;
 using EWalletV2.Domain.Repositories;
 using System;
@@ -22,6 +23,7 @@ namespace EWalletV2.DataAccess.Repositories
             try
             {
                 _context.Add(userData);
+                _context.SaveChanges();
 
                 UserEntity user = _context.Users.FirstOrDefault(x => x.Email == userData.Email);
                 string account = GenerateUserAccount(user.Id);
@@ -41,7 +43,8 @@ namespace EWalletV2.DataAccess.Repositories
 
         private string GenerateUserAccount(int id)
         {
-            return "01" + id.ToString("D8");
+            int account_type = (int)EW_Enumerations.EW_UserTypeEnum.Customer;
+            return account_type > 9 ? "" : "0" + account_type + id.ToString("D8");
         }
 
         public bool ChangeBalance(string email, decimal amount)
@@ -49,13 +52,12 @@ namespace EWalletV2.DataAccess.Repositories
             try
             {
                 UserEntity user = _context.Users.FirstOrDefault(x => x.Email == email);
-                user.Balance = amount;
+                user.Balance += amount;
                 _context.SaveChanges();
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
             
