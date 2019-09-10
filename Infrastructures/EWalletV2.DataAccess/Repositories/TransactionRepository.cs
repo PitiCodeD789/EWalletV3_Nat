@@ -44,7 +44,7 @@ namespace EWalletV2.DataAccess.Repositories
                 _context.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }

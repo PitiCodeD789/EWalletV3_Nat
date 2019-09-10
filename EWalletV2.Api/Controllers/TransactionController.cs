@@ -10,6 +10,7 @@ using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using EWalletV2.Api.ViewModels;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -126,19 +127,29 @@ namespace EWalletV2.Api.Controllers
         //GenerateTopup
      
         [HttpPost("GenerateTopup")]
-        public IActionResult GenerateTopup(TopupCommand command)
+        public IActionResult GenerateTopup(GenerateTopupCommand command)
         {
-            bool isExist = _userService.ExistingEmail(command.Email);
-            if (!isExist)
+            if (int.Parse(command.Account.Substring(0, 2)) != (int)EW_Enumerations.EW_UserTypeEnum.Admin)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            string referenceNumber = _transactionService.GenerateTopUp(command.Email, command.Amount);
-            if (referenceNumber == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
+            bool isExist = _userService.ExistAccountNo(command.Account);
+            if (!isExist)
+            {
+                return BadRequest();
+            }
 
-            return Ok(new { referenceNumber });
+            string referenceNumber = _transactionService.GenerateTopUp(command.Account, command.Amount);
+            if (referenceNumber == null)
+                return BadRequest();
+
+            GenerateTopupViewModel viewModel = new GenerateTopupViewModel()
+            {
+                ReferenceNumber = referenceNumber
+            };
+
+            return Ok(viewModel);
         }
 
     }

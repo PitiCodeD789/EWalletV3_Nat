@@ -19,10 +19,11 @@ namespace EWalletV2.Domain.Services
             _transactionRepository = transactionRepository;
         }
 
-        public string GenerateTopUp(string email, string amount)
+        public string GenerateTopUp(string account, decimal amount)
         {
             string referenceNumber = GenerateReferenceNumber(18);
             bool isReference = _transactionRepository.CheckReference(referenceNumber);
+            // ??
             while (isReference)
             {
                 referenceNumber = GenerateReferenceNumber(18);
@@ -32,15 +33,16 @@ namespace EWalletV2.Domain.Services
                     break;
                 }
             }
-            UserEntity userEntity = _userRepository.GetUserByEmail(email);
-            decimal deAmount = Decimal.Parse(amount);
-            int otherId = userEntity.Id;
-            bool isCreateTopUP = _transactionRepository.CreateNewTopUp(referenceNumber, otherId, deAmount);
-            if (!isCreateTopUP)
+            UserEntity userEntity = _userRepository.GetUserByAccountNumber(account);
+            if (userEntity == null)
             {
                 return null;
             }
-            return referenceNumber;
+
+            int otherId = userEntity.Id;
+            bool isCreateTopUP = _transactionRepository.CreateNewTopUp(referenceNumber, otherId, amount);
+
+            return isCreateTopUP ? referenceNumber : null;
         }
 
         private string GenerateReferenceNumber(int length)
