@@ -101,6 +101,12 @@ namespace EWalletV2.Domain.Services
             {
                 return null;
             }
+            amount = transactionEntity.Amount * (-1M);
+            bool isChangeBalance = _userRepository.ChangeBalance(email, amount);
+            if (!isChangeBalance)
+            {
+                return null;
+            }
             return new PaymentDto()
             {
                 Reference = transactionEntity.TransactionReference,
@@ -126,9 +132,9 @@ namespace EWalletV2.Domain.Services
             {
                 return new TopupDto()
                 {
-                    IsTopupExist = false,
-                    IsSuccess = true,
-                    IsExpired = false
+                    IsTopupExist = true,
+                    IsSuccess = false,
+                    IsExpired = true
                 };
             }
             else
@@ -138,16 +144,27 @@ namespace EWalletV2.Domain.Services
                 {
                     return new TopupDto()
                     {
-                        IsTopupExist = false,
+                        IsTopupExist = true,
                         IsSuccess = false,
-                        IsExpired = true
+                        IsExpired = false
+                    };
+                }
+                decimal amount = transactionEntity.Amount;
+                bool isChangeBalance = _userRepository.ChangeBalance(email, amount);
+                if (!isChangeBalance)
+                {
+                    return new TopupDto()
+                    {
+                        IsTopupExist = true,
+                        IsSuccess = false,
+                        IsExpired = false
                     };
                 }
                 return new TopupDto()
                 {
                     IsTopupExist = true,
                     IsSuccess = true,
-                    IsExpired = true
+                    IsExpired = false
                 };
             }
             
