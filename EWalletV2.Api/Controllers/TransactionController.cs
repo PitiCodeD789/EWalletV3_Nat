@@ -10,7 +10,6 @@ using EWalletV2.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using EWalletV2.Api.ViewModels;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -32,20 +31,18 @@ namespace EWalletV2.Api.Controllers
         [HttpGet("GetListTransaction/{email}")]
         public IActionResult GetTransaction30Days(string email)
         {
-            List<TransactionDetailDto> transactionDetailDtos;
+            List<TransactionDto> transactionDetailDtos;
             bool isExist = _userService.ExistingEmail(email);
             if (isExist)
             {
-                List<TransactionDetailViewModel> transactionList = new List<TransactionDetailViewModel>();
                 transactionDetailDtos = _transactionService.GetTransaction30Days(email);
-
-                transactionList = _mapper.Map<List<TransactionDetailViewModel>>(transactionDetailDtos);
+                List<TransactionViewModel>  transactionList = _mapper.Map<List<TransactionViewModel>>(transactionDetailDtos);
 
                 return Ok(transactionList);
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
         //Payment
@@ -107,23 +104,19 @@ namespace EWalletV2.Api.Controllers
         }
 
         //GetDetailTransaction
-        [HttpPost("DetailTransaction")]
-        public IActionResult DetailTransaction([FromBody]TransactionCommand command)
-        {
-            bool isExist = _userService.ExistingEmail(command.Email);
-            if (isExist)
-            {
-                TransactionDto transactionDto = _transactionService.GetDetailTransaction(command.Email, command.TransactionId);
+        //[HttpPost("DetailTransaction")]
+        //public IActionResult DetailTransaction([FromBody]TransactionCommand command)
+        //{
+        //    bool isExist = _userService.ExistingEmail(command.Email);
+        //    if (!isExist)
+        //        return BadRequest();
 
-                TransactionViewModel model = _mapper.Map<TransactionViewModel>(transactionDto);
+        //    TransactionDto transactionDto = _transactionService.GetDetailTransaction(command.Email, command.TransactionId);
+        //    TransactionViewModel model = _mapper.Map<TransactionViewModel>(transactionDto);
 
-                return Ok(model);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
+        //    return Ok(model);
+
+        //}
         //GenerateTopup
      
         [HttpPost("GenerateTopup")]

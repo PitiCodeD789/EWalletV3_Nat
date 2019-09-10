@@ -90,10 +90,10 @@ namespace EWalletV2.DataAccess.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnName("customer_id");
 
-                    b.Property<int>("OtherId")
+                    b.Property<int?>("OtherId")
                         .HasColumnName("other_id");
 
                     b.Property<bool>("Status");
@@ -107,6 +107,8 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasDefaultValueSql("GetUtcDate()");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("OtherId");
 
@@ -174,10 +176,16 @@ namespace EWalletV2.DataAccess.Migrations
 
             modelBuilder.Entity("EWalletV2.Domain.Entities.TransactionEntity", b =>
                 {
-                    b.HasOne("EWalletV2.Domain.Entities.UserEntity", "UserEntity")
-                        .WithMany("TransactionEntities")
+                    b.HasOne("EWalletV2.Domain.Entities.UserEntity", "UserCustomerEntity")
+                        .WithMany("TransactionCustomerEntities")
+                        .HasForeignKey("CustomerId")
+                        .HasConstraintName("FK_UserCustomerEntity")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("EWalletV2.Domain.Entities.UserEntity", "UserOtherEntity")
+                        .WithMany("TransactionOtherEntities")
                         .HasForeignKey("OtherId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK_UserOtherEntity");
                 });
 #pragma warning restore 612, 618
         }

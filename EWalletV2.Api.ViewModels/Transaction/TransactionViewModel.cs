@@ -4,8 +4,14 @@ using System.Text;
 
 namespace EWalletV2.Api.ViewModels.Transaction
 {
-    public class TransactionViewModel : BaseTransaction
+   public class TransactionViewModel
     {
-        public string AccountNo { get; set; }
+        public int TransactionId { get; set; }
+        public string Account { get; set; }
+        public string TransactionType { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public decimal Balance { get; set; }
+        public DateTime CreateDateTime { get; set; }
     }
 }

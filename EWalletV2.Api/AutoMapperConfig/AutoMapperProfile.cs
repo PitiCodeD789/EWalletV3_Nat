@@ -23,7 +23,6 @@ namespace EWalletV2.Api.AutoMapperConfig
             CreateMap<LoginUserAndPassDto, LoginUserAndPassViewModel>();
             CreateMap<UpdateUserCommand, UpdateUserDtoCommand>();
             CreateMap<TransactionDto, TransactionViewModel>();
-            CreateMap<TransactionDetailDto,TransactionDetailViewModel>();
             CreateMap<RegisterCommand, RegisterDtoCommand>();
             CreateMap<RegisterDtoCommand, UserEntity>();
             CreateMap<TopupDto, TopupViewModel>();
