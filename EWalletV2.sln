@@ -33,19 +33,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Admin.Android", "src\Cli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Admin.iOS", "src\Client\Admin\EV.Admin\EV.Admin.iOS\EV.Admin.iOS.csproj", "{09B62820-6865-4552-A9BB-126C3F4187FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Admin", "src\Client\Admin\EV.Admin\EV.Admin\EV.Admin.csproj", "{D8CCA6E7-890E-4659-BBA5-19DC11CEE999}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EV.Admin", "src\Client\Admin\EV.Admin\EV.Admin\EV.Admin.csproj", "{D8CCA6E7-890E-4659-BBA5-19DC11CEE999}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Customer.Android", "src\Client\Customer\EV.Customer\EV.Customer.Android\EV.Customer.Android.csproj", "{1BFDD33F-C389-441D-9C6E-97B46BD4CB28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Customer.iOS", "src\Client\Customer\EV.Customer\EV.Customer.iOS\EV.Customer.iOS.csproj", "{A3365737-321F-456C-AF6D-0E6D90E786C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Customer", "src\Client\Customer\EV.Customer\EV.Customer\EV.Customer.csproj", "{0BE9B0E4-BAA7-434F-8A26-E03A037F1A56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EV.Customer", "src\Client\Customer\EV.Customer\EV.Customer\EV.Customer.csproj", "{0BE9B0E4-BAA7-434F-8A26-E03A037F1A56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Merchant.Android", "src\Client\Merchant\EV.Merchant\EV.Merchant.Android\EV.Merchant.Android.csproj", "{75890B82-B958-48AA-8E25-D00FF7C97D87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Merchant.iOS", "src\Client\Merchant\EV.Merchant\EV.Merchant.iOS\EV.Merchant.iOS.csproj", "{F780607B-82D4-44C0-862F-D11E4296617D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Merchant", "src\Client\Merchant\EV.Merchant\EV.Merchant\EV.Merchant.csproj", "{4D7A2D82-62E4-4B91-BF6C-41FF0004B318}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EV.Merchant", "src\Client\Merchant\EV.Merchant\EV.Merchant\EV.Merchant.csproj", "{4D7A2D82-62E4-4B91-BF6C-41FF0004B318}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Service", "src\Client\EV.Service\EV.Service.csproj", "{5E02C013-AA37-46C4-85A5-B4AB44E20477}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -225,6 +227,18 @@ Global
 		{4D7A2D82-62E4-4B91-BF6C-41FF0004B318}.Release|iPhone.Build.0 = Release|Any CPU
 		{4D7A2D82-62E4-4B91-BF6C-41FF0004B318}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{4D7A2D82-62E4-4B91-BF6C-41FF0004B318}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Release|iPhone.Build.0 = Release|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,6 +264,7 @@ Global
 		{75890B82-B958-48AA-8E25-D00FF7C97D87} = {F336EB38-FE0A-4D12-ABBC-04554357EE52}
 		{F780607B-82D4-44C0-862F-D11E4296617D} = {F336EB38-FE0A-4D12-ABBC-04554357EE52}
 		{4D7A2D82-62E4-4B91-BF6C-41FF0004B318} = {F336EB38-FE0A-4D12-ABBC-04554357EE52}
+		{5E02C013-AA37-46C4-85A5-B4AB44E20477} = {1E3A8D85-44FF-4A9D-8AC6-4C01CE7E5287}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5895E037-0345-4465-8DDC-C1FC39D140E0}
