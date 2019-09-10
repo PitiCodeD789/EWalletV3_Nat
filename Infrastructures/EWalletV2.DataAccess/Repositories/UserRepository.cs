@@ -52,13 +52,12 @@ namespace EWalletV2.DataAccess.Repositories
             try
             {
                 UserEntity user = _context.Users.FirstOrDefault(x => x.Email == email);
-                user.Balance = amount;
+                user.Balance += amount;
                 _context.SaveChanges();
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
             

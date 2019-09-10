@@ -94,14 +94,14 @@ namespace EWalletV2.Api.Controllers
             bool isExist = _userService.ExistingEmail(command.Email);
             if (!isExist)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new { Message = "User Not Found" });
+                return BadRequest();
             }
 
             TopupDto topupDto = _transactionService.Topup(command.Email, command.ReferenceNumber);
-            TopupModel topupModel = _mapper.Map<TopupModel>(topupDto);
+            TopupViewModel topupModel = _mapper.Map<TopupViewModel>(topupDto);
 
-            if (!topupModel.IsSuccess)
-                return StatusCode(StatusCodes.Status400BadRequest, topupModel);
+            if (topupModel == null || !topupModel.IsSuccess)
+                return BadRequest();
 
             return Ok(topupModel);
         }

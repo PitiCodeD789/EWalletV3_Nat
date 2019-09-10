@@ -121,58 +121,35 @@ namespace EWalletV2.Domain.Services
 
         public TopupDto Topup(string email, string referenceNumber)
         {
-            UserEntity userEntity = _userRepository.GetUserByEmail(email);
+            var userEntity = _userRepository.GetUserByEmail(email);
+            if (userEntity == null)
+            {
+                return null;
+            }
+
             int customerId = userEntity.Id;
-            TransactionEntity transactionEntity = _transactionRepository.GetTransactionByReferenceNumber(referenceNumber);
-            if(transactionEntity == null)
+            var transactionEntity = _transactionRepository.GetTransactionByReferenceNumber(referenceNumber);
+
+            var expiredTime = transactionEntity?.CreateDateTime.AddMinutes(15);
+
+            if (transactionEntity == null || transactionEntity.Status || expiredTime < DateTime.UtcNow)
+                return null;
+
+            //??
+            bool isTopUp = _transactionRepository.CustomerTopup(customerId, referenceNumber);
+            if (!isTopUp)
+                return null;
+
+            bool isChangeBalance = _userRepository.ChangeBalance(email, transactionEntity.Amount);
+            if (!isChangeBalance)
+                return null;
+
+            var dto = new TopupDto()
             {
-                return new TopupDto()
-                {
-                    IsTopupExist = false,
-                    IsSuccess = false,
-                    IsExpired = false
-                };
-            }
-            else if (transactionEntity.CreateDateTime.AddMinutes(15) < DateTime.UtcNow)
-            {
-                return new TopupDto()
-                {
-                    IsTopupExist = true,
-                    IsSuccess = false,
-                    IsExpired = true
-                };
-            }
-            else
-            {
-                bool isTopUp = _transactionRepository.CustomerTopup(customerId, referenceNumber);
-                if (!isTopUp)
-                {
-                    return new TopupDto()
-                    {
-                        IsTopupExist = true,
-                        IsSuccess = false,
-                        IsExpired = false
-                    };
-                }
-                decimal amount = transactionEntity.Amount;
-                bool isChangeBalance = _userRepository.ChangeBalance(email, amount);
-                if (!isChangeBalance)
-                {
-                    return new TopupDto()
-                    {
-                        IsTopupExist = true,
-                        IsSuccess = false,
-                        IsExpired = false
-                    };
-                }
-                return new TopupDto()
-                {
-                    IsTopupExist = true,
-                    IsSuccess = true,
-                    IsExpired = false
-                };
-            }
-            
+                IsSuccess = true
+            };
+
+            return dto;
         }
 
         public TransactionDto GetDetailTransaction(string email, int transactionId)
