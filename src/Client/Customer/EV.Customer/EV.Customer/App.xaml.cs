@@ -11,7 +11,7 @@ namespace EV.Customer
         {
             InitializeComponent();
 
-            MainPage = new RegisterPage();
+            MainPage = new TransactionsPage();
         }
 
         protected override void OnStart()

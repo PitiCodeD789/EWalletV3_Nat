@@ -6439,13 +6439,46 @@ namespace EV.Customer.Droid
 			public const int notification_action_background = 2131165496;
 			
 			// aapt resource value: 0x7F070139
-			public const int Splash = 2131165497;
+			public const int notification_bg = 2131165497;
 			
 			// aapt resource value: 0x7F07013A
-			public const int tooltip_frame_dark = 2131165498;
+			public const int notification_bg_low = 2131165498;
 			
 			// aapt resource value: 0x7F07013B
-			public const int tooltip_frame_light = 2131165499;
+			public const int notification_bg_low_normal = 2131165499;
+			
+			// aapt resource value: 0x7F07013C
+			public const int notification_bg_low_pressed = 2131165500;
+			
+			// aapt resource value: 0x7F07013D
+			public const int notification_bg_normal = 2131165501;
+			
+			// aapt resource value: 0x7F07013E
+			public const int notification_bg_normal_pressed = 2131165502;
+			
+			// aapt resource value: 0x7F07013F
+			public const int notification_icon_background = 2131165503;
+			
+			// aapt resource value: 0x7F070140
+			public const int notification_template_icon_bg = 2131165504;
+			
+			// aapt resource value: 0x7F070141
+			public const int notification_template_icon_low_bg = 2131165505;
+			
+			// aapt resource value: 0x7F070142
+			public const int notification_tile_bg = 2131165506;
+			
+			// aapt resource value: 0x7F070143
+			public const int notify_panel_notification_icon_bg = 2131165507;
+			
+			// aapt resource value: 0x7F070144
+			public const int Splash = 2131165508;
+			
+			// aapt resource value: 0x7F070145
+			public const int tooltip_frame_dark = 2131165509;
+			
+			// aapt resource value: 0x7F070146
+			public const int tooltip_frame_light = 2131165510;
 			
 			static Drawable()
 			{
