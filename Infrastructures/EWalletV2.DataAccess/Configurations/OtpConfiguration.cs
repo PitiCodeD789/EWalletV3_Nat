@@ -11,6 +11,8 @@ namespace EWalletV2.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<OtpEntity> e)
         {
+            base.Configure(e);
+
             e.ToTable("Otps");
 
             e.Property(p => p.Otp)

@@ -11,6 +11,8 @@ namespace EWalletV2.DataAccess.Configurations
     {
         public override void Configure(EntityTypeBuilder<TransactionEntity> e)
         {
+            base.Configure(e);
+
             e.ToTable("Transactions");
 
             e.Property(p => p.CustomerId)
