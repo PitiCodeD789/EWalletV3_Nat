@@ -5792,6 +5792,7 @@ namespace EV.Admin.Droid
 			public const int design_snackbar_background = 2131165275;
 			
 			// aapt resource value: 0x7F07005C
+			public const int design_bottom_navigation_item_background = 2131165276;
 			public const int ic_audiotrack_dark = 2131165276;
 			
 			static Drawable()
@@ -6645,6 +6646,28 @@ namespace EV.Admin.Droid
 			public const int tooltip_frame_dark = 2131165491;
 			
 			// aapt resource value: 0x7F070134
+			public const int notification_icon_background = 2131165492;
+			
+			// aapt resource value: 0x7F070135
+			public const int notification_template_icon_bg = 2131165493;
+			
+			// aapt resource value: 0x7F070136
+			public const int notification_template_icon_low_bg = 2131165494;
+			
+			// aapt resource value: 0x7F070137
+			public const int notification_tile_bg = 2131165495;
+			
+			// aapt resource value: 0x7F070138
+			public const int notify_panel_notification_icon_bg = 2131165496;
+			
+			// aapt resource value: 0x7F070139
+			public const int Splash = 2131165497;
+			
+			// aapt resource value: 0x7F07013A
+			public const int tooltip_frame_dark = 2131165498;
+			
+			// aapt resource value: 0x7F07013B
+			public const int tooltip_frame_light = 2131165499;
 			public const int tooltip_frame_light = 2131165492;
 			
 			static Drawable()
@@ -9030,6 +9053,69 @@ namespace EV.Admin.Droid
 			// aapt resource value: 0x7F0E013D
 			public const int TextAppearance_Widget_AppCompat_Toolbar_Title = 2131624253;
 			
+			// aapt resource value: 0x7F0E0173
+			public const int ThemeOverlay_AppCompat = 2131624307;
+			
+			// aapt resource value: 0x7F0E0174
+			public const int ThemeOverlay_AppCompat_ActionBar = 2131624308;
+			
+			// aapt resource value: 0x7F0E0175
+			public const int ThemeOverlay_AppCompat_Dark = 2131624309;
+			
+			// aapt resource value: 0x7F0E0176
+			public const int ThemeOverlay_AppCompat_Dark_ActionBar = 2131624310;
+			
+			// aapt resource value: 0x7F0E0177
+			public const int ThemeOverlay_AppCompat_Dialog = 2131624311;
+			
+			// aapt resource value: 0x7F0E0178
+			public const int ThemeOverlay_AppCompat_Dialog_Alert = 2131624312;
+			
+			// aapt resource value: 0x7F0E0179
+			public const int ThemeOverlay_AppCompat_Light = 2131624313;
+			
+			// aapt resource value: 0x7F0E017A
+			public const int ThemeOverlay_MaterialComponents = 2131624314;
+			
+			// aapt resource value: 0x7F0E017B
+			public const int ThemeOverlay_MaterialComponents_ActionBar = 2131624315;
+			
+			// aapt resource value: 0x7F0E017C
+			public const int ThemeOverlay_MaterialComponents_Dark = 2131624316;
+			
+			// aapt resource value: 0x7F0E017D
+			public const int ThemeOverlay_MaterialComponents_Dark_ActionBar = 2131624317;
+			
+			// aapt resource value: 0x7F0E017E
+			public const int ThemeOverlay_MaterialComponents_Dialog = 2131624318;
+			
+			// aapt resource value: 0x7F0E017F
+			public const int ThemeOverlay_MaterialComponents_Dialog_Alert = 2131624319;
+			
+			// aapt resource value: 0x7F0E0180
+			public const int ThemeOverlay_MaterialComponents_Light = 2131624320;
+			
+			// aapt resource value: 0x7F0E0181
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText = 2131624321;
+			
+			// aapt resource value: 0x7F0E0182
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox = 2131624322;
+			
+			// aapt resource value: 0x7F0E0183
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox_Dense = 2131624323;
+			
+			// aapt resource value: 0x7F0E0184
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox = 2131624324;
+			
+			// aapt resource value: 0x7F0E0185
+			public const int ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense = 2131624325;
+			
+			// aapt resource value: 0x7F0E0186
+			public const int ThemeOverlay_MediaRouter_Dark = 2131624326;
+			
+			// aapt resource value: 0x7F0E0187
+			public const int ThemeOverlay_MediaRouter_Light = 2131624327;
+			
 			// aapt resource value: 0x7F0E013E
 			public const int ThemeOverlay_AppCompat = 2131624254;
 			
@@ -9187,6 +9273,7 @@ namespace EV.Admin.Droid
 			public const int Theme_MaterialComponents_CompactMenu = 2131624305;
 			
 			// aapt resource value: 0x7F0E0172
+			public const int Theme_Splash = 2131624306;
 			public const int Theme_MaterialComponents_Dialog = 2131624306;
 			
 			// aapt resource value: 0x7F0E0173
@@ -9283,6 +9370,19 @@ namespace EV.Admin.Droid
 			public const int Widget_AppCompat_AutoCompleteTextView = 2131624337;
 			
 			// aapt resource value: 0x7F0E0192
+			public const int Widget_AppCompat_AutoCompleteTextView = 2131624338;
+			
+			// aapt resource value: 0x7F0E0193
+			public const int Widget_AppCompat_Button = 2131624339;
+			
+			// aapt resource value: 0x7F0E0199
+			public const int Widget_AppCompat_ButtonBar = 2131624345;
+			
+			// aapt resource value: 0x7F0E019A
+			public const int Widget_AppCompat_ButtonBar_AlertDialog = 2131624346;
+			
+			// aapt resource value: 0x7F0E0194
+			public const int Widget_AppCompat_Button_Borderless = 2131624340;
 			public const int Widget_AppCompat_Button = 2131624338;
 			
 			// aapt resource value: 0x7F0E0198
@@ -9301,6 +9401,7 @@ namespace EV.Admin.Droid
 			public const int Widget_AppCompat_Button_Borderless_Colored = 2131624343;
 			
 			// aapt resource value: 0x7F0E0198
+			public const int Widget_AppCompat_Button_Small = 2131624344;
 			public const int Widget_AppCompat_Button_ButtonBar_AlertDialog = 2131624344;
 			
 			// aapt resource value: 0x7F0E0199
@@ -9549,6 +9650,14 @@ namespace EV.Admin.Droid
 			// aapt resource value: 0x7F0E01EA
 			public const int Widget_MaterialComponents_CardView = 2131624426;
 			
+			// aapt resource value: 0x7F0E01EB
+			public const int Widget_MaterialComponents_CardView = 2131624427;
+			
+			// aapt resource value: 0x7F0E01F0
+			public const int Widget_MaterialComponents_ChipGroup = 2131624432;
+			
+			// aapt resource value: 0x7F0E01EC
+			public const int Widget_MaterialComponents_Chip_Action = 2131624428;
 			// aapt resource value: 0x7F0E01EF
 			public const int Widget_MaterialComponents_ChipGroup = 2131624431;
 			
@@ -9562,6 +9671,7 @@ namespace EV.Admin.Droid
 			public const int Widget_MaterialComponents_Chip_Choice = 2131624430;
 			
 			// aapt resource value: 0x7F0E01EF
+			public const int Widget_MaterialComponents_Chip_Filter = 2131624431;
 			public const int Widget_MaterialComponents_Chip_Entry = 2131624431;
 			
 			// aapt resource value: 0x7F0E01F0
@@ -10848,6 +10958,31 @@ namespace EV.Admin.Droid
 			public const int Chip_closeIconStartPadding = 24;
 			
 			// aapt resource value: 0x19
+			public const int Chip_chipStrokeWidth = 25;
+			
+			// aapt resource value: 0x20
+			public const int Chip_closeIcon = 32;
+			
+			// aapt resource value: 0x21
+			public const int Chip_closeIconEnabled = 33;
+			
+			// aapt resource value: 0x22
+			public const int Chip_closeIconEndPadding = 34;
+			
+			// aapt resource value: 0x23
+			public const int Chip_closeIconSize = 35;
+			
+			// aapt resource value: 0x24
+			public const int Chip_closeIconStartPadding = 36;
+			
+			// aapt resource value: 0x25
+			public const int Chip_closeIconTint = 37;
+			
+			// aapt resource value: 0x26
+			public const int Chip_closeIconVisible = 38;
+			
+			// aapt resource value: 0x27
+			public const int Chip_hideMotionSpec = 39;
 			public const int Chip_closeIconTint = 25;
 			
 			// aapt resource value: 0x1A
@@ -10874,6 +11009,7 @@ namespace EV.Admin.Droid
 			// aapt resource value: 0x21
 			public const int Chip_textStartPadding = 33;
 			
+			// aapt resource value: { 0x7F030081,0x7F030082,0x7F03009C,0x7F0300BC,0x7F0300BD,0x7F0300BE,0x7F0300BF,0x7F0300C0,0x7F0300C1,0x7F0300C2,0x7F03015C,0x7F03015E,0x7F03017C,0x7F0301C9,0x7F0301CA,0x7F0301D4 }
 			// aapt resource value: { 0x7F030080,0x7F030081,0x7F03009C,0x7F0300BC,0x7F0300BD,0x7F0300BE,0x7F0300BF,0x7F0300C0,0x7F0300C1,0x7F0300C2,0x7F03015C,0x7F03015E,0x7F03017C,0x7F0301C9,0x7F0301CA,0x7F0301D4 }
 			public static int[] CollapsingToolbarLayout = new int[] {
 					2130903168,
@@ -11548,6 +11684,25 @@ namespace EV.Admin.Droid
 			public const int MaterialComponentsTheme_textAppearanceHeadline3 = 24;
 			
 			// aapt resource value: 0x19
+			public const int MaterialComponentsTheme_textAppearanceBody2 = 25;
+			
+			// aapt resource value: 0x20
+			public const int MaterialComponentsTheme_textAppearanceButton = 32;
+			
+			// aapt resource value: 0x21
+			public const int MaterialComponentsTheme_textAppearanceCaption = 33;
+			
+			// aapt resource value: 0x22
+			public const int MaterialComponentsTheme_textAppearanceHeadline1 = 34;
+			
+			// aapt resource value: 0x23
+			public const int MaterialComponentsTheme_textAppearanceHeadline2 = 35;
+			
+			// aapt resource value: 0x24
+			public const int MaterialComponentsTheme_textAppearanceHeadline3 = 36;
+			
+			// aapt resource value: 0x25
+			public const int MaterialComponentsTheme_textAppearanceHeadline4 = 37;
 			public const int MaterialComponentsTheme_textAppearanceHeadline4 = 25;
 			
 			// aapt resource value: 0x1A
@@ -11568,6 +11723,7 @@ namespace EV.Admin.Droid
 			// aapt resource value: 0x1F
 			public const int MaterialComponentsTheme_textInputStyle = 31;
 			
+			// aapt resource value: { 0x101013F,0x1010140,0x7F0300C3,0x7F03012E }
 			// aapt resource value: { 0x1010140,0x101013F,0x7F0300C3,0x7F03012E }
 			public static int[] MediaRouteButton = new int[] {
 					16843072,
@@ -12222,6 +12378,27 @@ namespace EV.Admin.Droid
 			public const int TabLayout_tabTextColor = 23;
 			
 			// aapt resource value: 0x18
+			public const int TabLayout_tabPaddingStart = 24;
+			
+			// aapt resource value: 0x19
+			public const int TabLayout_tabPaddingTop = 25;
+			
+			// aapt resource value: 0x20
+			public const int TabLayout_tabRippleColor = 32;
+			
+			// aapt resource value: 0x21
+			public const int TabLayout_tabSelectedTextColor = 33;
+			
+			// aapt resource value: 0x22
+			public const int TabLayout_tabTextAppearance = 34;
+			
+			// aapt resource value: 0x23
+			public const int TabLayout_tabTextColor = 35;
+			
+			// aapt resource value: 0x24
+			public const int TabLayout_tabUnboundedRipple = 36;
+			
+			// aapt resource value: { 0x1010095,0x1010096,0x1010097,0x1010098,0x101009A,0x101009B,0x1010161,0x1010162,0x1010163,0x1010164,0x10103AC,0x7F0300D2,0x7F0301A4 }
 			public const int TabLayout_tabUnboundedRipple = 24;
 			
 			// aapt resource value: { 0x10103AC,0x1010161,0x1010162,0x1010163,0x1010164,0x1010098,0x101009A,0x101009B,0x1010095,0x1010097,0x1010096,0x7F0300D2,0x7F0301A4 }
@@ -12386,6 +12563,25 @@ namespace EV.Admin.Droid
 			public const int TextInputLayout_passwordToggleDrawable = 24;
 			
 			// aapt resource value: 0x19
+			public const int TextInputLayout_helperTextTextAppearance = 25;
+			
+			// aapt resource value: 0x20
+			public const int TextInputLayout_hintAnimationEnabled = 32;
+			
+			// aapt resource value: 0x21
+			public const int TextInputLayout_hintEnabled = 33;
+			
+			// aapt resource value: 0x22
+			public const int TextInputLayout_hintTextAppearance = 34;
+			
+			// aapt resource value: 0x23
+			public const int TextInputLayout_passwordToggleContentDescription = 35;
+			
+			// aapt resource value: 0x24
+			public const int TextInputLayout_passwordToggleDrawable = 36;
+			
+			// aapt resource value: 0x25
+			public const int TextInputLayout_passwordToggleEnabled = 37;
 			public const int TextInputLayout_passwordToggleEnabled = 25;
 			
 			// aapt resource value: 0x1A
@@ -12517,6 +12713,19 @@ namespace EV.Admin.Droid
 			public const int Toolbar_titleMargins = 24;
 			
 			// aapt resource value: 0x19
+			public const int Toolbar_subtitleTextColor = 25;
+			
+			// aapt resource value: 0x20
+			public const int Toolbar_title = 32;
+			
+			// aapt resource value: 0x21
+			public const int Toolbar_titleMargin = 33;
+			
+			// aapt resource value: 0x22
+			public const int Toolbar_titleMarginBottom = 34;
+			
+			// aapt resource value: 0x23
+			public const int Toolbar_titleMarginEnd = 35;
 			public const int Toolbar_titleMarginStart = 25;
 			
 			// aapt resource value: 0x1A
@@ -12528,6 +12737,7 @@ namespace EV.Admin.Droid
 			// aapt resource value: 0x1C
 			public const int Toolbar_titleTextColor = 28;
 			
+			// aapt resource value: { 0x1010000,0x10100DA,0x7F030142,0x7F030143,0x7F0301BF }
 			// aapt resource value: { 0x10100DA,0x1010000,0x7F030142,0x7F030143,0x7F0301BF }
 			public static int[] View = new int[] {
 					16842970,
