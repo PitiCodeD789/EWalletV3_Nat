@@ -18,6 +18,35 @@ namespace EV.Customer.Components
             mEntry.BindingContext = this;
         }
 
+        #region IsPassword
+        private bool isPassword;
+
+        public bool IsPassword
+        {
+            get { return isPassword; }
+            set
+            {
+                isPassword = value;
+                mEntry.IsPassword = isPassword;
+            }
+        }
+        #endregion
+
+        #region Placeholder
+        private string placeholder;
+
+        public string Placeholder
+        {
+            get { return placeholder; }
+            set
+            {
+                placeholder = value;
+                mEntry.Placeholder = placeholder;
+            }
+        }
+
+        #endregion
+
         public string TextEntry
         {
             get { return (string)GetValue(TextEntryProperty); }
