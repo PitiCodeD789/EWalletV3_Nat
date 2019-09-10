@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EV.Service.Models
 {
-    public class NullModel
+    public class DummyModel
     {
     }
 }

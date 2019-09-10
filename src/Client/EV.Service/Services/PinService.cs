@@ -11,7 +11,7 @@ namespace EV.Service.Services
 {
     public class PinService : BaseService, IPinService
     {
-        private string serviceUrl = Constant.BaseUrl + "pin/";
+        private string serviceUrl = Helper.BaseUrl + "pin/";
 
         public async Task<ResultServiceModel<LoginByPinViewModel>> LoginByPin(string pin, string email)
         {
@@ -25,7 +25,7 @@ namespace EV.Service.Services
             return await Post<LoginByPinViewModel>(url, model);
         }
 
-        public async Task<ResultServiceModel<NullModel>> CheckPin(string pin, string email)
+        public async Task<ResultServiceModel<DummyModel>> CheckPin(string pin, string email)
         {
             CheckPinCommand model = new CheckPinCommand()
             {
@@ -34,10 +34,10 @@ namespace EV.Service.Services
             };
 
             string url = serviceUrl + "CheckPin";
-            return await Post<NullModel>(url, model);
+            return await Post<DummyModel>(url, model);
         }
 
-        public async Task<ResultServiceModel<NullModel>> UpdatePin(string newPin, string oldPin, string email)
+        public async Task<ResultServiceModel<DummyModel>> UpdatePin(string newPin, string oldPin, string email)
         {
             UpdatePinCommand model = new UpdatePinCommand()
             {
@@ -47,7 +47,7 @@ namespace EV.Service.Services
             };
 
             string url = serviceUrl + "updatepin";
-            return await Post<NullModel>(url, model);
+            return await Post<DummyModel>(url, model);
         }
 
         public async Task<ResultServiceModel<string>> CheckForgotPin(DateTime birthday, string email)

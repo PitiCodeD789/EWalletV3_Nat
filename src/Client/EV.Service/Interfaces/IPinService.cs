@@ -10,8 +10,8 @@ namespace EV.Service.Interfaces
     public interface IPinService
     {
         Task<ResultServiceModel<LoginByPinViewModel>> LoginByPin(string pin, string email);
-        Task<ResultServiceModel<NullModel>> CheckPin(string pin, string email);
-        Task<ResultServiceModel<NullModel>> UpdatePin(string newPin, string oldPin, string email);
+        Task<ResultServiceModel<DummyModel>> CheckPin(string pin, string email);
+        Task<ResultServiceModel<DummyModel>> UpdatePin(string newPin, string oldPin, string email);
         Task<ResultServiceModel<string>> CheckForgotPin(DateTime birthday, string email);
     }
 }
