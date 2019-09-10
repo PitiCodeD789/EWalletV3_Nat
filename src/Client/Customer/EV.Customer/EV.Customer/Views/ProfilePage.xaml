@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EV.Customer.Views.ProfilePage">
+    <ContentPage.Content>
+        <Grid BackgroundColor="#E6E6E6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Image Source="splash" Aspect="AspectFill" Grid.Column="0" Grid.Row="0"/>
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0"  Padding="20">
+                    <Image Source="icon_user_circle_filled" HorizontalOptions="Center" VerticalOptions="Center"  HeightRequest="50"/>
+                    <Label Text="ชื่ออออออออออออออออออออออออออออออออออออออออออ" TextColor="White" HorizontalOptions="Center" LineBreakMode="TailTruncation" FontAttributes="Bold"/>
+                    <Label Text="089-701-5XXX" TextColor="White" HorizontalOptions="Center"/>
+                    <Label Text="email@email.com" TextColor="White" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Grid>
+            <Frame BackgroundColor="White" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="0,20,0,0" CornerRadius="0" Grid.Row="1">
+                <Grid HorizontalOptions="FillAndExpand" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid HorizontalOptions="FillAndExpand" Padding="20,0" Grid.Row="0" HeightRequest="50">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Profile"/>
+                        </Grid.GestureRecognizers>
+                        <Label Text="โปรไฟล์ " TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Image Source="icon_left_black" Rotation="180" HeightRequest="30" HorizontalOptions="End"/>
+                    </Grid>
+                    <BoxView BackgroundColor="LightSlateGray" HeightRequest="1" HorizontalOptions="FillAndExpand" Grid.Row="1"/>
+                    <Grid HorizontalOptions="FillAndExpand" Padding="20,0" Grid.Row="2" HeightRequest="50">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Setting"/>
+                        </Grid.GestureRecognizers>
+                        <Label Text="ตั้งค่า " TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Image Source="icon_left_black" Rotation="180" HeightRequest="30" HorizontalOptions="End"/>
+                    </Grid>
+                    <BoxView BackgroundColor="LightSlateGray" HeightRequest="1" HorizontalOptions="FillAndExpand" Grid.Row="3"/>
+                    <Grid HorizontalOptions="FillAndExpand" Padding="20,0" Grid.Row="4" HeightRequest="50">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SignOutCommand}"/>
+                        </Grid.GestureRecognizers>
+                        <Label Text="ออกจากระบบ " TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                    </Grid>
+                </Grid>
+            </Frame>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
