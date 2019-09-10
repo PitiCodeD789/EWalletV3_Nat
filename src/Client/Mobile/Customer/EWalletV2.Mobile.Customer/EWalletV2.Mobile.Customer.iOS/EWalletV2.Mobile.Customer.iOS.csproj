@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{824617F9-6424-4844-B17F-5F7769F5182C}</ProjectGuid>
+    <ProjectGuid>{CFA637D4-D39F-4B1C-8EF5-6470F6F0C9F3}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6143fdea-f3c2-4a09-aafa-6e230626515e}</TemplateGuid>
     <OutputType>Exe</OutputType>
@@ -126,7 +126,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\EWalletV2.Mobile.Customer\EWalletV2.Mobile.Customer.csproj">
-      <Project>{8D815285-C9CF-4A6E-B613-C124B3A06A67}</Project>
+      <Project>{2DDC3408-1F21-48C4-B4B0-E7B408F01299}</Project>
       <Name>EWalletV2.Mobile.Customer</Name>
     </ProjectReference>
   </ItemGroup>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9413D8B0-876B-40E2-B22E-D46805428BDE}</ProjectGuid>
+    <ProjectGuid>{9C039F2A-B497-424A-8B66-93F99EB6E7AE}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
     <OutputType>Library</OutputType>
@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EWalletV2.Mobile.Customer\EWalletV2.Mobile.Customer.csproj">
-      <Project>{8D815285-C9CF-4A6E-B613-C124B3A06A67}</Project>
+      <Project>{2DDC3408-1F21-48C4-B4B0-E7B408F01299}</Project>
       <Name>EWalletV2.Mobile.Customer</Name>
     </ProjectReference>
   </ItemGroup>
