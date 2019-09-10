@@ -36,7 +36,7 @@ namespace EWalletV2.DataAccess.Repositories
                 {
                     TransactionReference = referenceNumber,
                     TransactionType = EW_Enumerations.EW_TypeTransectionEnum.TopUp,
-                    CustomerId = 0,
+                    CustomerId = null,
                     OtherId = otherId,
                     Status = false,
                     Amount = amount
@@ -96,6 +96,8 @@ namespace EWalletV2.DataAccess.Repositories
         {
 
             var transactions = _context.Transactions
+                .Include(x => x.UserCustomerEntity)
+                .Include(x => x.UserOtherEntity)
                 .Where(x => x.CustomerId == customerId || x.OtherId == customerId)
                 .ToList();
 

@@ -8,8 +8,11 @@ namespace EWalletV2.Domain.DtoModels.Transaction
     public class BaseTransaction
     {
         public int TransactionId { get; set; }
+        public string Account { get; set; }
         public EW_Enumerations.EW_TypeTransectionEnum TransactionType { get; set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public decimal Balance { get; set; }
+        public DateTime CreateDateTime { get; set; }
     }
 }

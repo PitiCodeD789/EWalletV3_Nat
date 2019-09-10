@@ -4,14 +4,16 @@ using EWalletV2.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EWalletV2.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190910061445_add_fk")]
+    partial class add_fk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,10 +92,10 @@ namespace EWalletV2.DataAccess.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnName("customer_id");
 
-                    b.Property<int?>("OtherId")
+                    b.Property<int>("OtherId")
                         .HasColumnName("other_id");
 
                     b.Property<bool>("Status");
@@ -185,7 +187,8 @@ namespace EWalletV2.DataAccess.Migrations
                     b.HasOne("EWalletV2.Domain.Entities.UserEntity", "UserOtherEntity")
                         .WithMany("TransactionOtherEntities")
                         .HasForeignKey("OtherId")
-                        .HasConstraintName("FK_UserOtherEntity");
+                        .HasConstraintName("FK_UserOtherEntity")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

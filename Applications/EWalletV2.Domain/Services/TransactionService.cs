@@ -1,4 +1,5 @@
-﻿using EWalletV2.Domain.DtoModels.Transaction;
+﻿using EWalletV2.Api.ViewModels;
+using EWalletV2.Domain.DtoModels.Transaction;
 using EWalletV2.Domain.Entities;
 using EWalletV2.Domain.Interfaces;
 using EWalletV2.Domain.Repositories;
@@ -53,24 +54,45 @@ namespace EWalletV2.Domain.Services
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public List<TransactionDetailDto> GetTransaction30Days(string email)
+        public List<TransactionDto> GetTransaction30Days(string email)
         {
             UserEntity userEntity = _userRepository.GetUserByEmail(email);
             int customerId = userEntity.Id;
             List<TransactionEntity> transactionEntities = _transactionRepository.Get30TransactionByCustomerId(customerId);
-            if(transactionEntities == null)
+            if (transactionEntities == null)
             {
                 return null;
             }
-            string fullName = userEntity.FirstName + " " + userEntity.LastName;
-            List<TransactionDetailDto> transactionDetails = transactionEntities.Select(x => new TransactionDetailDto()
+
+            List<TransactionDto> transactionDetails = new List<TransactionDto>();
+
+            if (int.Parse(userEntity.Account.Substring(0, 2)) == (int)EW_Enumerations.EW_UserTypeEnum.Customer)
             {
-                TransactionId = x.Id,
-                TransactionType = x.TransactionType,
-                Name = "",
-                Balance = x.Amount,
-                CreateDate = x.CreateDateTime
-            }).ToList();
+                transactionDetails = transactionEntities.Select(x => new TransactionDto()
+                {
+                    TransactionId = x.Id,
+                    Account = x.UserOtherEntity.Account,
+                    TransactionType = x.TransactionType,
+                    FirstName = x.UserOtherEntity.FirstName,
+                    LastName = x.UserOtherEntity.LastName,
+                    Balance = x.Amount,
+                    CreateDateTime = x.CreateDateTime
+                }).ToList();
+            }
+            else
+            {
+                transactionDetails = transactionEntities.Select(x => new TransactionDto()
+                {
+                    TransactionId = x.Id,
+                    Account = x.UserCustomerEntity.Account,
+                    TransactionType = x.TransactionType,
+                    FirstName = x.UserCustomerEntity.FirstName,
+                    LastName = x.UserCustomerEntity.LastName,
+                    Balance = x.Amount,
+                    CreateDateTime = x.CreateDateTime
+                }).ToList();
+            }
+
             return transactionDetails;
         }
 
@@ -99,7 +121,7 @@ namespace EWalletV2.Domain.Services
             int customerId = customer.Id;
             decimal amount = pay;
 
-            if(amount > customer.Balance)
+            if (amount > customer.Balance)
                 return null;
 
 
@@ -108,7 +130,7 @@ namespace EWalletV2.Domain.Services
                 return null;
 
             TransactionEntity transactionEntity = _transactionRepository.GetTransactionByReferenceNumber(referenceNumber);
-            if(transactionEntity == null)
+            if (transactionEntity == null)
                 return null;
 
             amount = transactionEntity.Amount * (-1M);
@@ -162,24 +184,5 @@ namespace EWalletV2.Domain.Services
             return dto;
         }
 
-        public TransactionDto GetDetailTransaction(string email, int transactionId)
-        {
-            UserEntity userEntity = _userRepository.GetUserByEmail(email);
-            TransactionEntity transactionEntity = _transactionRepository.GetTransactionByTransactionId(transactionId);
-            if(transactionEntity == null)
-            {
-                return null;
-            }
-            string fullName = userEntity.FirstName + " " + userEntity.LastName;
-            TransactionDto transaction = new TransactionDto()
-            {
-                TransactionId = transactionEntity.Id,
-                TransactionType = transactionEntity.TransactionType,
-                Name = fullName,
-                Balance = transactionEntity.Amount,
-                AccountNo = userEntity.Account
-            };
-            return transaction;
-        }
     }
 }

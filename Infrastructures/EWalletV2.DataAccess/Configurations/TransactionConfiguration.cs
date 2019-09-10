@@ -24,13 +24,16 @@ namespace EWalletV2.DataAccess.Configurations
             e.Property(p => p.Amount)
                 .HasColumnName("Amount");
 
-            e.HasOne(x => x.UserEntity)
-                .WithMany(x => x.TransactionEntities)
-                .HasForeignKey(x => x.CustomerId);
+            e.HasOne(x => x.UserCustomerEntity)
+                .WithMany(x => x.TransactionCustomerEntities)
+                .HasForeignKey(x => x.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_UserCustomerEntity");
 
-            e.HasOne(x => x.UserEntity)
-                .WithMany(x => x.TransactionEntities)
-                .HasForeignKey(x => x.OtherId);
+            e.HasOne(x => x.UserOtherEntity)
+                .WithMany(x => x.TransactionOtherEntities)
+                .HasForeignKey(x => x.OtherId)
+                .HasConstraintName("FK_UserOtherEntity");
         }
     }
 }
