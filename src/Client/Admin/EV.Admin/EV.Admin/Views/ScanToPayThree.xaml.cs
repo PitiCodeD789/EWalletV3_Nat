@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace EV.Admin.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ScanToPayThree : ContentPage
+    public partial class ScanToPayThree : Rg.Plugins.Popup.Pages.PopupPage
     {
         public ScanToPayThree()
         {

@@ -15,6 +15,19 @@ namespace EV.Admin.Components
         public EW_Popup()
         {
             InitializeComponent();
+            SuccessText.BindingContext = this;
         }
+        public string TextSuccess
+        {
+            get { return (string)GetValue(TextSuccessProperty); }
+            set { SetValue(TextSuccessProperty, value); }
+        }
+
+        public static readonly BindableProperty TextSuccessProperty =
+                            BindableProperty.Create(
+                        propertyName: "TextSuccess",
+                        returnType: typeof(string),
+                        declaringType: typeof(EW_Popup),
+                        defaultBindingMode: BindingMode.OneWay);
     }
 }
