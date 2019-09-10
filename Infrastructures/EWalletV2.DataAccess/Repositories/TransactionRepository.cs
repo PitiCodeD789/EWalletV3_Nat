@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace EWalletV2.DataAccess.Repositories
 {
@@ -68,7 +69,7 @@ namespace EWalletV2.DataAccess.Repositories
             }
         }
 
-        public bool CreateNewPayment(int otherId, int merchantId, decimal amount, string referenceNumber)
+        public bool CreateNewPayment(int otherId, int customerId, decimal amount, string referenceNumber)
         {
             try
             {
@@ -76,8 +77,8 @@ namespace EWalletV2.DataAccess.Repositories
                 {
                     TransactionReference = referenceNumber,
                     TransactionType = EW_Enumerations.EW_TypeTransectionEnum.Payment,
-                    CustomerId = otherId,
-                    OtherId = merchantId,
+                    CustomerId = customerId,
+                    OtherId = otherId,
                     Status = true,
                     Amount = amount
                 };
@@ -91,9 +92,14 @@ namespace EWalletV2.DataAccess.Repositories
             }
         }
 
-        public List<TransactionEntity> GetTransactionByCustomerId(int customerId)
+        public List<TransactionEntity> Get30TransactionByCustomerId(int customerId)
         {
-            return _context.Transactions.Where(x => x.CustomerId == customerId).ToList();
+
+            var transactions = _context.Transactions
+                .Where(x => x.CustomerId == customerId || x.OtherId == customerId)
+                .ToList();
+
+            return transactions;
         }
 
         public TransactionEntity GetTransactionByReferenceNumber(string referenceNumber)

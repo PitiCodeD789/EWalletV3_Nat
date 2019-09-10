@@ -57,7 +57,7 @@ namespace EWalletV2.Domain.Services
         {
             UserEntity userEntity = _userRepository.GetUserByEmail(email);
             int customerId = userEntity.Id;
-            List<TransactionEntity> transactionEntities = _transactionRepository.GetTransactionByCustomerId(customerId);
+            List<TransactionEntity> transactionEntities = _transactionRepository.Get30TransactionByCustomerId(customerId);
             if(transactionEntities == null)
             {
                 return null;
@@ -67,7 +67,7 @@ namespace EWalletV2.Domain.Services
             {
                 TransactionId = x.Id,
                 TransactionType = x.TransactionType,
-                Name = fullName,
+                Name = "",
                 Balance = x.Amount,
                 CreateDate = x.CreateDateTime
             }).ToList();

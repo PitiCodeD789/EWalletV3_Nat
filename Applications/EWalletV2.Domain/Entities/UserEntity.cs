@@ -7,6 +7,11 @@ namespace EWalletV2.Domain.Entities
 {
     public class UserEntity : BaseEntity
     {
+        public UserEntity()
+        {
+            TransactionEntities = new HashSet<TransactionEntity>();
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; } = "";
         public DateTime BirthDate { get; set; }
@@ -17,5 +22,7 @@ namespace EWalletV2.Domain.Entities
         public string Salt { get;  set; }
         public decimal Balance { get; set; }
         public string Account { get; set; }
+
+        public ICollection<TransactionEntity> TransactionEntities { get; set; }
     }
 }
