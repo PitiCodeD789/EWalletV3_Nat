@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             mc:Ignorable="d"
+             x:Class="EV.Merchant.Views.TopupPage"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Content>
+        <StackLayout  Margin="30,0,30,20">
+
+            <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
+                <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" Margin="0,40,0,0">
+                    <StackLayout>
+                        <zxing:ZXingBarcodeImageView WidthRequest="300" 
+                                         HeightRequest="300" 
+                                         BarcodeValue="5555" 
+                                         BarcodeFormat="QR_CODE"
+                                         InputTransparent="True"
+                                         >
+                            <zxing:ZXingBarcodeImageView.BarcodeOptions>
+                                <zxcm:EncodingOptions Width="400" Height="400" PureBarcode="True" />
+                            </zxing:ZXingBarcodeImageView.BarcodeOptions>
+                        </zxing:ZXingBarcodeImageView>
+                        <Image Source="walletcircle" WidthRequest="60" HeightRequest="60"/>
+                        <Label Text="Test" FontSize="14" TextColor="#ABABAB" HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+
+                </Frame>
+            </StackLayout>
+            <StackLayout VerticalOptions="EndAndExpand" Margin="0,20">
+
+                <Frame BackgroundColor="#EAA200" Padding="0">
+                    <Button 
+                    Text="บันทึก"
+                    TextColor="White"
+                    CornerRadius="10"
+                    />
+                </Frame>
+                <Frame  BackgroundColor="White" Padding="0">
+                    <Button 
+                    Text="กลับสู่หน้าหลัก"
+                    TextColor="#EBA406"
+                    BackgroundColor="White"
+                    CornerRadius="10"
+                    />
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
