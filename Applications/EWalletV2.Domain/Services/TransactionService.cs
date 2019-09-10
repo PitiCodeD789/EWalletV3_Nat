@@ -92,7 +92,10 @@ namespace EWalletV2.Domain.Services
             int otherId = merchant.Id;
             int customerId = customer.Id;
             decimal amount = pay;
-
+            if(amount < customer.Balance)
+            {
+                return null;
+            }
             bool isPayment = _transactionRepository.CreateNewPayment(otherId, customerId, amount, referenceNumber);
             if (!isPayment)
             {
@@ -100,6 +103,12 @@ namespace EWalletV2.Domain.Services
             }
             TransactionEntity transactionEntity = _transactionRepository.GetTransactionByReferenceNumber(referenceNumber);
             if(transactionEntity == null)
+            {
+                return null;
+            }
+            amount = transactionEntity.Amount * (-1M);
+            bool isChangeBalance = _userRepository.ChangeBalance(email, amount);
+            if (!isChangeBalance)
             {
                 return null;
             }
@@ -128,9 +137,9 @@ namespace EWalletV2.Domain.Services
             {
                 return new TopupDto()
                 {
-                    IsTopupExist = false,
-                    IsSuccess = true,
-                    IsExpired = false
+                    IsTopupExist = true,
+                    IsSuccess = false,
+                    IsExpired = true
                 };
             }
             else
@@ -140,16 +149,27 @@ namespace EWalletV2.Domain.Services
                 {
                     return new TopupDto()
                     {
-                        IsTopupExist = false,
+                        IsTopupExist = true,
                         IsSuccess = false,
-                        IsExpired = true
+                        IsExpired = false
+                    };
+                }
+                decimal amount = transactionEntity.Amount;
+                bool isChangeBalance = _userRepository.ChangeBalance(email, amount);
+                if (!isChangeBalance)
+                {
+                    return new TopupDto()
+                    {
+                        IsTopupExist = true,
+                        IsSuccess = false,
+                        IsExpired = false
                     };
                 }
                 return new TopupDto()
                 {
                     IsTopupExist = true,
                     IsSuccess = true,
-                    IsExpired = true
+                    IsExpired = false
                 };
             }
             
