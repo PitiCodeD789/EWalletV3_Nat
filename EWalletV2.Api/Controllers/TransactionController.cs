@@ -73,7 +73,7 @@ namespace EWalletV2.Api.Controllers
 
             if(payment == null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return BadRequest();
             }
 
             PaymentViewModel result = new PaymentViewModel()

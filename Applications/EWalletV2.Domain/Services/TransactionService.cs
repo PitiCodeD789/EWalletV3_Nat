@@ -88,35 +88,45 @@ namespace EWalletV2.Domain.Services
                 }
             }
             UserEntity customer = _userRepository.GetUserByEmail(email);
+            if (customer == null)
+                return null;
+
             UserEntity merchant = _userRepository.GetUserByAccountNumber(merchantAccNo);
+            if (merchant == null)
+                return null;
+
             int otherId = merchant.Id;
             int customerId = customer.Id;
             decimal amount = pay;
-            if(amount < customer.Balance)
-            {
+
+            if(amount > customer.Balance)
                 return null;
-            }
+
+
             bool isPayment = _transactionRepository.CreateNewPayment(otherId, customerId, amount, referenceNumber);
             if (!isPayment)
-            {
                 return null;
-            }
+
             TransactionEntity transactionEntity = _transactionRepository.GetTransactionByReferenceNumber(referenceNumber);
             if(transactionEntity == null)
-            {
                 return null;
-            }
+
             amount = transactionEntity.Amount * (-1M);
             bool isChangeBalance = _userRepository.ChangeBalance(email, amount);
             if (!isChangeBalance)
-            {
                 return null;
-            }
-            return new PaymentDto()
+
+            isChangeBalance = _userRepository.ChangeBalance(merchant.Email, transactionEntity.Amount);
+            if (!isChangeBalance)
+                return null;
+
+            var dto = new PaymentDto()
             {
                 Reference = transactionEntity.TransactionReference,
                 CreateDatetime = transactionEntity.CreateDateTime
             };
+
+            return dto;
         }
 
         public TopupDto Topup(string email, string referenceNumber)
