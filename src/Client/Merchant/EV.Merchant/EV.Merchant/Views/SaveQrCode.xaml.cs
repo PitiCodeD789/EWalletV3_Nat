@@ -10,8 +10,8 @@ using Xamarin.Forms.Xaml;
 namespace EV.Merchant.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SaveQrCode : ContentPage
-    {
+    public partial class SaveQrCode : Rg.Plugins.Popup.Pages.PopupPage
+    { 
         public SaveQrCode()
         {
             InitializeComponent();
