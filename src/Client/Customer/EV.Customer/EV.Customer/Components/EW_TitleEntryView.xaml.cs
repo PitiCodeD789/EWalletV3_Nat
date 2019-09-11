@@ -72,7 +72,7 @@ namespace EV.Customer.Components
         public static readonly BindableProperty isEntryEnabledProperty =
             BindableProperty.Create(
                 propertyName: "IsEntryEnabled",
-                returnType: typeof(string),
+                returnType: typeof(bool),
                 declaringType: typeof(EW_EntryView),
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
