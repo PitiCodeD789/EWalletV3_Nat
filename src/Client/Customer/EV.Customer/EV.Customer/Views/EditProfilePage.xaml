@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:EV.Customer.Components"
              mc:Ignorable="d"
              x:Class="EV.Customer.Views.EditProfilePage">
     <ContentPage.Resources>
@@ -38,38 +39,12 @@
             </Grid>
             <ScrollView Padding="20,0" Grid.Row="1">
                 <StackLayout>
-                    <Frame>
-                        <StackLayout>
-                            <Label Text="ชื่อจริง"/>
-                            <Entry Text="{Binding Name}" IsEnabled="{Binding IsEditMode}"/>
-                        </StackLayout>
-                    </Frame>
-                    <Frame>
-                        <StackLayout>
-                            <Label Text="นามสกุล"/>
-                            <Entry Text="{Binding LastName}" IsEnabled="{Binding IsEditMode}"/>
-                        </StackLayout>
-                    </Frame>
-                    <Frame>
-                        <StackLayout>
-                            <Label >
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="วัน/เดือน/ปี เกิด "/>
-                                        <Span Text="Ex 15/01/2019" TextColor="LightGray" FontSize="Small"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Entry Text="{Binding DateOfBirth}" Keyboard="Numeric" IsEnabled="{Binding IsEditMode}"/>
-                        </StackLayout>
-                    </Frame>
-                    <Frame>
-                        <StackLayout>
-                            <Label Text="หมายเลขโทรศัพท์มือถือ"/>
-                            <Entry Text="{Binding PhoneNumber}" Keyboard="Numeric" IsEnabled="{Binding IsEditMode}"/>
-                        </StackLayout>
-                    </Frame>
-                    <Frame>
+                    <components:EW_TitleEntryView TextTitle="ชื่อ"        TextEntry="" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="นามสกุล"    TextEntry="" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="เบอร์โทรศัพท์" TextEntry="" IsEntryEnabled="True"  KeyboardType="Telephone"/>
+                    <components:EW_TitleEntryView TextTitle="วันเกิด"     TextEntry="" IsEntryEnabled="True" KeyboardType="Numeric"/>
+                    <components:EW_TitleEntryView TextTitle="เพศ"       TextEntry="" IsEntryEnabled="True"/>
+                    <Frame CornerRadius="10" Padding="7" >
                         <StackLayout>
                             <Label Text="เพศ"/>
                             <Grid>
@@ -95,12 +70,7 @@
                             </Grid>
                         </StackLayout>
                     </Frame>
-                    <Frame>
-                        <StackLayout>
-                            <Label Text="อีเมลล์"/>
-                            <Entry Text="{Binding Email}" IsEnabled="False"/>
-                        </StackLayout>
-                    </Frame>
+                    <components:EW_TitleEntryView TextTitle="อีเมลล์"     TextEntry="" IsEntryEnabled="False"/>
                     <Grid>
                         <Button Text="บันทึก" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding ValidateCommand}" IsEnabled="{Binding IsEditMode}"/>
                         <Button Text="แก้ไข" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding EditModeCommand}" IsVisible="{Binding ShowEditButton}"/>

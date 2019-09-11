@@ -39,7 +39,10 @@
     <EmbeddedResource Update="Views\RegistAndFingerSuccess.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+
     <EmbeddedResource Update="Views\UserTabbedPage.xaml">
+    </EmbeddedResource>
+
     <Compile Update="Views\ChildProfileTabPage.xaml.cs">
       <DependentUpon>ChildProfileTabPage.xaml</DependentUpon>
     </Compile>

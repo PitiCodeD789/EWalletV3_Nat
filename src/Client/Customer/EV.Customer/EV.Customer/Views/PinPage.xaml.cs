@@ -12,9 +12,10 @@ namespace EV.Customer.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PinPage : ContentPage
     {
-        public PinPage()
+        public PinPage(object vm)
         {
             InitializeComponent();
+            BindingContext = vm;
         }
     }
 }
