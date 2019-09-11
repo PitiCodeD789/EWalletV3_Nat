@@ -15,6 +15,7 @@ namespace EV.Admin.Components
         public EW_TitleEntryView()
         {
             InitializeComponent();
+            mEntry.BindingContext = this;
         }
 
         #region TextEntry
@@ -28,7 +29,7 @@ namespace EV.Admin.Components
             BindableProperty.Create(
                 propertyName: "TextEntry",
                 returnType: typeof(string),
-                declaringType: typeof(EW_EntryView),
+                declaringType: typeof(EW_TitleEntryView),
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
 
@@ -73,7 +74,7 @@ namespace EV.Admin.Components
             BindableProperty.Create(
                 propertyName: "IsEntryEnabled",
                 returnType: typeof(bool),
-                declaringType: typeof(EW_EntryView),
+                declaringType: typeof(EW_TitleEntryView),
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
     }

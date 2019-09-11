@@ -28,7 +28,7 @@ namespace EV.Admin.Components
             BindableProperty.Create(
                 propertyName: "Command",
                 returnType: typeof(ICommand),
-                declaringType: typeof(EW_ButtonView)); //คนที่ประกาศ
+                declaringType: typeof(EW_ButtonView));
 
         private void MButton_Clicked(object sender, EventArgs e)
         {
