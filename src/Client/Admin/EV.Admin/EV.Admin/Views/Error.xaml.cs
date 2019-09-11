@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Admin.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,10 @@ namespace EV.Admin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Error : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public Error()
+        public Error(ErrorViewModel vm)
         {
             InitializeComponent();
+            BindingContext = vm;
         }
     }
 }
