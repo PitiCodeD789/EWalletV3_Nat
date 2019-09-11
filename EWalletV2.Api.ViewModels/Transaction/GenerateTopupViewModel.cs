@@ -11,5 +11,6 @@ namespace EWalletV2.Api.ViewModels.Transaction
         public string LastName { get; set; }
         public string CheckSum { get; set; }
         public double Amount { get; set; }
+        public string AccountNumber { get; set; }
     }
 }
