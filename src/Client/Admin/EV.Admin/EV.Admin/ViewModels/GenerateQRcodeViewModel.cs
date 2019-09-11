@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EV.Admin.ViewModels
 {
-    public class GenerateQRcodeViewModel : BaseViewModel
+    public class GenerateQRcodeViewModel :BaseViewModel
     {
 
         public GenerateQRcodeViewModel(GenerateTopupViewModel generateTopup)
