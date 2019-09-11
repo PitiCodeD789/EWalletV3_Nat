@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="EV.Merchant.Components.EW_TitleEntryView">
   <ContentView.Content>
-        <Frame HasShadow="True" CornerRadius="10" Padding="7">
+        <Frame HasShadow="True" CornerRadius="5" Padding="7">
             <StackLayout Spacing="-8">
                 <Label x:Name="mLabel" Margin="7,0,7,0"/>
                 <Entry x:Name="mEntry" TextColor="Black"

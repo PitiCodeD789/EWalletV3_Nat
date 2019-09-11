@@ -6,10 +6,10 @@
              mc:Ignorable="d"
              x:Class="EV.Merchant.Components.EW_ButtonView">
     <ContentView.Content>
-        <Frame Padding="0" HasShadow="True" CornerRadius="10">
+        <Frame Padding="0" HasShadow="True" CornerRadius="5">
             <Button x:Name="mButton" Text="Click Me" Clicked="MButton_Clicked" 
-                    BackgroundColor="#eaa200"  TextColor="White" CornerRadius="10"
-                    FontAttributes="Bold"/>
+                    BackgroundColor="#eaa200"  TextColor="White" CornerRadius="5"
+                    FontAttributes="Bold" FontSize="21"/>
         </Frame>
     </ContentView.Content>
 </ContentView>
