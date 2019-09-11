@@ -33,7 +33,14 @@ namespace EV.Service.Services
 
                     return resultService;
                 }
-                return null;
+                else if(result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception e)
             {

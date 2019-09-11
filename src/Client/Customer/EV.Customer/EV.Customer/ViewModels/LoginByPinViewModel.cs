@@ -4,35 +4,44 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class OtpRegisViewModel : INotifyPropertyChanged
+    public class LoginByPinViewModel : INotifyPropertyChanged
     {
-        private readonly AuthService _authService = new AuthService();
-        public OtpRegisViewModel(string passEmail, string passReference, Status.LastPage lastPage)
+        private readonly PinService _pinService = new PinService();
+        public LoginByPinViewModel()
         {
-            title = "การยืนยัน OTP";
+            title = "";
             image = "";
-            blackDetail = "กรุณาใส่ OTP\nเพื่อยืนยัน email ของคุณ";
-            grayDetail = "เราได้ส่ง OTP ไปที่ email ของคุณแล้ว";
-            referenceText = "ref. " + passReference;
-            referenceVisible = true;
-            orangeText = "ส่ง OTP อีกครั้ง";
+            blackDetail = "ใส่รหัสผ่าน";
+            grayDetail = "ใส่รหัสผ่านของคุณ";
+            referenceText = "";
+            referenceVisible = false;
+            orangeText = "ลืมรหัสผ่าน";
             orangeVisible = true;
             warningText = "";
             warningVisible = false;
-            backVisible = true;
-            OrangeTextTab = new Command(SentOtpAgain);
-            InputPin = new Command<string>(CheckOtp);
-            email = passEmail;
-            checkProcess = lastPage;
-            reference = passReference;
+            backVisible = false;
             pin = "";
+            countLogin = 0;
+            email = SecureStorage.GetAsync("Email").Result;
+            bool isExistEmail = Unities.CheckEmailFormat(email);
+            if (!isExistEmail)
+            {
+                ForceLogout();
+            }
+            try
+            {
+                countLogin =  Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
+            }
+            catch(Exception e)
+            {
+                countLogin = 0;
+            }
         }
 
         private string title;
@@ -128,62 +137,20 @@ namespace EV.Customer.ViewModels
 
         private string email;
 
-        private Status.LastPage checkProcess;
-
-        private string reference;
-
         private string pin;
+
+        private int countLogin;
 
         public ICommand OrangeTextTab { get; set; }
         //TODO : Input Name Page;
-        public async void SentOtpAgain()
+        public async void GoToForgotPasswordPage()
         {
-            bool isExistEmail = Unities.CheckEmailFormat(email);
-            if (isExistEmail)
-            {
-                var signInData = await _authService.SignIn(email);
-                if (signInData != null && !signInData.IsError)
-                {
-                    Status.LastPage lastPage;
-                    if (signInData.Model.IsExist)
-                    {
-                        lastPage = Status.LastPage.Login;
-                    }
-                    else
-                    {
-                        lastPage = Status.LastPage.Register;
-                    }
-                    OtpRegisViewModel otpRegis = new OtpRegisViewModel(email, signInData.Model.RefNumber, lastPage);
-                    //await Application.Current.MainPage.Navigation.PushAsync(new Page(otpRegis));
-                }
-                else
-                {
-                    WarningText = "ไม่สามารถเชื่อมต่อได้";
-                    WarningVisible = true;
-                    try
-                    {
-                        Vibration.Vibrate();
-                        var duration = TimeSpan.FromSeconds(1);
-                        Vibration.Vibrate(duration);
-                    }
-                    catch (FeatureNotSupportedException ex)
-                    {
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
-            }
-            else
-            {
-                await Application.Current.MainPage.Navigation.PopToRootAsync();
-            }
+            //await Application.Current.MainPage.Navigation(new Page());
         }
 
         public ICommand InputPin { get; set; }
         //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
-        public async void CheckOtp(string value)
+        public async void LoginByPin(string value)
         {
             if (value == "Delete")
             {
@@ -216,41 +183,20 @@ namespace EV.Customer.ViewModels
                 HintColorChange(countPin);
                 if (countPin == 6)
                 {
-                    var checkOtpData = await _authService.CheckOtp(email, pin, reference);
-                    if (checkOtpData != null && !checkOtpData.IsError)
+                    var loginPinData = await _pinService.LoginByPin(pin, email);
+                    if (loginPinData != null && !loginPinData.IsError && loginPinData.Model != null)
                     {
-                        if (checkOtpData.Model != null || checkOtpData.Model.IsValidateOtp)
+                        if (loginPinData.Model.IsLogin)
                         {
-                            if (checkProcess == Status.LastPage.Login)
-                            {
-                                SetPinForAuthViewModel setPinForAuth = new SetPinForAuthViewModel(email);
-                                //await Application.Current.MainPage.Navigation.PushAsync(new Page(setPinForAuth));
-                            }
-                            else if (checkProcess == Status.LastPage.Register)
-                            {
-                                //TODO : Waiting Name of next view model
-                                //await Application.Current.MainPage.Navigation.PushAsync();
-                            }
-                            else
-                            {
-                                await Application.Current.MainPage.Navigation.PopToRootAsync();
-                            }
+                            //Application.Current.MainPage = new NavigationPage(new Page());
                         }
                         else
                         {
-                            WarningText = "OTP ไม่ถูกต้องหรือหมดอายุ";
-                            WarningVisible = true;
-                            try
+                            countLogin++;
+                            await SecureStorage.SetAsync("CountLogin", countLogin.ToString());
+                            if(countLogin >= 5)
                             {
-                                Vibration.Vibrate();
-                                var duration = TimeSpan.FromSeconds(1);
-                                Vibration.Vibrate(duration);
-                            }
-                            catch (FeatureNotSupportedException ex)
-                            {
-                            }
-                            catch (Exception ex)
-                            {
+                                ForceLogout();
                             }
                         }
                     }
@@ -273,6 +219,12 @@ namespace EV.Customer.ViewModels
                     }
                 }
             }
+        }
+
+        private void ForceLogout()
+        {
+            SecureStorage.RemoveAll();
+            //Application.Current.MainPage = new NavigationPage(new Page());
         }
 
         private void HintColorChange(int length)
@@ -376,12 +328,6 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
-        }
-
-        public ICommand GoBack { get; set; }
-        public async void BackPage()
-        {
-            await Application.Current.MainPage.Navigation.PopAsync();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
