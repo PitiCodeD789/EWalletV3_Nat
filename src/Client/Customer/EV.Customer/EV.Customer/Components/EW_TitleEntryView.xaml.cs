@@ -32,6 +32,7 @@ namespace EV.Customer.Components
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
 
+
         #region TextTitle
         private string textTitle;
 
@@ -62,17 +63,18 @@ namespace EV.Customer.Components
         #endregion
 
         #region IsEnable
-        private bool isEntryEnabled;
-
         public bool IsEntryEnabled
         {
-            get { return isEntryEnabled; }
-            set
-            {
-                isEntryEnabled = value;
-                mEntry.IsEnabled = isEntryEnabled;
-            }
+            get { return (bool)GetValue(isEntryEnabledProperty); }
+            set { SetValue(isEntryEnabledProperty, value); }
         }
+
+        public static readonly BindableProperty isEntryEnabledProperty =
+            BindableProperty.Create(
+                propertyName: "IsEntryEnabled",
+                returnType: typeof(string),
+                declaringType: typeof(EW_EntryView),
+                defaultBindingMode: BindingMode.TwoWay);
         #endregion
     }
 }
