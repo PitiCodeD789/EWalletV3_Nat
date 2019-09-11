@@ -192,5 +192,21 @@ namespace EWalletV2.Domain.Services
 
             return false;
         }
+
+        public bool ChangePin(string email, string newPin)
+        {
+            UserEntity user = _userRepository.GetUserByEmail(email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            string salt = Generator.GenerateRandomString(12);
+            string hashPass = Generator.HashPassword(newPin, salt);
+            user.Pin = hashPass;
+            user.Salt = salt;
+            bool isUpdate = _userRepository.Update(user);
+            return isUpdate;
+        }
     }
 }
