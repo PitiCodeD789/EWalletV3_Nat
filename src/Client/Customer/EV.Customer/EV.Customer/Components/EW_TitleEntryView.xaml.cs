@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace EV.Customer.Components
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class EW_TitleEntryView : ContentView
+    {
+        public EW_TitleEntryView()
+        {
+            InitializeComponent();
+        }
+
+        #region TextEntry
+        public string TextEntry
+        {
+            get { return (string)GetValue(TextEntryProperty); }
+            set { SetValue(TextEntryProperty, value); }
+        }
+
+        public static readonly BindableProperty TextEntryProperty =
+            BindableProperty.Create(
+                propertyName: "TextEntry",
+                returnType: typeof(string),
+                declaringType: typeof(EW_EntryView),
+                defaultBindingMode: BindingMode.TwoWay);
+        #endregion
+
+        #region TextTitle
+        private string textTitle;
+
+        public string TextTitle
+        {
+            get { return textTitle; }
+            set
+            {
+                textTitle = value;
+                mLabel.Text = textTitle;
+            }
+        }
+        #endregion
+
+        #region KeyboardType
+        private Keyboard keyboardType;
+
+        public Keyboard KeyboardType
+        {
+            get { return keyboardType; }
+            set
+            {
+                keyboardType = value;
+                mEntry.Keyboard = keyboardType;
+            }
+        }
+
+        #endregion
+
+        #region IsEnable
+        private bool isEntryEnabled;
+
+        public bool IsEntryEnabled
+        {
+            get { return isEntryEnabled; }
+            set
+            {
+                isEntryEnabled = value;
+                mEntry.IsEnabled = isEntryEnabled;
+            }
+        }
+        #endregion
+    }
+}

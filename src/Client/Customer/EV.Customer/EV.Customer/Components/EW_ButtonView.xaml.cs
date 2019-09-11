@@ -80,5 +80,33 @@ namespace EV.Customer.Components
         //    }
         //}
         #endregion
+
+        #region BackgroundButton
+        private Color backgroundButton;
+
+        public Color BackgroundButton
+        {
+            get { return backgroundButton; }
+            set
+            {
+                backgroundButton = value;
+                mButton.BackgroundColor = backgroundButton;
+            }
+        }
+        #endregion
+
+        #region TextColor
+        private Color textColor;
+
+        public Color TextColor
+        {
+            get { return textColor; }
+            set
+            {
+                textColor = value;
+                mButton.TextColor = textColor;
+            }
+        }
+        #endregion
     }
 }
