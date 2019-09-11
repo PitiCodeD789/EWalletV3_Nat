@@ -24,9 +24,14 @@
             <Label Text="ใส่จำนวนเงิน" FontSize="25" TextColor="#7F7F7F"  HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
             <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal" >
                 <Entry Placeholder="0.00" FontSize="40" 
-                       Keyboard="Numeric" 
-                       HorizontalTextAlignment="End"/>
-                <Label Text="THB" Margin="0,20,0,0"/>
+                       Keyboard="Numeric"
+                       x:Name="inputMoney"
+                       TextChanged="TextSizeChange"
+                       HorizontalTextAlignment="Center"
+                       WidthRequest="120"
+                       MaxLength="7"
+                       />
+                <Label x:Name="thbTag" Text="THB" Margin="-10,20,0,0"/>
             </StackLayout>
             <Button VerticalOptions="EndAndExpand" Margin="10,20"
                     Text="ตกลง"
