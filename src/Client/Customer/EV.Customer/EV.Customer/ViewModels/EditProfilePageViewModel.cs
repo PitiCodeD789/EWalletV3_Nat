@@ -3,6 +3,7 @@ using EV.Service.Interfaces;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
+using EWalletV2.Api.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,16 +17,17 @@ namespace EV.Customer.ViewModels
 {
     public class EditProfilePageViewModel : INotifyPropertyChanged
     {
-        private readonly IAuthService _authService;
+        private readonly IUserService _userService;
         public EditProfilePageViewModel()
         {
             //TODO: CheckGender OnLoad
             //GendenRadioChange(App.Gender());
-            _authService = new AuthService();
-            RegisterClickCommand = new Command(Register);
+            _userService = new UserService();
+            EditClickCommand = new Command(Edit);
             GendenRadioChangeCommand = new Command(GendenRadioChange);
         }
-
+        public ICommand EditClickCommand { get; set; }
+        public ICommand GendenRadioChangeCommand { get; set; }
 
         private void GendenRadioChange(object obj)
         {
@@ -43,7 +45,7 @@ namespace EV.Customer.ViewModels
             }
         }
 
-        private async void Register()
+        private async void Edit()
         {
             bool isValidateName = Unities.ValidateName(FirstName);
             bool isValidateLastName = Unities.ValidateName(LastName);
@@ -51,26 +53,31 @@ namespace EV.Customer.ViewModels
             bool isValidateEmail = Unities.CheckEmailFormat(Email);
             if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
             {
-                RegisterCommand register = new RegisterCommand
+                UpdateUserCommand updateUserCommand = new UpdateUserCommand
                 {
-                    BirthDate = DateTime.Parse(BirthDate),
+                    BitrhDate = DateTime.Parse(BirthDate),
                     Email = Email,
                     FirstName = FirstName,
                     LastName = LastName,
-                    Pin = Pin,
                     MobileNumber = MobileNumber,
                     Gender = Gender
-
                 };
-                await Application.Current.MainPage.Navigation.PushAsync(new Page());
+                var editResult = await _userService.UpdateUser(updateUserCommand);
+                bool isError = editResult.IsError;
+                if (isError)
+                {
+                    await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+                }
+                else
+                {
 
+                }
+                //TODO EditProfile
             }
             else
             {
                 await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
             }
-
-
         }
 
 
@@ -93,9 +100,22 @@ namespace EV.Customer.ViewModels
         }
 
 
-        public ICommand RegisterClickCommand { get; set; }
-        public ICommand GendenRadioChangeCommand { get; set; }
 
+
+        private bool _isEditMode;
+
+        public bool IsEditMode
+        {
+            get { return  _isEditMode; }
+            set
+            {
+                if (value != _isEditMode)
+                {
+                    _isEditMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
 
         private string birthDate;
@@ -111,13 +131,42 @@ namespace EV.Customer.ViewModels
         }
 
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        private string _firstName;
+        public string FirstName
+        {
+            get { return _firstName; }
+            set { _firstName = value; OnPropertyChanged(); }
+        }
 
-        public string MobileNumber { get; set; }
-        public EW_Enumerations.EW_GenderEnum Gender { get; set; }
-        public string Email { get; set; }
-        public string Pin { get; set; }
+        private string _lastName;
+        public string LastName
+        {
+            get { return _lastName; }
+            set { _lastName = value; OnPropertyChanged(); }
+        }
+
+        private string _mobileNumber;
+        public string MobileNumber
+        {
+            get { return _mobileNumber; }
+            set { _mobileNumber = value; OnPropertyChanged(); }
+        }
+
+        private EW_Enumerations.EW_GenderEnum _gender;
+        public EW_Enumerations.EW_GenderEnum Gender
+        {
+            get { return _gender; }
+            set { _gender = value; OnPropertyChanged(); }
+        }
+
+
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; OnPropertyChanged(); }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
