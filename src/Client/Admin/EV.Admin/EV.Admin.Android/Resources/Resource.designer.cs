@@ -5799,6 +5799,9 @@ namespace EV.Admin.Droid
 			// aapt resource value: 0x7F070061
 			public const int design_password_eye = 2131165281;
 			
+			// aapt resource value: 0x7F070116
+			public const int icon_camera_circle = 2131165462;
+			
 			// aapt resource value: 0x7F070062
 			public const int design_snackbar_background = 2131165282;
 			

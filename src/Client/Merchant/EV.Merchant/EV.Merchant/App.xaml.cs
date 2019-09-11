@@ -11,7 +11,7 @@ namespace EV.Merchant
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new GenerateQRcodePage());
+            MainPage = new NavigationPage(new ChildHomeTabPage());
         }
 
         protected override void OnStart()
