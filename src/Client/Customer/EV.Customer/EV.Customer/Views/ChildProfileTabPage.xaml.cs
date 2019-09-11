@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace EV.Customer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProfilePage : ContentPage
+    public partial class ChildProfileTabPage : ContentPage
     {
-        public ProfilePage()
+        public ChildProfileTabPage()
         {
             InitializeComponent();
         }
