@@ -10,12 +10,12 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class LoginByPinViewModel : INotifyPropertyChanged
+    public class ChangePasswordViewModel : INotifyPropertyChanged
     {
         private readonly PinService _pinService = new PinService();
-        public LoginByPinViewModel()
+        public ChangePasswordViewModel()
         {
-            title = "";
+            title = "เปลี่ยนรหัสผ่าน";
             image = "";
             blackDetail = "ใส่รหัสผ่าน";
             grayDetail = "ใส่รหัสผ่านของคุณ";
@@ -26,33 +26,31 @@ namespace EV.Customer.ViewModels
             warningText = "";
             warningVisible = false;
             backVisible = false;
-            fingerTabVisible = true;
+            fingerTabVisible = false;
             pin = "";
-            countLogin = 0;
-            Fingerprint = new Command(LoginByFingerprint);
-            OrangeTextTab = new Command(GoToForgotPasswordPage);
-            InputPin = new Command<string>(LoginByPin);
+            oldPin = "";
+            newPin = "";
+            repeatNewPin = "";
             email = SecureStorage.GetAsync("Email").Result;
             bool isExistEmail = Unities.CheckEmailFormat(email);
             if (!isExistEmail)
             {
                 ForceLogout();
             }
-            try
-            {
-                countLogin =  Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
-            }
-            catch(Exception e)
-            {
-                countLogin = 0;
-            }
         }
 
         private string title;
         public string Title
         {
-            get { return title; }
-            set { title = value; }
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                OnPropertyChanged(nameof(Title));
+            }
         }
 
         private string image;
@@ -65,15 +63,29 @@ namespace EV.Customer.ViewModels
         private string blackDetail;
         public string BlackDetail
         {
-            get { return blackDetail; }
-            set { blackDetail = value; }
+            get
+            {
+                return blackDetail;
+            }
+            set
+            {
+                blackDetail = value;
+                OnPropertyChanged(nameof(BlackDetail));
+            }
         }
 
         private string grayDetail;
         public string GrayDetail
         {
-            get { return grayDetail; }
-            set { grayDetail = value; }
+            get
+            {
+                return grayDetail;
+            }
+            set
+            {
+                grayDetail = value;
+                OnPropertyChanged(nameof(GrayDetail));
+            }
         }
 
         private string referenceText;
@@ -150,14 +162,11 @@ namespace EV.Customer.ViewModels
 
         private string pin;
 
-        private int countLogin;
+        private string oldPin;
 
-        public ICommand Fingerprint { get; set; }
-        public async void LoginByFingerprint()
-        {
+        private string newPin;
 
-        }
-
+        private string repeatNewPin;
 
         public ICommand OrangeTextTab { get; set; }
         //TODO : Input Name Page;
@@ -167,8 +176,7 @@ namespace EV.Customer.ViewModels
         }
 
         public ICommand InputPin { get; set; }
-        //TODO : Input Name Page;
-        public async void LoginByPin(string value)
+        public async void InputPinMethod(string value)
         {
             if (value == "Delete")
             {
@@ -201,19 +209,23 @@ namespace EV.Customer.ViewModels
                 HintColorChange(countPin);
                 if (countPin == 6)
                 {
-                    var loginPinData = await _pinService.LoginByPin(pin, email);
-                    if (loginPinData != null && !loginPinData.IsError && loginPinData.Model != null)
+                    if(oldPin != "" && newPin != "")
                     {
-                        if (loginPinData.Model.IsLogin)
+                        repeatNewPin = pin;
+                        if(newPin == repeatNewPin)
                         {
-                            //Application.Current.MainPage = new NavigationPage(new Page());
+                            var updateData = await _pinService.UpdatePin(newPin, oldPin, email);
+                            if(updateData != null && !updateData.IsError)
+                            {
+                                await Application.Current.MainPage.Navigation.PopAsync();
+                            }
                         }
                         else
                         {
                             pin = "";
                             countPin = pin.Length;
                             HintColorChange(countPin);
-                            WarningText = "รหัสผ่านไม่ถูกต้อง";
+                            WarningText = "รหัสผ่านทั้ง 2 ครั้งไม่ตรงกัน";
                             WarningVisible = true;
                             try
                             {
@@ -227,39 +239,55 @@ namespace EV.Customer.ViewModels
                             catch (Exception ex)
                             {
                             }
-                            countLogin++;
-                            await SecureStorage.SetAsync("CountLogin", countLogin.ToString());
-                            if(countLogin >= 5)
-                            {
-                                ForceLogout();
-                            }
                         }
+                    }
+                    else if(oldPin != "")
+                    {
+                        ChangeDataRepeatNewPin();
                     }
                     else
                     {
-                        WarningText = "ไม่สามารถเชื่อมต่อได้";
-                        WarningVisible = true;
-                        try
-                        {
-                            Vibration.Vibrate();
-                            var duration = TimeSpan.FromSeconds(1);
-                            Vibration.Vibrate(duration);
-                        }
-                        catch (FeatureNotSupportedException ex)
-                        {
-                        }
-                        catch (Exception ex)
-                        {
-                        }
+                        ChangeDataNewPin(); 
                     }
                 }
             }
         }
 
-        private void ForceLogout()
+        public ICommand GoBack { get; set; }
+        //TODO : Input Name Page;
+        //TODO : Waiting Name of next view model
+        public async void BackPage()
         {
-            SecureStorage.RemoveAll();
-            //Application.Current.MainPage = new NavigationPage(new Page());
+            if (oldPin == "" && newPin == "")
+            {
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
+            else if (oldPin == "")
+            {
+                newPin = "";
+                ChangeDataRepeatNewPin();
+            }
+            else
+            {
+                repeatNewPin = "";
+                ChangeDataNewPin();
+            }
+        }
+
+        public void ChangeDataNewPin()
+        {
+            BlackDetail = "สร้างรหัสผ่าน";
+            GrayDetail = "ใส่รหัสผ่านของคุณ";
+            oldPin = pin;
+            pin = "";
+        }
+
+        public void ChangeDataRepeatNewPin()
+        {
+            BlackDetail = "ยืนยันรหัสผ่าน";
+            GrayDetail = "ใส่รหัสผ่านของคุณอีกครั้ง";
+            newPin = pin;
+            pin = "";
         }
 
         private void HintColorChange(int length)
@@ -363,6 +391,12 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
+        }
+
+        private void ForceLogout()
+        {
+            SecureStorage.RemoveAll();
+            //Application.Current.MainPage = new NavigationPage(new Page());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
