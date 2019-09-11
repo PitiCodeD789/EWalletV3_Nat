@@ -1,6 +1,5 @@
 ﻿using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Transaction;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
