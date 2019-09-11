@@ -15,6 +15,7 @@ namespace EV.Admin.Components
         public EW_TitleEntryView()
         {
             InitializeComponent();
+            mEntry.BindingContext = this;
         }
 
         #region TextEntry
