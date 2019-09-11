@@ -47,6 +47,7 @@ namespace EV.Customer.Components
 
         #endregion
 
+        #region TextEntry
         public string TextEntry
         {
             get { return (string)GetValue(TextEntryProperty); }
@@ -59,5 +60,6 @@ namespace EV.Customer.Components
                 returnType: typeof(string),
                 declaringType: typeof(EW_EntryView),
                 defaultBindingMode: BindingMode.TwoWay); //คนที่ประกาศ
+        #endregion
     }
 }

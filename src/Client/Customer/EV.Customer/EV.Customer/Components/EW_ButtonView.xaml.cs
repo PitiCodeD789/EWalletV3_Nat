@@ -32,15 +32,7 @@ namespace EV.Customer.Components
 
         private void MButton_Clicked(object sender, EventArgs e)
         {
-            //if (Command!=null)
-            //{
-            //    Command.Execute(null);
-            //} รูปเต็ม
-
             Command?.Execute(null);
-
-            //Execute คือเรียกใช้ method ซึ่งคือ ICommand  null คือ value ของ command
-
         }
 
         #endregion
@@ -58,27 +50,6 @@ namespace EV.Customer.Components
                 mButton.Text = textButton;
             }
         }
-
-
-        //หรือแบบนี้ถ้าจะ Binding
-        //public string TextButton { get; set; }
-
-        //public static readonly BindableProperty TextButtonProperty =
-        //    BindableProperty.Create(
-        //        propertyName:"TextButton", 
-        //        returnType: typeof(string), 
-        //        declaringType: typeof(EW_ButtonView), //คนที่ประกาศ
-        //        defaultValue: "", 
-        //        propertyChanged: OnTextButtonChanged);
-
-        //private static void OnTextButtonChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (newValue != null && !string.IsNullOrEmpty((string)newValue))
-        //    {
-        //        var control = bindable as EW_ButtonView;
-        //        control.mButton.Text = (string)newValue;
-        //    }
-        //}
         #endregion
 
         #region BackgroundButton
