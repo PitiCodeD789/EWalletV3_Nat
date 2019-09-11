@@ -60,3 +60,12 @@
     </EmbeddedResource>
   </ItemGroup>
 </Project>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\EWalletV2.Api.ViewModels\EWalletV2.Api.ViewModels.csproj" />
+    <ProjectReference Include="..\..\..\EV.Service\EV.Service.csproj" />
+  </ItemGroup>
+</Project>
+</Project>
