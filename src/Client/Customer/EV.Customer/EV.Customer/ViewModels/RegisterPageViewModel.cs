@@ -1,4 +1,5 @@
-﻿using EV.Service.Interfaces;
+﻿using EV.Customer.Helper;
+using EV.Service.Interfaces;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
@@ -39,27 +40,30 @@ namespace EV.Customer.ViewModels
 
         private async void Register()
         {
-
-            RegisterCommand register = new RegisterCommand
+            bool isValidateName = Unities.ValidateName(FirstName);
+            bool isValidateLastName = Unities.ValidateName(LastName);
+            bool isValidateDate = Unities.ValidateStringDateFormat(BirthDate);
+            bool isValidateEmail = Unities.CheckEmailFormat(Email);
+            if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
             {
-                BirthDate = DateTime.Parse(BirthDate),
-                Email = Email,
-                FirstName = FirstName,
-                LastName = LastName,
-                Pin = Pin,
-                MobileNumber = MobileNumber,
-                Gender = Gender
+                RegisterCommand register = new RegisterCommand
+                {
+                    BirthDate = DateTime.Parse(BirthDate),
+                    Email = Email,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    Pin = Pin,
+                    MobileNumber = MobileNumber,
+                    Gender = Gender
 
-            };
-            var result = await _authService.Register(register);
-            if(result.IsError)
+                };
+                await Application.Current.MainPage.Navigation.PushAsync(new Page());
+
+            }else
             {
                 await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
-            }
-            else
-            {
-                await Application.Current.MainPage.Navigation.PushAsync(new Page());
-            }
+            }         
+         
                 
         }
 
@@ -87,13 +91,32 @@ namespace EV.Customer.ViewModels
         public ICommand GendenRadioChangeCommand { get; set; }
 
 
+
+        private string birthDate ;
+
+        public string BirthDate 
+        {
+            get { return birthDate; }
+            set
+            {
+                birthDate = Unities.BirthDateSet(value);             
+                OnPropertyChanged("BirthDate");
+            }
+        }
+
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string BirthDate { get; set; }
+        
         public string MobileNumber { get; set; }
         public EW_Enumerations.EW_GenderEnum Gender { get; set; }
         public string Email { get; set; }
         public string Pin { get; set; }
+
+       
+
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
