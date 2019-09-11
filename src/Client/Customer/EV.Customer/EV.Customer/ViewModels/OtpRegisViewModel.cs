@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
@@ -151,6 +152,18 @@ namespace EV.Customer.ViewModels
                 {
                     WarningText = "ไม่สามารถเชื่อมต่อได้";
                     WarningVisible = true;
+                    try
+                    {
+                        Vibration.Vibrate();
+                        var duration = TimeSpan.FromSeconds(1);
+                        Vibration.Vibrate(duration);
+                    }
+                    catch (FeatureNotSupportedException ex)
+                    {
+                    }
+                    catch (Exception ex)
+                    {
+                    }
                 }
             }
             else
@@ -203,12 +216,36 @@ namespace EV.Customer.ViewModels
                         {
                             WarningText = "OTP ไม่ถูกต้องหรือหมดอายุ";
                             WarningVisible = true;
+                            try
+                            {
+                                Vibration.Vibrate();
+                                var duration = TimeSpan.FromSeconds(1);
+                                Vibration.Vibrate(duration);
+                            }
+                            catch (FeatureNotSupportedException ex)
+                            {
+                            }
+                            catch (Exception ex)
+                            {
+                            }
                         }
                     }
                     else
                     {
                         WarningText = "ไม่สามารถเชื่อมต่อได้";
                         WarningVisible = true;
+                        try
+                        {
+                            Vibration.Vibrate();
+                            var duration = TimeSpan.FromSeconds(1);
+                            Vibration.Vibrate(duration);
+                        }
+                        catch (FeatureNotSupportedException ex)
+                        {
+                        }
+                        catch (Exception ex)
+                        {
+                        }
                     }
                 }
                 else
