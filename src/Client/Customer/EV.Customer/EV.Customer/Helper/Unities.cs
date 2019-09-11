@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace EV.Customer.Helper
 {
@@ -20,7 +21,123 @@ namespace EV.Customer.Helper
             }
         }
 
-    
-       
+        public static string BirthDateSet(string input)
+        {
+            if (input == null)
+            {
+                return "";
+            }
+            if (input.Length < 1)
+            {
+                return "";
+            }
+
+            char[] inputByte = input.ToCharArray();
+            string formatDate = "";
+            int check = input.Length;
+
+             if (check > 10)
+            {
+                check = 10;
+            }
+
+          
+          
+            for (int i = 0; i < check; i++)
+            {
+               
+                 if (i == 2 && inputByte[i] != '/')
+                {
+                    formatDate += "/";
+                }
+                else if (i == 5 && inputByte[i] != '/')
+                {
+                    formatDate += "/";
+                }
+
+                formatDate += inputByte[i];
+            }
+            
+            return formatDate;
+
+
+
+        }
+
+       public static bool ValidateName(string name)
+        {
+            if (name == null)
+            {
+                return false;
+            }
+            if (name.Length < 1)
+            {
+                return false;
+            }
+            string strRegex =
+                    @"^[a-zA-Z0-9ก-๋]{1,50}";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(name))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public static bool ValidateStringDateFormat(string date)
+        {
+
+            if (date == null)
+            {
+                return false;
+            }
+            if (date.Length < 1)
+            {
+                return false;
+            }
+            string strRegex =
+                    @"^([0-9]{2}).([0-9]{2}).([0-9]{4})$";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(date))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public static bool ValidateStringMobile(string mobilePhone)
+        {
+
+            if (mobilePhone == null)
+            {
+                return false;
+            }
+            if (mobilePhone.Length < 1)
+            {
+                return false;
+            }
+            string strRegex =
+                    @"^[0]([0-9]{9})$";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(mobilePhone))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+
     }
 }
