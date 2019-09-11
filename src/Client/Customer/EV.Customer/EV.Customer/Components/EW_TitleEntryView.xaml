@@ -9,7 +9,7 @@
         <Frame HasShadow="True" CornerRadius="10" Padding="7">
             <StackLayout Spacing="-8">
                 <Label x:Name="mLabel" Margin="7,0,7,0"/>
-                <Entry x:Name="mEntry" WidthRequest="260" TextColor="Black"
+                <Entry x:Name="mEntry" TextColor="Black"
                        HorizontalOptions="Fill" FontSize="Medium" 
                        Margin="7,0,7,0" Text="{Binding TextEntry}" 
                        IsEnabled="{Binding IsEntryEnabled}"/>
