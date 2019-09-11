@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace EV.Merchant.ViewModels
@@ -37,6 +38,7 @@ namespace EV.Merchant.ViewModels
         public QRcodeViewModel()
         {
             BacktoPreviousCommand = new Command(Goback);
+            MerchantAccount = SecureStorage.GetAsync("Account").Result;
 
         }
         private async void Goback()
