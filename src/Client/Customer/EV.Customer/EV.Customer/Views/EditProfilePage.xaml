@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:EV.Customer.Components"
+             mc:Ignorable="d"
+             x:Class="EV.Customer.Views.EditProfilePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="0,7"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style TargetType="Label" x:Key="EntryLabel">
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HeightRequest="60" VerticalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="icon_left_black" Grid.Column="0" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0"/>
+                <Label Text="โปรไฟล์ " TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" VerticalOptions="Center" IsVisible="{Binding ShowEditButton}"/>
+                <Label Text="แก้ไขโปรไฟล์ " TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" VerticalOptions="Center" IsVisible="{Binding IsEditMode}"/>
+            </Grid>
+            <ScrollView Padding="20,0" Grid.Row="1">
+                <StackLayout>
+                    <components:EW_TitleEntryView TextTitle="ชื่อ"        TextEntry="" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="นามสกุล"    TextEntry="" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="เบอร์โทรศัพท์" TextEntry="" IsEntryEnabled="True"  KeyboardType="Telephone"/>
+                    <components:EW_TitleEntryView TextTitle="วันเกิด"     TextEntry="" IsEntryEnabled="True" KeyboardType="Numeric"/>
+                    <components:EW_TitleEntryView TextTitle="เพศ"       TextEntry="" IsEntryEnabled="True"/>
+                    <Frame CornerRadius="10" Padding="7" >
+                        <StackLayout>
+                            <Label Text="เพศ"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="Start">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ChangeSexCommand}" CommandParameter="Male"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding MaleColor}"/>
+                                    <Label Text="ชาย" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="End">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ChangeSexCommand}" CommandParameter="Female"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding FemaleColor}"/>
+                                    <Label Text="หญิง" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                    <components:EW_TitleEntryView TextTitle="อีเมลล์"     TextEntry="" IsEntryEnabled="False"/>
+                    <Grid>
+                        <Button Text="บันทึก" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding ValidateCommand}" IsEnabled="{Binding IsEditMode}"/>
+                        <Button Text="แก้ไข" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding EditModeCommand}" IsVisible="{Binding ShowEditButton}"/>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="LightGray" Opacity="0.5" IsVisible="false">
+            </StackLayout>
+            <Frame Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="20" IsVisible="false">
+                <ActivityIndicator
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}"
+                Color="#EAA200"/>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

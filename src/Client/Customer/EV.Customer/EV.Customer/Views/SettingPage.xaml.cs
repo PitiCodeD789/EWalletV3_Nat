@@ -10,12 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace EV.Customer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PinPage : ContentPage
+    public partial class SettingPage : ContentPage
     {
-        public PinPage(object vm)
+        public SettingPage()
         {
             InitializeComponent();
-            BindingContext = vm;
         }
     }
 }

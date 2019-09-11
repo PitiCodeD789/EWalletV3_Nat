@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:components="clr-namespace:EV.Customer.Components"
+             x:Class="EV.Customer.Views.RegisterPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" HeightRequest="60" VerticalOptions="Center" Padding="0">
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="icon_left_black" Grid.Column="0" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0"/>
+                    <Label Text="สร้างรหัสผ่าน" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
+            <ScrollView Grid.Row="1" Padding="10,10,10,20">
+                <StackLayout>
+                    <components:EW_TitleEntryView TextTitle="ชื่อ"        TextEntry="" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="นามสกุล"    TextEntry="" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="เบอร์โทรศัพท์" TextEntry="" IsEntryEnabled="True"  KeyboardType="Telephone"/>
+                    <components:EW_TitleEntryView TextTitle="วันเกิด"     TextEntry="" IsEntryEnabled="True" KeyboardType="Numeric"/>
+                    <Frame CornerRadius="10" Padding="14,7" HeightRequest="50">
+                        <StackLayout>
+                            <Label Text="เพศ"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="Start">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ChangeSexCommand}" CommandParameter="Male"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding MaleColor}"/>
+                                    <Label Text="ชาย" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="End">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ChangeSexCommand}" CommandParameter="Female"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding FemaleColor}"/>
+                                    <Label Text="หญิง" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                    <components:EW_TitleEntryView TextTitle="อีเมลล์"     TextEntry="" IsEntryEnabled="False"/>
+                    <Button BackgroundColor="#EAA200" Text="ถัดไป" FontAttributes="Bold" TextColor="White"/>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
