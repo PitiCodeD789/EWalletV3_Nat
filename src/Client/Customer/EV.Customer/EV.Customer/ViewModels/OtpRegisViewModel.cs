@@ -12,20 +12,25 @@ namespace EV.Customer.ViewModels
     public class OtpRegisViewModel : INotifyPropertyChanged
     {
         private readonly AuthService _authService;
-        public OtpRegisViewModel(string passEmail, string reference)
+        public OtpRegisViewModel(string passEmail, string passReference, Status.LastPage lastPage)
         {
             _authService = new AuthService();
             title = "การยืนยัน OTP";
             image = "";
             blackDetail = "กรุณาใส่ OTP\nเพื่อยืนยัน email ของคุณ";
             grayDetail = "เราได้ส่ง OTP ไปที่ email ของคุณแล้ว";
-            referenceText = "ref. " + reference;
+            referenceText = "ref. " + passReference;
             referenceVisible = true;
             orangeText = "ส่ง OTP อีกครั้ง";
             orangeVisible = true;
             warningText = "";
             warningVisible = false;
             email = passEmail;
+            checkProcess = lastPage;
+            reference = passReference;
+            pin = "";
+            OrangeTextTab = new Command(SentOtpAgain);
+            InputPin = new Command<string>(CheckOtp);
         }
 
         private string title;
@@ -113,13 +118,15 @@ namespace EV.Customer.ViewModels
         }
 
         private string email;
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
+
+        private Status.LastPage checkProcess;
+
+        private string reference;
+
+        private string pin;
 
         public ICommand OrangeTextTab { get; set; }
+        //TODO : Input Name Page;
         public async void SentOtpAgain()
         {
             bool isExistEmail = Unities.CheckEmailFormat(email);
@@ -128,24 +135,93 @@ namespace EV.Customer.ViewModels
                 var signInData = await _authService.SignIn(email);
                 if (signInData.IsError)
                 {
-                    
+                    Status.LastPage lastPage;
+                    if (signInData.Model.IsExist)
+                    {
+                        lastPage = Status.LastPage.Login;
+                    }
+                    else
+                    {
+                        lastPage = Status.LastPage.Register;
+                    }
+                    OtpRegisViewModel otpRegis = new OtpRegisViewModel(email, signInData.Model.RefNumber, lastPage);
+                    //await Application.Current.MainPage.Navigation.PushAsync(new Page(otpRegis));
+                }
+                else
+                {
+                    WarningText = "ไม่สามารถเชื่อมต่อได้";
+                    WarningVisible = true;
                 }
             }
             else
             {
-                WarningText = "รูปแบบ Email ไม่ถูกต้อง";
-                WarningVisible = true;
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
         }
 
         public ICommand InputPin { get; set; }
-        public async void CheckForRegister(string value)
+        //TODO : Input Name Page;
+        //TODO : Waiting Name of next view model
+        //TODO : Change Color of 6 Circle;
+        public async void CheckOtp(string value)
         {
-
+            bool isExistvalue = Unities.CheckDigitaAndLength(value, 1);
+            if (!isExistvalue)
+            {
+                WarningText = "ค่าที่ใส่ไม่ใช่ตัวเลข";
+                WarningVisible = true;
+            }
+            pin += value;
+            int countPin = pin.Length;
+            //TODO : Change Color of 6 Circle;
+            if(countPin == 6)
+            {
+                bool isExistEmail = Unities.CheckEmailFormat(email);
+                if (isExistEmail)
+                {
+                    var checkOtpData = await _authService.CheckOtp(email, pin, reference);
+                    if (checkOtpData.IsError)
+                    {
+                        if (checkOtpData.Model.IsValidateOtp)
+                        {
+                            if(checkProcess == Status.LastPage.Login)
+                            {
+                                //TODO : Waiting Name of next view model
+                                //await Application.Current.MainPage.Navigation.PushAsync();
+                            }
+                            else if(checkProcess == Status.LastPage.Register)
+                            {
+                                //TODO : Waiting Name of next view model
+                                //await Application.Current.MainPage.Navigation.PushAsync();
+                            }
+                            else
+                            {
+                                await Application.Current.MainPage.Navigation.PopToRootAsync();
+                            }
+                        }
+                        else
+                        {
+                            WarningText = "OTP ไม่ถูกต้องหรือหมดอายุ";
+                            WarningVisible = true;
+                        }
+                    }
+                    else
+                    {
+                        WarningText = "ไม่สามารถเชื่อมต่อได้";
+                        WarningVisible = true;
+                    }
+                }
+                else
+                {
+                    await Application.Current.MainPage.Navigation.PopToRootAsync();
+                }
+            }
         }
-        public async void CheckForLogin(string value)
-        {
 
+        public ICommand GoBack { get; set; }
+        public async void BackPage()
+        {
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
