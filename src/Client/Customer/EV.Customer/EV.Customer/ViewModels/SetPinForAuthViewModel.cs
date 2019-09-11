@@ -1,5 +1,6 @@
 ﻿using EV.Customer.Helper;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels.Auth;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,27 +12,40 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class OtpRegisViewModel : INotifyPropertyChanged
+    public class SetPinForAuthViewModel : INotifyPropertyChanged
     {
         private readonly AuthService _authService = new AuthService();
-        public OtpRegisViewModel(string passEmail, string passReference, Status.LastPage lastPage)
+        public SetPinForAuthViewModel(string passEmail)
         {
-            title = "การยืนยัน OTP";
+            DataJoint();
+            lastPage = Status.LastPage.Login;
+            email = passEmail;
+            GoBack = new Command(BackPageByLogin);
+        }
+
+        public SetPinForAuthViewModel(RegisterCommand passRegister)
+        {
+            DataJoint();
+            lastPage = Status.LastPage.Register;
+            register = passRegister;
+            GoBack = new Command(BackPageByRegis);
+        }
+
+        public void DataJoint()
+        {
+            title = "สร้างรหัสผ่าน";
             image = "";
-            blackDetail = "กรุณาใส่ OTP\nเพื่อยืนยัน email ของคุณ";
-            grayDetail = "เราได้ส่ง OTP ไปที่ email ของคุณแล้ว";
-            referenceText = "ref. " + passReference;
-            referenceVisible = true;
-            orangeText = "ส่ง OTP อีกครั้ง";
-            orangeVisible = true;
+            blackDetail = "สร้างรหัสผ่าน";
+            grayDetail = "ใส่รหัสผ่านของคุณ";
+            referenceText = "";
+            referenceVisible = false;
+            orangeText = "";
+            orangeVisible = false;
             warningText = "";
             warningVisible = false;
-            OrangeTextTab = new Command(SentOtpAgain);
-            InputPin = new Command<string>(CheckOtp);
-            email = passEmail;
-            checkProcess = lastPage;
-            reference = passReference;
             pin = "";
+            repeatPin = "";
+            InputPin = new Command<string>(InputPinMethod);
         }
 
         private string title;
@@ -118,64 +132,20 @@ namespace EV.Customer.ViewModels
             }
         }
 
+        private Status.LastPage lastPage;
+
         private string email;
-
-        private Status.LastPage checkProcess;
-
-        private string reference;
 
         private string pin;
 
+        private string repeatPin;
+
+        private RegisterCommand register;
+
         public ICommand OrangeTextTab { get; set; }
-        //TODO : Input Name Page;
-        public async void SentOtpAgain()
-        {
-            bool isExistEmail = Unities.CheckEmailFormat(email);
-            if (isExistEmail)
-            {
-                var signInData = await _authService.SignIn(email);
-                if (signInData.IsError)
-                {
-                    Status.LastPage lastPage;
-                    if (signInData.Model.IsExist)
-                    {
-                        lastPage = Status.LastPage.Login;
-                    }
-                    else
-                    {
-                        lastPage = Status.LastPage.Register;
-                    }
-                    OtpRegisViewModel otpRegis = new OtpRegisViewModel(email, signInData.Model.RefNumber, lastPage);
-                    //await Application.Current.MainPage.Navigation.PushAsync(new Page(otpRegis));
-                }
-                else
-                {
-                    WarningText = "ไม่สามารถเชื่อมต่อได้";
-                    WarningVisible = true;
-                    try
-                    {
-                        Vibration.Vibrate();
-                        var duration = TimeSpan.FromSeconds(1);
-                        Vibration.Vibrate(duration);
-                    }
-                    catch (FeatureNotSupportedException ex)
-                    {
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
-            }
-            else
-            {
-                await Application.Current.MainPage.Navigation.PopToRootAsync();
-            }
-        }
 
         public ICommand InputPin { get; set; }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
-        public async void CheckOtp(string value)
+        public async void InputPinMethod(string value)
         {
             if (value == "Delete")
             {
@@ -208,63 +178,192 @@ namespace EV.Customer.ViewModels
                 HintColorChange(countPin);
                 if (countPin == 6)
                 {
-                    var checkOtpData = await _authService.CheckOtp(email, pin, reference);
-                    if (checkOtpData.IsError)
+                    if (lastPage == Status.LastPage.Login)
                     {
-                        if (checkOtpData.Model != null || checkOtpData.Model.IsValidateOtp)
+                        if (repeatPin == "")
                         {
-                            if (checkProcess == Status.LastPage.Login)
-                            {
-                                //TODO : Waiting Name of next view model
-                                //await Application.Current.MainPage.Navigation.PushAsync();
-                            }
-                            else if (checkProcess == Status.LastPage.Register)
-                            {
-                                //TODO : Waiting Name of next view model
-                                //await Application.Current.MainPage.Navigation.PushAsync();
-                            }
-                            else
-                            {
-                                await Application.Current.MainPage.Navigation.PopToRootAsync();
-                            }
+                            ChangeDataJoint();
                         }
                         else
                         {
-                            WarningText = "OTP ไม่ถูกต้องหรือหมดอายุ";
-                            WarningVisible = true;
-                            try
+                            if (pin == repeatPin)
                             {
-                                Vibration.Vibrate();
-                                var duration = TimeSpan.FromSeconds(1);
-                                Vibration.Vibrate(duration);
+                                await Login();
                             }
-                            catch (FeatureNotSupportedException ex)
+                            else
                             {
+                                WarningText = "รหัสผ่านทั้ง 2 ครั้งไม่ตรงกัน";
+                                WarningVisible = true;
+                                try
+                                {
+                                    Vibration.Vibrate();
+                                    var duration = TimeSpan.FromSeconds(1);
+                                    Vibration.Vibrate(duration);
+                                }
+                                catch (FeatureNotSupportedException ex)
+                                {
+                                }
+                                catch (Exception ex)
+                                {
+                                }
                             }
-                            catch (Exception ex)
+                        }
+                    }
+                    else if (lastPage == Status.LastPage.Register)
+                    {
+                        if (repeatPin == "")
+                        {
+                            ChangeDataJoint();
+                        }
+                        else
+                        {
+                            if (pin == repeatPin)
                             {
+                                register.Pin = pin;
+                                await Register();
                             }
+                            else
+                            {
+                                WarningText = "รหัสผ่านทั้ง 2 ครั้งไม่ตรงกัน";
+                                WarningVisible = true;
+                                try
+                                {
+                                    Vibration.Vibrate();
+                                    var duration = TimeSpan.FromSeconds(1);
+                                    Vibration.Vibrate(duration);
+                                }
+                                catch (FeatureNotSupportedException ex)
+                                {
+                                }
+                                catch (Exception ex)
+                                {
+                                }
+                            }
+
                         }
                     }
                     else
                     {
-                        WarningText = "ไม่สามารถเชื่อมต่อได้";
-                        WarningVisible = true;
-                        try
-                        {
-                            Vibration.Vibrate();
-                            var duration = TimeSpan.FromSeconds(1);
-                            Vibration.Vibrate(duration);
-                        }
-                        catch (FeatureNotSupportedException ex)
-                        {
-                        }
-                        catch (Exception ex)
-                        {
-                        }
+                        await Application.Current.MainPage.Navigation.PopToRootAsync();
                     }
                 }
             }
+        }
+        //TODO : Input Name Page;
+        //TODO : Waiting Name of next view model
+        public async Task Register()
+        {
+            var registerData = await _authService.Register(register);
+            if (registerData.IsError)
+            {
+                if (registerData.Model != null)
+                {
+                    await SecureStorage.SetAsync("RefreshToken", registerData.Model.RefreshToken);
+                    await SecureStorage.SetAsync("AccessToken", registerData.Model.Token);
+                    await SecureStorage.SetAsync("AccountNumber", registerData.Model.Account);
+                    //TODO : Waiting Name of next view model
+                    //await Application.Current.MainPage.Navigation.PushAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "ไม่สามารถ Register ได้", "OK");
+                    await Application.Current.MainPage.Navigation.PopToRootAsync();
+                }
+            }
+            else
+            {
+                WarningText = "ไม่สามารถเชื่อมต่อได้";
+                WarningVisible = true;
+                try
+                {
+                    Vibration.Vibrate();
+                    var duration = TimeSpan.FromSeconds(1);
+                    Vibration.Vibrate(duration);
+                }
+                catch (FeatureNotSupportedException ex)
+                {
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+        public async Task Login()
+        {
+            var loginData = await _authService.LoginByCustomer(email, pin);
+            if (loginData.IsError)
+            {
+                if (loginData.Model != null)
+                {
+                    await SecureStorage.SetAsync("RefreshToken", loginData.Model.RefreshToken);
+                    await SecureStorage.SetAsync("AccessToken", loginData.Model.Token);
+                    await SecureStorage.SetAsync("AccountNumber", loginData.Model.Account);
+                    //TODO : Waiting Name of next view model
+                    //await Application.Current.MainPage.Navigation.PushAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "ไม่สามารถ Register ได้", "OK");
+                    await Application.Current.MainPage.Navigation.PopToRootAsync();
+                }
+            }
+            else
+            {
+                WarningText = "ไม่สามารถเชื่อมต่อได้";
+                WarningVisible = true;
+                try
+                {
+                    Vibration.Vibrate();
+                    var duration = TimeSpan.FromSeconds(1);
+                    Vibration.Vibrate(duration);
+                }
+                catch (FeatureNotSupportedException ex)
+                {
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+
+        public ICommand GoBack { get; set; }
+        //TODO : Input Name Page;
+        //TODO : Waiting Name of next view model
+        public async void BackPageByLogin()
+        {
+            if (repeatPin == "")
+            {
+                //TODO : Waiting Name of next view model
+                //await Application.Current.MainPage.Navigation.PushAsync();
+            }
+            else
+            {
+                DataJoint();
+            }
+        }
+        //TODO : Input Name Page;
+        //TODO : Waiting Name of next view model
+        public async void BackPageByRegis()
+        {
+            if (repeatPin == "")
+            {
+                //TODO : Waiting Name of next view model
+                //await Application.Current.MainPage.Navigation.PushAsync();
+            }
+            else
+            {
+                DataJoint();
+            }
+        }
+
+        public void ChangeDataJoint()
+        {
+            Title = "ยืนยันรหัสผ่าน";
+            Image = "";
+            BlackDetail = "ยืนยันรหัสผ่าน";
+            GrayDetail = "ใส่รหัสผ่านของคุณอีกครั้ง";
+            pin = "";
+            repeatPin = pin;
         }
 
         private void HintColorChange(int length)
@@ -368,12 +467,6 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
-        }
-
-        public ICommand GoBack { get; set; }
-        public async void BackPage()
-        {
-            await Application.Current.MainPage.Navigation.PopAsync();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

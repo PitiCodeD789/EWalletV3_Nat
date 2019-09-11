@@ -11,6 +11,5 @@ namespace EV.Customer.Helper
             Login,
             Register            
         };
-        
     }
 }
