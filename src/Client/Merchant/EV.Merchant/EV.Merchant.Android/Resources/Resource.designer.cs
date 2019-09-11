@@ -6448,19 +6448,19 @@ namespace EV.Merchant.Droid
 			public const int notify_panel_notification_icon_bg = 2131165497;
 			
 			// aapt resource value: 0x7F07013A
-			public const int qr_code_filled_50px = 2131165498;
+			public const int phoneicon = 2131165498;
 			
 			// aapt resource value: 0x7F07013B
-			public const int Splash = 2131165499;
+			public const int qricon = 2131165499;
 			
 			// aapt resource value: 0x7F07013C
-			public const int tooltip_frame_dark = 2131165500;
+			public const int Splash = 2131165500;
 			
 			// aapt resource value: 0x7F07013D
-			public const int tooltip_frame_light = 2131165501;
+			public const int tooltip_frame_dark = 2131165501;
 			
 			// aapt resource value: 0x7F07013E
-			public const int touchscreen_smartphone_filled_50px = 2131165502;
+			public const int tooltip_frame_light = 2131165502;
 			
 			// aapt resource value: 0x7F07013F
 			public const int walletIcon = 2131165503;

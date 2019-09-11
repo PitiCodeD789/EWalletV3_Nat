@@ -6450,11 +6450,11 @@ namespace EV.Admin.Droid
 			// aapt resource value: 0x7F07013A
 			public const int notify_panel_notification_icon_bg = 2131165498;
 			
+			// aapt resource value: 0x7F07013B
+			public const int phoneicon = 2131165499;
+			
 			// aapt resource value: 0x7F07013C
 			public const int qricon = 2131165500;
-			
-			// aapt resource value: 0x7F07013B
-			public const int qr_code_filled_50px = 2131165499;
 			
 			// aapt resource value: 0x7F07013D
 			public const int Splash = 2131165501;
@@ -6466,10 +6466,7 @@ namespace EV.Admin.Droid
 			public const int tooltip_frame_light = 2131165503;
 			
 			// aapt resource value: 0x7F070140
-			public const int touchscreen_smartphone_filled_50px = 2131165504;
-			
-			// aapt resource value: 0x7F070141
-			public const int walletIcon = 2131165505;
+			public const int walletIcon = 2131165504;
 			
 			static Drawable()
 			{
