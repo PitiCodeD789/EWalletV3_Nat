@@ -6,32 +6,39 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
              mc:Ignorable="d"
-             x:Class="EV.Merchant.Views.TopupPage"
+             x:Class="EV.Merchant.Views.GenerateQRcodePage"
              NavigationPage.HasNavigationBar="False"
              >
     <ContentPage.Content>
-        <StackLayout  Margin="30,0,30,20">
-
-            <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
-                <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" Margin="0,40,0,0">
+        <StackLayout   Margin="20,20,20,15">
+            <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="0,30,0,0">
+                <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" 
+                       Padding="0,10,0,25" IsClippedToBounds="True"
+                       >
                     <StackLayout>
-                        <zxing:ZXingBarcodeImageView WidthRequest="300" 
-                                         HeightRequest="300" 
-                                         BarcodeValue="5555" 
+                        <zxing:ZXingBarcodeImageView WidthRequest="400" 
+                                         HeightRequest="400" 
+                                         BarcodeValue="5555555555555555555555555555555555555555555" 
                                          BarcodeFormat="QR_CODE"
-                                         InputTransparent="True"
+                                         HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="FillAndExpand"
+                                         Margin="-120,-50,-120,-60"
                                          >
                             <zxing:ZXingBarcodeImageView.BarcodeOptions>
-                                <zxcm:EncodingOptions Width="400" Height="400" PureBarcode="True" />
+                                <zxcm:EncodingOptions Width="300" Height="300" />
                             </zxing:ZXingBarcodeImageView.BarcodeOptions>
                         </zxing:ZXingBarcodeImageView>
-                        <Image Source="walletcircle" WidthRequest="60" HeightRequest="60"/>
-                        <Label Text="Test" FontSize="14" TextColor="#ABABAB" HorizontalTextAlignment="Center"/>
+                        <Frame CornerRadius="50" BackgroundColor="White" Padding="0" Margin="0,5" HasShadow="True"
+                       HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" Grid.Column="0">
+                            <Image Source="walletIcon" Aspect="AspectFit" VerticalOptions="Center"
+                           HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
+                        </Frame>
+                        <Label Text="Store Food A" FontSize="14" TextColor="#B6B6B6" HorizontalTextAlignment="Center"/>
                     </StackLayout>
 
                 </Frame>
             </StackLayout>
-            <StackLayout VerticalOptions="EndAndExpand" Margin="0,20">
+            <StackLayout VerticalOptions="EndAndExpand" Margin="0,10">
 
                 <Frame BackgroundColor="#EAA200" Padding="0">
                     <Button 
