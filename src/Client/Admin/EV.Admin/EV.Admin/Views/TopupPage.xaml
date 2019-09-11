@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:EV.Admin.Components"
              mc:Ignorable="d"
              x:Class="EV.Admin.Views.TopupPage"
              NavigationPage.HasNavigationBar="False"
@@ -33,12 +34,9 @@
                        />
                 <Label x:Name="thbTag" Text="THB" Margin="-10,20,0,0"/>
             </StackLayout>
-            <Button VerticalOptions="EndAndExpand" Margin="10,20"
-                    Text="ตกลง"
-                    Command="{Binding NextPageCommand}"
-                    IsEnabled="{Binding ButtonEnable}"
-                    TextColor="White"
-                    CornerRadius="10"
+            <components:EW_ButtonView VerticalOptions="EndAndExpand" Margin="10,20"
+                    TextButton="ตกลง"
+                    TextColor="White"       
                     />
         </StackLayout>
     </ContentPage.Content>
