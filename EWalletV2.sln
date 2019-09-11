@@ -47,7 +47,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Merchant.iOS", "src\Clie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EV.Merchant", "src\Client\Merchant\EV.Merchant\EV.Merchant\EV.Merchant.csproj", "{4D7A2D82-62E4-4B91-BF6C-41FF0004B318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EV.Service", "src\Client\EV.Service\EV.Service.csproj", "{5E02C013-AA37-46C4-85A5-B4AB44E20477}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EV.Service", "src\Client\EV.Service\EV.Service.csproj", "{5E02C013-AA37-46C4-85A5-B4AB44E20477}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
