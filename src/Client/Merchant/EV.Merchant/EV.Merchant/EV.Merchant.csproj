@@ -48,6 +48,7 @@
     </Compile>
     <Compile Update="Components\EW_TitleEntryView.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
     <Compile Update="Views\GenerateQRcodePage.xaml.cs">
       <DependentUpon>GenerateQRcodePage.xaml</DependentUpon>
     </Compile>
