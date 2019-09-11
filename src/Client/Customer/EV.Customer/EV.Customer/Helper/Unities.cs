@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace EV.Customer.Helper
 {
-    public  class Unities
+    public class Unities
     {
         public static bool CheckEmailFormat(string email)
         {
