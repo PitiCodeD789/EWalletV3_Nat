@@ -10,6 +10,7 @@ namespace EV.Service.Services
 {
     public class AuthService : BaseService, IAuthService
     {
+        private string serviceUrl = Helper.BaseUrl + "auth/";
         public async Task<ResultServiceModel<CheckOtpViewModel>> CheckOtp(string email, string otp, string refNumber)
         {
             string url = Helper.BaseUrl + "auth/CheckOtp";
@@ -69,6 +70,16 @@ namespace EV.Service.Services
             return await Get<CheckEmailViewModel>(url);
         }
 
+        public async Task<ResultServiceModel<LoginByCustomerViewModel>> LoginByCustomer(string email, string pin)
+        {
+            LoginByCustomerCommand model = new LoginByCustomerCommand()
+            {
+                Email = email,
+                Pin = pin
+            };
 
+            string url = serviceUrl + "loginbycustomer";
+            return await Post<LoginByCustomerViewModel>(url, model);
+        }
     }
 }
