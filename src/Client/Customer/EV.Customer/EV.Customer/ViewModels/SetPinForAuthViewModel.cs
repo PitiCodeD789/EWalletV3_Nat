@@ -290,7 +290,40 @@ namespace EV.Customer.ViewModels
         }
         public async Task Login()
         {
-            
+            var loginData = await _authService.LoginByCustomer(email, pin);
+            if (loginData.IsError)
+            {
+                if (loginData.Model != null)
+                {
+                    await SecureStorage.SetAsync("RefreshToken", loginData.Model.RefreshToken);
+                    await SecureStorage.SetAsync("AccessToken", loginData.Model.Token);
+                    await SecureStorage.SetAsync("AccountNumber", loginData.Model.Account);
+                    //TODO : Waiting Name of next view model
+                    //await Application.Current.MainPage.Navigation.PushAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "ไม่สามารถ Register ได้", "OK");
+                    await Application.Current.MainPage.Navigation.PopToRootAsync();
+                }
+            }
+            else
+            {
+                WarningText = "ไม่สามารถเชื่อมต่อได้";
+                WarningVisible = true;
+                try
+                {
+                    Vibration.Vibrate();
+                    var duration = TimeSpan.FromSeconds(1);
+                    Vibration.Vibrate(duration);
+                }
+                catch (FeatureNotSupportedException ex)
+                {
+                }
+                catch (Exception ex)
+                {
+                }
+            }
         }
 
         public ICommand GoBack { get; set; }
