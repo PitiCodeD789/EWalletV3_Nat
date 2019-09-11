@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="EV.Merchant.Views.ChildHomeTabPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="270"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Image Source="https://sv1.picz.in.th/images/2019/09/01/ZsSakW.jpg"
+                       Aspect="AspectFill" Grid.Row="0"/>
+                <StackLayout Margin="0,20,0,0">
+                    <!--<Label Text="{Binding FullName,StringFormat='ยินดีตอนรับ {0}'} " LineBreakMode="WordWrap"-->
+                    <Grid VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="icon_camera_circle" Aspect="AspectFit" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"
+                               HorizontalOptions="End" VerticalOptions="Center"
+                               WidthRequest="40"
+                               HeightRequest="40"/>
+                        <Label Text="ยินดีต้อนรับ ดำรงเดช ลลิหกดฟหกดหฟห" LineBreakMode="TailTruncation" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"
+                           FontSize="28" TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="EndAndExpand"
+                           HorizontalOptions="Center"/>
+                        <Label Text="สวัสดีตอนเช้า" TextColor="White" FontSize="20"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+                           FontAttributes="Bold"
+                           VerticalOptions="StartAndExpand"
+                           HorizontalOptions="StartAndExpand"/>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+            <Grid VerticalOptions="CenterAndExpand"
+                  HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="0"
+                       Grid.Row="0"
+                       Margin="10,5,5,10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapCreateQRCode" NumberOfTapsRequired="1" 
+                                              Tapped="TapCreateQRCode_Tapped"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="qr_code_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                        <Label Text="สร้าง QR cods"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="0"
+                       Grid.Row="1"
+                       Margin="10,5,5,10">
+                    <StackLayout>
+                        <Image Source="touchscreen_smartphone_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                        <Label Text="Coming soon"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="1"
+                       Grid.Row="0"
+                       Margin="10,5,5,10">
+                    <StackLayout>
+                        <Image Source="touchscreen_smartphone_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                        <Label Text="Coming soon"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" 
+                       HasShadow="True"
+                       Padding="30"
+                       HeightRequest="150"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       Margin="10,5,5,10">
+                    <StackLayout>
+                        <Image Source="touchscreen_smartphone_filled_50px.png"
+                               Aspect="AspectFit"
+                               HeightRequest="80"/>
+                        <Label Text="Coming soon"
+                               FontSize="18"
+                               TextColor="LightGray"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
