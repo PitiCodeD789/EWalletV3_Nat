@@ -8,7 +8,7 @@
     <ContentView.Content>
         <Frame Padding="0" HasShadow="True" CornerRadius="10">
             <Button x:Name="mButton" Text="Click Me" Clicked="MButton_Clicked" 
-                    BackgroundColor="#eaa200"  TextColor="White"
+                    BackgroundColor="#eaa200"  TextColor="White" CornerRadius="10"
                     FontAttributes="Bold"/>
         </Frame>
     </ContentView.Content>
