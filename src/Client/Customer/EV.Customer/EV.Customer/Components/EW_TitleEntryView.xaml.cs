@@ -28,7 +28,7 @@ namespace EV.Customer.Components
             BindableProperty.Create(
                 propertyName: "TextEntry",
                 returnType: typeof(string),
-                declaringType: typeof(EW_EntryView),
+                declaringType: typeof(EW_TitleEntryView),
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
 
@@ -73,7 +73,7 @@ namespace EV.Customer.Components
             BindableProperty.Create(
                 propertyName: "IsEntryEnabled",
                 returnType: typeof(bool),
-                declaringType: typeof(EW_EntryView),
+                declaringType: typeof(EW_TitleEntryView),
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
     }
