@@ -20,7 +20,10 @@ namespace EV.Customer.Helper
             }
         }
 
-    
-       
+        public static bool CheckDigitaAndLength(string digit, int length)
+        {
+            string pattern = @"^\d{" + length + @"}$";
+            return Regex.IsMatch(digit, pattern);
+        }
     }
 }
