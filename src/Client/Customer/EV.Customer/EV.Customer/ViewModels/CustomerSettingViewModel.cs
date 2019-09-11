@@ -95,7 +95,7 @@ namespace EV.Customer.ViewModels
 
         private async void NarvigatetoChangePasswordPage()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new MainPage());
+            //await Application.Current.MainPage.Navigation.PushAsync(new MainPage());
         }
     }
 }

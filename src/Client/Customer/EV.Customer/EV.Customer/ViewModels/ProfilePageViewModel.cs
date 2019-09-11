@@ -40,7 +40,7 @@ namespace EV.Customer.ViewModels
         {
             _authService.Logout(Email);
             //กลับไปหน้าแรก
-            Application.Current.MainPage = new MainPage();
+           // Application.Current.MainPage = new MainPage();
         }
 
         private string _email;
