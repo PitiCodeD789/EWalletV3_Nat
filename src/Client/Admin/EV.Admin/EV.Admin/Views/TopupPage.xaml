@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:EV.Admin.Components"
              mc:Ignorable="d"
              x:Class="EV.Admin.Views.TopupPage"
              NavigationPage.HasNavigationBar="False"
@@ -24,16 +25,18 @@
             <Label Text="ใส่จำนวนเงิน" FontSize="25" TextColor="#7F7F7F"  HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
             <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal" >
                 <Entry Placeholder="0.00" FontSize="40" 
-                       Keyboard="Numeric" 
-                       HorizontalTextAlignment="End"/>
-                <Label Text="THB" Margin="0,20,0,0"/>
+                       Keyboard="Numeric"
+                       x:Name="inputMoney"
+                       TextChanged="TextSizeChange"
+                       HorizontalTextAlignment="Center"
+                       WidthRequest="120"
+                       MaxLength="7"
+                       />
+                <Label x:Name="thbTag" Text="THB" Margin="-10,20,0,0"/>
             </StackLayout>
-            <Button VerticalOptions="EndAndExpand" Margin="10,20"
-                    Text="ตกลง"
-                    Command="{Binding NextPageCommand}"
-                    IsEnabled="{Binding ButtonEnable}"
-                    TextColor="White"
-                    CornerRadius="10"
+            <components:EW_ButtonView VerticalOptions="EndAndExpand" Margin="10,20"
+                    TextButton="ตกลง"
+                    TextColor="White"       
                     />
         </StackLayout>
     </ContentPage.Content>

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             xmlns:components="clr-namespace:EV.Merchant.Components"
              mc:Ignorable="d"
              x:Class="EV.Merchant.Views.GenerateQRcodePage"
              NavigationPage.HasNavigationBar="False"
@@ -40,21 +41,9 @@
             </StackLayout>
             <StackLayout VerticalOptions="EndAndExpand" Margin="0,10">
 
-                <Frame BackgroundColor="#EAA200" Padding="0">
-                    <Button 
-                    Text="บันทึก"
-                    TextColor="White"
-                    CornerRadius="10"
-                    />
-                </Frame>
-                <Frame  BackgroundColor="White" Padding="0">
-                    <Button 
-                    Text="กลับสู่หน้าหลัก"
-                    TextColor="#EBA406"
-                    BackgroundColor="White"
-                    CornerRadius="10"
-                    />
-                </Frame>
+ 
+                <components:EW_ButtonView TextButton="บันทึก"  />
+                <components:EW_ButtonView TextButton="กลับสู่หน้าหลัก" BackgroundButton="White" TextColor="#EBA406" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
