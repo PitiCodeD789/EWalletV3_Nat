@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
@@ -22,6 +23,7 @@ namespace EV.Customer.ViewModels
         {
             //TODO: CheckGender OnLoad
             //GendenRadioChange(App.Gender());
+            IsEditMode = false;
             _userService = new UserService();
             EditClickCommand = new Command(Edit);
             GendenRadioChangeCommand = new Command(GendenRadioChange);
@@ -47,39 +49,65 @@ namespace EV.Customer.ViewModels
 
         private async void Edit()
         {
-            bool isValidateName = Unities.ValidateName(FirstName);
-            bool isValidateLastName = Unities.ValidateName(LastName);
-            bool isValidateDate = Unities.ValidateStringDateFormat(BirthDate);
-            bool isValidateEmail = Unities.CheckEmailFormat(Email);
-            if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
+            if (IsEditMode)
             {
-                UpdateUserCommand updateUserCommand = new UpdateUserCommand
+                bool isValidateName = Unities.ValidateName(FirstName);
+                bool isValidateLastName = Unities.ValidateName(LastName);
+                bool isValidateDate = Unities.ValidateStringDateFormat(BirthDate);
+                bool isValidateEmail = Unities.CheckEmailFormat(Email);
+                if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
                 {
-                    BitrhDate = DateTime.Parse(BirthDate),
-                    Email = Email,
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    MobileNumber = MobileNumber,
-                    Gender = Gender
-                };
-                var editResult = await _userService.UpdateUser(updateUserCommand);
-                bool isError = editResult.IsError;
-                if (isError)
-                {
-                    await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+                    UpdateUserCommand updateUserCommand = new UpdateUserCommand
+                    {
+                        BitrhDate = DateTime.Parse(BirthDate),
+                        Email = Email,
+                        FirstName = FirstName,
+                        LastName = LastName,
+                        MobileNumber = MobileNumber,
+                        Gender = Gender
+                    };
+                    var editResult = await _userService.UpdateUser(updateUserCommand);
+                    bool isError = editResult.IsError;
+                    if (isError)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+                    }
+                    else
+                    {
+                        //TODO: Show Completed Popup
+                        StoreValue(updateUserCommand);
+                        IsEditMode = false;
+                    }
                 }
                 else
                 {
-
+                    await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
                 }
-                //TODO EditProfile
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+                IsEditMode = true;
             }
+
         }
 
+        bool StoreValue(UpdateUserCommand viewModel)
+        {
+            try
+            {
+                SecureStorage.SetAsync("BirthDate", viewModel.BitrhDate.ToString());
+                SecureStorage.SetAsync("Email", viewModel.Email);
+                SecureStorage.SetAsync("FirstName", viewModel.FirstName);
+                SecureStorage.SetAsync("Gender", viewModel.Gender.ToString());
+                SecureStorage.SetAsync("LastName", viewModel.LastName);
+                SecureStorage.SetAsync("MobileNumber", viewModel.MobileNumber);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
 
         private string bgWomenRadio;
