@@ -65,15 +65,25 @@ namespace EV.Customer.ViewModels
         public string BirthDate
         {
             get { return _birthDate; }
-            set { _birthDate = value; OnPropertyChanged(); }
+            set {
+                if (value != _birthDate)
+                {
+                    _birthDate = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         private string _email;
-
         public string Email
         {
             get { return _email; }
-            set { _email = value;OnPropertyChanged(); }
+            set {
+                if (value != _email)
+                {
+                    _email = value; OnPropertyChanged();
+                }
+            }
         }
 
         public Command CallCheckForgotPin { get; }
