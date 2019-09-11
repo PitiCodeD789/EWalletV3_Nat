@@ -5,9 +5,10 @@ using System.Text;
 
 namespace EWalletV2.Api.ViewModels.User
 {
-    public class AccountCommand
+    public class EmailCommand
     {
-        [RegularExpression(@"^(\d{10})$")]
-        public string AccountNumber { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
     }
 }

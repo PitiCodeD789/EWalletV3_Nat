@@ -39,9 +39,9 @@ namespace EWalletV2.Api.Controllers
 
         //GetBalance
         [HttpPost("GetBalance")]
-        public IActionResult GetBalance([EmailAddress]string email)
+        public IActionResult GetBalance([FromBody]EmailCommand command)
         {
-            AccountViewModel accountViewModel = _userService.GetAccountDetailByEmail(email);
+            AccountViewModel accountViewModel = _userService.GetAccountDetailByEmail(command.Email);
             if (accountViewModel == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
