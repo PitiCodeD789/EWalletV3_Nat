@@ -20,33 +20,51 @@ namespace EV.Customer.ViewModels
 
         private async void SignIn()
         {
+            IsProcess = true;
             bool isEmail = Unities.CheckEmailFormat(Email);
-            if(isEmail)
+          
+            if (isEmail)
             {
                 var result = await _authService.SignIn(Email);
                 if (result.IsError || result.Model == null)
                 {
                     
                     await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+                    
 
                 }
                 else
                 {
-                    
+                  
                     // TODO: valid or invalid Create viewModels supports Otp page and edit data
                     await Application.Current.MainPage.Navigation.PushAsync(new Page());
                 }
+                IsProcess = false;
 
-
+            }else
+            {
+                await Application.Current.MainPage.DisplayAlert("", "Email Error", "Ok");
             }
 
 
 
         }
 
+        private bool isProcess;
+
+        public bool IsProcess
+        {
+            get { return isProcess; }
+            set { isProcess = value; OnPropertyChanged("IsProcess"); }
+        }
+
         public String Email { get; set; }
         public Command SignInCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
