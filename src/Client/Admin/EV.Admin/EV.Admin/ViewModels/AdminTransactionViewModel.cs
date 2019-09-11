@@ -1,7 +1,5 @@
 ﻿using EV.Service.Interfaces;
-using EV.Service.Models;
 using EV.Service.Services;
-using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Transaction;
 using System;
 using System.Collections.Generic;
@@ -10,12 +8,12 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace EV.Customer.ViewModels
+namespace EV.Admin.ViewModels
 {
-    public class CustomerTransactionViewModel
+    public class AdminTransactionViewModel
     {
         private readonly ITransactionServices _transactionService;
-        public CustomerTransactionViewModel()
+        public AdminTransactionViewModel()
         {
             //Initial
             _transactionService = new TransactionServices();
@@ -31,6 +29,8 @@ namespace EV.Customer.ViewModels
             TransactionViewModel transaction = Transactionlist.Where(x => x.TransactionId == transactionId).FirstOrDefault();
             TransactionName = transaction.TransactionType;
             TransactionPaid = transaction.Balance;
+            TransactionReference = transaction.TransactionReference;
+            CreateDate = transaction.CreateDateTime;
             if (transaction.TransactionType == "TopUp")
             {
                 //TopUp
@@ -42,24 +42,13 @@ namespace EV.Customer.ViewModels
                 FullName2 = FullName;
                 AccountNumber2 = AccountNumber;
             }
-            else
-            {
-                //Payment
-                Image1 = "AccountOrange";
-                FullName1 = FullName;
-                AccountNumber1 = AccountNumber;
-
-                Image2 = "Wallet";
-                FullName2 = transaction.FirstName + " " + transaction.LastName;
-                AccountNumber2 = transaction.Account;
-            }
         }
 
         public async void GetTransactions()
         {
-            ResultServiceModel<List<TransactionViewModel>> result = await _transactionService.GetTransaction30Days(Email);
-            if(result.IsError != true)
-            Transactionlist = result.Model;
+            var result = await _transactionService.GetTransaction30Days(Email);
+            if (result.IsError != true)
+                Transactionlist = result.Model;
             //If Error popup errorPopupPage
         }
 
@@ -73,8 +62,16 @@ namespace EV.Customer.ViewModels
 
         public string TransactionName { get; set; }
         public decimal TransactionPaid { get; set; }
+        public string TransactionReference { get; set; }
 
         public List<TransactionViewModel> Transactionlist { get; set; }
+
+        private DateTime _createDate;
+        public DateTime CreateDate
+        {
+            get { return _createDate; }
+            set { _createDate = value; }
+        }
 
         private string _fullName;
         public string FullName
@@ -103,6 +100,5 @@ namespace EV.Customer.ViewModels
             get { return _customerBalance; }
             set { _customerBalance = value; }
         }
-
     }
 }
