@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="EV.Customer.Views.RegistAndFingerSuccess">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <StackLayout VerticalOptions="StartAndExpand"
+                         HorizontalOptions="CenterAndExpand"
+                         Margin="0,50,0,0">
+                <Image Source="icon_checked.png"
+                   WidthRequest="120"
+                   HeightRequest="120"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+                <Label Text="ลงทะเบียนสำเร็จแล้ว"
+                   FontSize="25"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="Black"
+                   FontAttributes="Bold"/>
+            </StackLayout>
+            <Grid>
+                <Frame IsVisible="True"
+                    BackgroundColor="White"
+                   HasShadow="True"
+                   CornerRadius="10"
+                   HorizontalOptions="FillAndExpand"
+                   Padding="2"
+                   VerticalOptions="End">
+                    <Button
+                        Text="เพิ่ม Fingerprint"
+                        TextColor="#EAA200"
+                        FontSize="18"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"/>
+                </Frame>
+                <Label  Margin="0,0,0,30"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="เพิ่ม FingerPrint เรียบร้อย"
+                        FontSize="18"
+                        TextColor="#EAA200"
+                        IsVisible="False"
+                        BackgroundColor="Transparent"
+                        FontAttributes="Bold"/>
+            </Grid>
+            <Frame BackgroundColor="#EAA200"
+                   HasShadow="True"
+                   CornerRadius="10"
+                   Padding="2"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="End">
+                <Button Text="เสร็จสิ้น"
+                        TextColor="White"
+                        FontSize="18"
+                        BackgroundColor="#EAA200"/>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

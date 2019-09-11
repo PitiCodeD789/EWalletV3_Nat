@@ -40,7 +40,7 @@
 
 
             </StackLayout>
-            <ContentView IsVisible="{Binding ShowLoading}" 
+            <ContentView IsVisible="False" 
                          HorizontalOptions="FillAndExpand" 
                          VerticalOptions="FillAndExpand" 
                          BackgroundColor="Black"

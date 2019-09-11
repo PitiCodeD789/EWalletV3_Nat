@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace EV.Merchant.Views
+namespace EV.Admin.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TopupPage : ContentPage
+    public partial class ChildHomeTabPage : ContentPage
     {
-        public TopupPage()
+        public ChildHomeTabPage()
         {
             InitializeComponent();
+        }
+
+        private void TapPayment_Tapped(object sender, EventArgs e)
+        {
+
         }
     }
 }

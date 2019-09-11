@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Admin.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace EV.Admin
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new AdminTabbedPage());
         }
 
         protected override void OnStart()
