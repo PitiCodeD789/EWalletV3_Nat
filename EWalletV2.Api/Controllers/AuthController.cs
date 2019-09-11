@@ -131,7 +131,7 @@ namespace EWalletV2.Api.Controllers
 
                 return Ok(viewModel);
             }
-
+            
             return BadRequest();
         }
 
