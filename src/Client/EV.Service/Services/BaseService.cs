@@ -33,6 +33,7 @@ namespace EV.Service.Services
 
                     return resultService;
                 }
+                client.Dispose();
                 return null;
             }
             catch (Exception e)
@@ -63,6 +64,7 @@ namespace EV.Service.Services
 
                     return resultService;
                 }
+                client.Dispose();
                 return null;
             }
             catch (Exception e)
