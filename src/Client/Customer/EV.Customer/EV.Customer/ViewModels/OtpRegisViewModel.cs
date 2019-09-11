@@ -215,8 +215,8 @@ namespace EV.Customer.ViewModels
                         {
                             if (checkProcess == Status.LastPage.Login)
                             {
-                                //TODO : Waiting Name of next view model
-                                //await Application.Current.MainPage.Navigation.PushAsync();
+                                SetPinForAuthViewModel setPinForAuth = new SetPinForAuthViewModel(email);
+                                //await Application.Current.MainPage.Navigation.PushAsync(new Page(setPinForAuth));
                             }
                             else if (checkProcess == Status.LastPage.Register)
                             {
