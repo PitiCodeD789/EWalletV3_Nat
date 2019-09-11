@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace EV.Admin.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ForgotPassword : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class LoginPage : ContentPage
     {
-        public ForgotPassword()
+        public LoginPage()
         {
             InitializeComponent();
         }

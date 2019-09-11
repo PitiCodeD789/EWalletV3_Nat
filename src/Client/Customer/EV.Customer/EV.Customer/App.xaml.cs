@@ -12,7 +12,7 @@ namespace EV.Customer
             InitializeComponent();
 
             //MainPage = new MainPage();
-            MainPage = new NavigationPage(new ScanToPayOne());
+            MainPage = new NavigationPage(new ForgotPassword());
         }
 
         protected override void OnStart()

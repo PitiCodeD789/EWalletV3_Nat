@@ -6,8 +6,9 @@
              mc:Ignorable="d"
              x:Class="EV.Admin.Components.EW_EntryView">
     <ContentView.Content>
-        <Frame>
-            <Entry x:Name="mEntry" Text="{Binding TextEntry}"/>
+        <Frame Padding="10,5,10,5" HasShadow="True" CornerRadius="5">
+            <Entry x:Name="mEntry" Text="{Binding TextEntry}"  PlaceholderColor="#d9d9d9" 
+                   TextColor="Black" FontSize="Medium"/>
         </Frame>
     </ContentView.Content>
 </ContentView>

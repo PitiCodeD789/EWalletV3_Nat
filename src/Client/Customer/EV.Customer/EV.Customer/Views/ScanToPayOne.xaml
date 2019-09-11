@@ -40,8 +40,8 @@
                             <Image Source="AccountOrange" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                         </Frame>
-                        <Label Text="{Binding FirstName}" HorizontalTextAlignment="Center" TextColor="Black"/>
-                        <Label Text="{Binding BookBank}" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding FullName1}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding AccountNumber1}" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                     <Image Source="Next" Grid.Column="1" Aspect="AspectFit" Margin="0,-50,0,0"/>
                     <StackLayout Grid.Column="2">
@@ -50,8 +50,8 @@
                             <Image Source="Wallet" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                         </Frame>
-                        <Label Text="{Binding MerchantName}" HorizontalTextAlignment="Center" TextColor="Black"/>
-                        <Label Text="{Binding MerchantBookBank}" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding FullName2}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding AccountNumber2}" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </Grid>
                 <BoxView BackgroundColor="Black" HeightRequest="1"/>

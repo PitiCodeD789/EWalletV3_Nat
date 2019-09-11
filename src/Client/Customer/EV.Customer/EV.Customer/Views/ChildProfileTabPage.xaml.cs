@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace EV.Merchant.Views
+namespace EV.Customer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TopupPage : ContentPage
+    public partial class ChildProfileTabPage : ContentPage
     {
-        public TopupPage()
+        public ChildProfileTabPage()
         {
             InitializeComponent();
         }

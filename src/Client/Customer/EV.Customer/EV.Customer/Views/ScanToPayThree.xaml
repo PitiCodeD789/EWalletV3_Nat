@@ -20,5 +20,5 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-    <components:EW_Popup TextSuccess="ทำรายการสำเร็จ"/>
+        <components:EW_Popup TextSuccess="ทำรายการสำเร็จ"/>
     </pages:PopupPage>
