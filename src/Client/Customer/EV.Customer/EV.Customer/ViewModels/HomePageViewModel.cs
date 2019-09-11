@@ -49,7 +49,7 @@ namespace EV.Customer.ViewModels
                         string AdminName = QrCodeInfomation.FirstName + " " + QrCodeInfomation.LastName;
                         string AccountNumber = QrCodeInfomation.AccountNumber;
                         string qrcodeReference = QrCodeInfomation.ReferenceNumber;
-                        PopupNavigation.PushAsync(new Views.TopUpPopUpView(Amount , AdminName, AccountNumber, qrcodeReference));
+                        PopupNavigation.PushAsync(new Views.TopUpPopUpView(Amount, AdminName, AccountNumber, qrcodeReference));
                     }
                     //Wrong QRCode or QRCode expired
                 }
