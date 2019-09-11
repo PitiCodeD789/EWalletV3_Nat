@@ -238,6 +238,9 @@ namespace EV.Customer.ViewModels
                         }
                         else
                         {
+                            pin = "";
+                            countPin = pin.Length;
+                            HintColorChange(countPin);
                             WarningText = "OTP ไม่ถูกต้องหรือหมดอายุ";
                             WarningVisible = true;
                             try

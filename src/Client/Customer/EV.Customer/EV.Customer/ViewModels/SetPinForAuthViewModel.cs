@@ -52,8 +52,15 @@ namespace EV.Customer.ViewModels
         private string title;
         public string Title
         {
-            get { return title; }
-            set { title = value; }
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                OnPropertyChanged(nameof(Title));
+            }
         }
 
         private string image;
@@ -66,15 +73,29 @@ namespace EV.Customer.ViewModels
         private string blackDetail;
         public string BlackDetail
         {
-            get { return blackDetail; }
-            set { blackDetail = value; }
+            get
+            {
+                return blackDetail;
+            }
+            set
+            {
+                blackDetail = value;
+                OnPropertyChanged(nameof(BlackDetail));
+            }
         }
 
         private string grayDetail;
         public string GrayDetail
         {
-            get { return grayDetail; }
-            set { grayDetail = value; }
+            get
+            {
+                return grayDetail;
+            }
+            set
+            {
+                grayDetail = value;
+                OnPropertyChanged(nameof(GrayDetail));
+            }
         }
 
         private string referenceText;
@@ -200,6 +221,9 @@ namespace EV.Customer.ViewModels
                             }
                             else
                             {
+                                pin = "";
+                                countPin = pin.Length;
+                                HintColorChange(countPin);
                                 WarningText = "รหัสผ่านทั้ง 2 ครั้งไม่ตรงกัน";
                                 WarningVisible = true;
                                 try
@@ -383,7 +407,6 @@ namespace EV.Customer.ViewModels
         public void ChangeDataJoint()
         {
             Title = "ยืนยันรหัสผ่าน";
-            Image = "";
             BlackDetail = "ยืนยันรหัสผ่าน";
             GrayDetail = "ใส่รหัสผ่านของคุณอีกครั้ง";
             pin = "";
