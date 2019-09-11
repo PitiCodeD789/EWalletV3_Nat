@@ -11,7 +11,7 @@ namespace EV.Admin
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new TopupPage());
+            MainPage = new NavigationPage(new QRcodePage());
         }
 
         protected override void OnStart()
