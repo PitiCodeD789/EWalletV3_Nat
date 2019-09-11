@@ -19,8 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\EV.Service\EV.Service.csproj" />
   </ItemGroup>
-</Project>
-</Project>
+  <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="VIewsModel\" />
   </ItemGroup>

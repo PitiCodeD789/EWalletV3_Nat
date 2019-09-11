@@ -19,7 +19,7 @@
                     <StackLayout>
                         <zxing:ZXingBarcodeImageView WidthRequest="400" 
                                          HeightRequest="400" 
-                                         BarcodeValue="5555555555555555555555555555555555555555555" 
+                                         BarcodeValue="{Binding MerchantAccount}" 
                                          BarcodeFormat="QR_CODE"
                                          HorizontalOptions="FillAndExpand"
                                          VerticalOptions="FillAndExpand"
@@ -34,7 +34,7 @@
                             <Image Source="walletIcon" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                         </Frame>
-                        <Label Text="Store Food A" FontSize="14" TextColor="#B6B6B6" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding StoreName}" FontSize="14" TextColor="#B6B6B6" HorizontalTextAlignment="Center"/>
                     </StackLayout>
 
                 </Frame>
@@ -43,7 +43,11 @@
 
  
                 <components:EW_ButtonView TextButton="บันทึก"  />
-                <components:EW_ButtonView TextButton="กลับสู่หน้าหลัก" BackgroundButton="White" TextColor="#EBA406" />
+                <components:EW_ButtonView TextButton="กลับสู่หน้าหลัก" 
+                                          BackgroundButton="White" 
+                                          TextColor="#EBA406" 
+                                          Command="{Binding GoBackCommand}"
+                                          />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

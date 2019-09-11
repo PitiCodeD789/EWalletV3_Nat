@@ -23,7 +23,7 @@
                             </Grid.RowDefinitions>
                         <zxing:ZXingBarcodeImageView WidthRequest="300" 
                                          HeightRequest="400" 
-                                         BarcodeValue="5555555555555555555555555555555555555555555" 
+                                         BarcodeValue="{Binding QrcodeData}" 
                                          BarcodeFormat="QR_CODE"
                                          HorizontalOptions="FillAndExpand"
                                          Margin="-100,-40,-120,0"
@@ -39,16 +39,16 @@
                             <Image Source="walletIcon" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="30" HorizontalOptions="CenterAndExpand"/>
                         </Frame>
-                        <Label Text="Agent A" 
+                       <Label Text="{Binding DisplayData.FirstName}"
                        FontSize="15" HorizontalTextAlignment="Center"/>
                         <Frame Padding="7,2,7,2" BackgroundColor="#EAA200" CornerRadius="25" HorizontalOptions="Center" >
                             <Label  Text="Top up" IsEnabled="False" FontSize="14" TextColor="White" HorizontalTextAlignment="Center" />
                         </Frame>
-                        <Label Text="1200 THB" TextColor="Black"
+                       <Label Text="{Binding DisplayData.Amount,StringFormat='{0:N2} THB'}"  TextColor="Black"
                        FontSize="35" HorizontalTextAlignment="Center"/>
-                        <Label Text="Ref : 1asdsa" HorizontalOptions="Center"
+                       <Label  Text="{Binding DisplayData.ReferenceNumber,StringFormat='Ref. {0}'}" HorizontalOptions="Center"
                        FontSize="15"/>
-                        <Label Text="Expired : 12/12/12"
+                            <Label Text="{Binding DisplayData.ExpireDate,StringFormat='Expired: {0:dd MMM yyyy HH:mm:ss}'}" 
                        HorizontalOptions="Center" FontSize="15"/>
                         </StackLayout>
                     </Grid>
@@ -60,6 +60,7 @@
                     TextButton="กลับสู่หน้าหลัก"
                     TextColor="White"   
                     BackgroundColor="White"
+                    Command ="{Binding BacktoPreviousCommand}"
                     />
             </StackLayout>
         </StackLayout>
