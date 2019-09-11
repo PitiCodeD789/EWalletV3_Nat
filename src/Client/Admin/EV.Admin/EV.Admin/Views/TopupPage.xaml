@@ -32,7 +32,6 @@
                        WidthRequest="120"
                        MaxLength="7"
                        Text="{Binding Amount,Mode=OneWayToSource}"/>
-                       />
                 <Label x:Name="thbTag" Text="THB" Margin="-10,20,0,0"/>
             </StackLayout>
             <components:EW_ButtonView VerticalOptions="EndAndExpand" Margin="10,20"
