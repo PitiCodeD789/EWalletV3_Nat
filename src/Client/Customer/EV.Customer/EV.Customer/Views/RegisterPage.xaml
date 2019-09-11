@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:bd="clr-namespace:EV.Customer.ViewModels"
+             mc:Ignorable="d"
+             x:Class="EV.Customer.Views.RegisterPage">
+    <ContentPage.BindingContext>
+        <bd:RegisterPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+        
+
+            <Entry Placeholder="FirstName" Text="{Binding FirstName}" />
+            <Entry Placeholder="LastName" Text="{Binding LastName}"  />
+            <Entry Placeholder="ว/ด/ป เกิด" Text="{Binding BirthDate}"/>
+            <Entry Placeholder="หมายเลยโทรศัพท์"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="F" Command="{Binding GendenRadioChangeCommand}" CommandParameter="F"/>
+                <Label Text="{Binding BgWomenRadio}"/>
+                
+                <Button Text="M" Command="{Binding GendenRadioChangeCommand}" CommandParameter="M"/>
+                <Label Text="{Binding  BgMenRadio }"/>
+            </StackLayout>
+            <Entry Placeholder="Email"/>
+            <Button Text="ถัดไป" Command="{Binding RegisterClickCommand}"/>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
