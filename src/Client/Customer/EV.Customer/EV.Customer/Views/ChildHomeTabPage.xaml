@@ -72,29 +72,29 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Frame BackgroundColor="White" 
+                <Frame BackgroundColor="White" 
                        HasShadow="True"
                        Padding="30"
                        HeightRequest="150"
                        Grid.Column="0"
                        Grid.Row="0"
                        Margin="10,5,5,10">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="TapPayment" NumberOfTapsRequired="1" 
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapPayment" NumberOfTapsRequired="1" 
                                               Tapped="TapPayment_Tapped"/>
-                        </Frame.GestureRecognizers>
-                        <StackLayout>
-                            <Image Source="qr_code_filled_50px.png"
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="qricon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
-                            <Label Text="สแกนจ่าย"
+                        <Label Text="สแกนจ่าย"
                                FontSize="18"
                                TextColor="LightGray"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"/>
-                        </StackLayout>
-                    </Frame>
-                    <Frame BackgroundColor="White" 
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" 
                        HasShadow="True"
                        Padding="30"
                        HeightRequest="150"
@@ -102,7 +102,7 @@
                        Grid.Row="1"
                        Margin="10,5,5,10">
                         <StackLayout>
-                            <Image Source="touchscreen_smartphone_filled_50px.png"
+                        <Image Source="phoneicon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
                             <Label Text="Coming soon"
@@ -124,7 +124,7 @@
                                               Tapped="TapTopupFromAdminApp_Tapped"/>
                         </Frame.GestureRecognizers>
                         <StackLayout>
-                            <Image Source="touchscreen_smartphone_filled_50px.png"
+                        <Image Source="phoneicon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
                             <Label Text="เติมเงิน"
@@ -142,7 +142,7 @@
                        Grid.Row="1"
                        Margin="10,5,5,10">
                         <StackLayout>
-                            <Image Source="touchscreen_smartphone_filled_50px.png"
+                        <Image Source="phoneicon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
                             <Label Text="Coming soon"
