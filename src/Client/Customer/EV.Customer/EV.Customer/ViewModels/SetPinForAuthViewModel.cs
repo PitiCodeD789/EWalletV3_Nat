@@ -44,6 +44,7 @@ namespace EV.Customer.ViewModels
             warningText = "";
             warningVisible = false;
             backVisible = true;
+            fingerTabVisible = false;
             pin = "";
             repeatPin = "";
             InputPin = new Command<string>(InputPinMethod);
@@ -159,6 +160,13 @@ namespace EV.Customer.ViewModels
         {
             get { return backVisible; }
             set { backVisible = value; }
+        }
+
+        private bool fingerTabVisible;
+        public bool FingerTabVisible
+        {
+            get { return fingerTabVisible; }
+            set { fingerTabVisible = value; }
         }
 
         private Status.LastPage lastPage;

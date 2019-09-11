@@ -26,8 +26,12 @@ namespace EV.Customer.ViewModels
             warningText = "";
             warningVisible = false;
             backVisible = false;
+            fingerTabVisible = true;
             pin = "";
             countLogin = 0;
+            Fingerprint = new Command(LoginByFingerprint);
+            OrangeTextTab = new Command(GoToForgotPasswordPage);
+            InputPin = new Command<string>(LoginByPin);
             email = SecureStorage.GetAsync("Email").Result;
             bool isExistEmail = Unities.CheckEmailFormat(email);
             if (!isExistEmail)
@@ -135,11 +139,25 @@ namespace EV.Customer.ViewModels
             set { backVisible = value; }
         }
 
+        private bool fingerTabVisible;
+        public bool FingerTabVisible
+        {
+            get { return fingerTabVisible; }
+            set { fingerTabVisible = value; }
+        }
+
         private string email;
 
         private string pin;
 
         private int countLogin;
+
+        public ICommand Fingerprint { get; set; }
+        public async void LoginByFingerprint()
+        {
+
+        }
+
 
         public ICommand OrangeTextTab { get; set; }
         //TODO : Input Name Page;

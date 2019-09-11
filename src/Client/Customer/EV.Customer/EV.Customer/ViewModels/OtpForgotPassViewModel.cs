@@ -27,6 +27,7 @@ namespace EV.Customer.ViewModels
             warningText = "";
             warningVisible = false;
             backVisible = true;
+            fingerTabVisible = false;
             email = passEmail;
             reference = passReference;
             pin = "";
@@ -115,6 +116,13 @@ namespace EV.Customer.ViewModels
                 warningVisible = value;
                 OnPropertyChanged(nameof(WarningVisible));
             }
+        }
+
+        private bool fingerTabVisible;
+        public bool FingerTabVisible
+        {
+            get { return fingerTabVisible; }
+            set { fingerTabVisible = value; }
         }
 
         private bool backVisible;

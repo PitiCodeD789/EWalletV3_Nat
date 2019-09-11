@@ -27,6 +27,7 @@ namespace EV.Customer.ViewModels
             warningText = "";
             warningVisible = false;
             backVisible = true;
+            fingerTabVisible = false;
             OrangeTextTab = new Command(SentOtpAgain);
             InputPin = new Command<string>(CheckOtp);
             email = passEmail;
@@ -124,6 +125,13 @@ namespace EV.Customer.ViewModels
         {
             get { return backVisible; }
             set { backVisible = value; }
+        }
+
+        private bool fingerTabVisible;
+        public bool FingerTabVisible
+        {
+            get { return fingerTabVisible; }
+            set { fingerTabVisible = value; }
         }
 
         private string email;
