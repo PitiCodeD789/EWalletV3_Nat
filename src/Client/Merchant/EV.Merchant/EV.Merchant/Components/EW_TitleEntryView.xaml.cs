@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace EV.Customer.Components
+namespace EV.Merchant.Components
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EW_TitleEntryView : ContentView

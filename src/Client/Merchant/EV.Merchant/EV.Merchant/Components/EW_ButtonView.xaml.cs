@@ -28,19 +28,11 @@ namespace EV.Merchant.Components
             BindableProperty.Create(
                 propertyName: "Command",
                 returnType: typeof(ICommand),
-                declaringType: typeof(EW_ButtonView)); //คนที่ประกาศ
+                declaringType: typeof(EW_ButtonView));
 
         private void MButton_Clicked(object sender, EventArgs e)
         {
-            //if (Command!=null)
-            //{
-            //    Command.Execute(null);
-            //} รูปเต็ม
-
             Command?.Execute(null);
-
-            //Execute คือเรียกใช้ method ซึ่งคือ ICommand  null คือ value ของ command
-
         }
 
         #endregion
@@ -58,27 +50,34 @@ namespace EV.Merchant.Components
                 mButton.Text = textButton;
             }
         }
+        #endregion
 
+        #region BackgroundButton
+        private Color backgroundButton;
 
-        //หรือแบบนี้ถ้าจะ Binding
-        //public string TextButton { get; set; }
+        public Color BackgroundButton
+        {
+            get { return backgroundButton; }
+            set
+            {
+                backgroundButton = value;
+                mButton.BackgroundColor = backgroundButton;
+            }
+        }
+        #endregion
 
-        //public static readonly BindableProperty TextButtonProperty =
-        //    BindableProperty.Create(
-        //        propertyName:"TextButton", 
-        //        returnType: typeof(string), 
-        //        declaringType: typeof(EW_ButtonView), //คนที่ประกาศ
-        //        defaultValue: "", 
-        //        propertyChanged: OnTextButtonChanged);
+        #region TextColor
+        private Color textColor;
 
-        //private static void OnTextButtonChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (newValue != null && !string.IsNullOrEmpty((string)newValue))
-        //    {
-        //        var control = bindable as EW_ButtonView;
-        //        control.mButton.Text = (string)newValue;
-        //    }
-        //}
+        public Color TextColor
+        {
+            get { return textColor; }
+            set
+            {
+                textColor = value;
+                mButton.TextColor = textColor;
+            }
+        }
         #endregion
     }
 }

@@ -70,7 +70,7 @@
                                               Tapped="TapCreateQRCode_Tapped"/>
                     </Frame.GestureRecognizers>
                     <StackLayout>
-                        <Image Source="qr_code_filled_50px.png"
+                        <Image Source="qricon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
                         <Label Text="สร้าง QR cods"
@@ -88,7 +88,7 @@
                        Grid.Row="1"
                        Margin="10,5,5,10">
                     <StackLayout>
-                        <Image Source="touchscreen_smartphone_filled_50px.png"
+                        <Image Source="phoneicon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
                         <Label Text="Coming soon"
@@ -106,7 +106,7 @@
                        Grid.Row="0"
                        Margin="10,5,5,10">
                     <StackLayout>
-                        <Image Source="touchscreen_smartphone_filled_50px.png"
+                        <Image Source="phoneicon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
                         <Label Text="Coming soon"
@@ -124,7 +124,7 @@
                        Grid.Row="1"
                        Margin="10,5,5,10">
                     <StackLayout>
-                        <Image Source="touchscreen_smartphone_filled_50px.png"
+                        <Image Source="phoneicon.png"
                                Aspect="AspectFit"
                                HeightRequest="80"/>
                         <Label Text="Coming soon"
