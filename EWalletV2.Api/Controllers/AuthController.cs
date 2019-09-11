@@ -170,5 +170,33 @@ namespace EWalletV2.Api.Controllers
             return NoContent();
         }
 
+
+        //Login
+        [AllowAnonymous]
+        [HttpPost("LoginByCustomer")]
+        public IActionResult LoginByCustomer([FromBody] LoginUserAndPassCommand command)
+        {
+
+            string username = command.Username;
+            string password = command.Password;
+
+            bool changePinResult= _authService.ChangePin(username, password);
+            if (!changePinResult)
+            {
+                return null;
+            }
+
+            LoginUserAndPassDto loginUserAndPassDto = _authService.LoginWithUsernameAndPassword(username, password);
+
+            if (loginUserAndPassDto == null)
+                return NotFound();
+            GetToken getToken = new GetToken(_configuration);
+            LoginUserAndPassViewModel model = _mapper.Map<LoginUserAndPassViewModel>(loginUserAndPassDto);
+
+            model.Token = getToken.Token;
+            model.RefreshToken = _authService.GetRefreshToken(username);
+
+            return Ok(model);
+        }
     }
 }
