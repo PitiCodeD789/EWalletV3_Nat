@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace EV.Merchant.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TopupPage : ContentPage
+    public partial class GenerateQRcodePage : ContentPage
     {
-        public TopupPage()
+        public GenerateQRcodePage()
         {
             InitializeComponent();
         }
