@@ -28,7 +28,7 @@
     <EmbeddedResource Update="Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TopupPage.xaml">
+    <EmbeddedResource Update="Views\GenerateQRcodePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -39,6 +39,9 @@
     </Compile>
     <Compile Update="Components\EW_EntryView.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\GenerateQRcodePage.xaml.cs">
+      <DependentUpon>GenerateQRcodePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace EV.Merchant.Views
+namespace EV.Admin.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TopupPage : ContentPage
+    public partial class LoginPage : ContentPage
     {
-        public TopupPage()
+        public LoginPage()
         {
             InitializeComponent();
         }
