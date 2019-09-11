@@ -1,53 +1,42 @@
 ﻿using EV.Customer.Helper;
 using EV.Service.Services;
-using EWalletV2.Api.ViewModels.Auth;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class SetPinForAuthViewModel : INotifyPropertyChanged
+    public class ChangePasswordViewModel : INotifyPropertyChanged
     {
-        private readonly AuthService _authService = new AuthService();
-        public SetPinForAuthViewModel(string passEmail)
+        private readonly PinService _pinService = new PinService();
+        public ChangePasswordViewModel()
         {
-            DataJoint();
-            lastPage = Status.LastPage.Login;
-            email = passEmail;
-            GoBack = new Command(BackPageByLogin);
-        }
-
-        public SetPinForAuthViewModel(RegisterCommand passRegister)
-        {
-            DataJoint();
-            lastPage = Status.LastPage.Register;
-            register = passRegister;
-            GoBack = new Command(BackPageByRegis);
-        }
-
-        public void DataJoint()
-        {
-            title = "สร้างรหัสผ่าน";
+            title = "เปลี่ยนรหัสผ่าน";
             image = "";
-            blackDetail = "สร้างรหัสผ่าน";
+            blackDetail = "ใส่รหัสผ่าน";
             grayDetail = "ใส่รหัสผ่านของคุณ";
             referenceText = "";
             referenceVisible = false;
-            orangeText = "";
-            orangeVisible = false;
+            orangeText = "ลืมรหัสผ่าน";
+            orangeVisible = true;
             warningText = "";
             warningVisible = false;
-            backVisible = true;
+            backVisible = false;
             fingerTabVisible = false;
             pin = "";
-            repeatPin = "";
-            InputPin = new Command<string>(InputPinMethod);
+            oldPin = "";
+            newPin = "";
+            repeatNewPin = "";
+            email = SecureStorage.GetAsync("Email").Result;
+            bool isExistEmail = Unities.CheckEmailFormat(email);
+            if (!isExistEmail)
+            {
+                ForceLogout();
+            }
         }
 
         private string title;
@@ -169,17 +158,22 @@ namespace EV.Customer.ViewModels
             set { fingerTabVisible = value; }
         }
 
-        private Status.LastPage lastPage;
-
         private string email;
 
         private string pin;
 
-        private string repeatPin;
+        private string oldPin;
 
-        private RegisterCommand register;
+        private string newPin;
+
+        private string repeatNewPin;
 
         public ICommand OrangeTextTab { get; set; }
+        //TODO : Input Name Page;
+        public async void GoToForgotPasswordPage()
+        {
+            //await Application.Current.MainPage.Navigation(new Page());
+        }
 
         public ICommand InputPin { get; set; }
         public async void InputPinMethod(string value)
@@ -215,172 +209,46 @@ namespace EV.Customer.ViewModels
                 HintColorChange(countPin);
                 if (countPin == 6)
                 {
-                    if (lastPage == Status.LastPage.Login)
+                    if(oldPin != "" && newPin != "")
                     {
-                        if (repeatPin == "")
+                        repeatNewPin = pin;
+                        if(newPin == repeatNewPin)
                         {
-                            ChangeDataJoint();
+                            var updateData = await _pinService.UpdatePin(newPin, oldPin, email);
+                            if(updateData != null && !updateData.IsError)
+                            {
+                                await Application.Current.MainPage.Navigation.PopAsync();
+                            }
                         }
                         else
                         {
-                            if (pin == repeatPin)
+                            pin = "";
+                            countPin = pin.Length;
+                            HintColorChange(countPin);
+                            WarningText = "รหัสผ่านทั้ง 2 ครั้งไม่ตรงกัน";
+                            WarningVisible = true;
+                            try
                             {
-                                await Login();
+                                Vibration.Vibrate();
+                                var duration = TimeSpan.FromSeconds(1);
+                                Vibration.Vibrate(duration);
                             }
-                            else
+                            catch (FeatureNotSupportedException ex)
                             {
-                                pin = "";
-                                countPin = pin.Length;
-                                HintColorChange(countPin);
-                                WarningText = "รหัสผ่านทั้ง 2 ครั้งไม่ตรงกัน";
-                                WarningVisible = true;
-                                try
-                                {
-                                    Vibration.Vibrate();
-                                    var duration = TimeSpan.FromSeconds(1);
-                                    Vibration.Vibrate(duration);
-                                }
-                                catch (FeatureNotSupportedException ex)
-                                {
-                                }
-                                catch (Exception ex)
-                                {
-                                }
+                            }
+                            catch (Exception ex)
+                            {
                             }
                         }
                     }
-                    else if (lastPage == Status.LastPage.Register)
+                    else if(oldPin != "")
                     {
-                        if (repeatPin == "")
-                        {
-                            ChangeDataJoint();
-                        }
-                        else
-                        {
-                            if (pin == repeatPin)
-                            {
-                                register.Pin = pin;
-                                await Register();
-                            }
-                            else
-                            {
-                                pin = "";
-                                countPin = pin.Length;
-                                HintColorChange(countPin);
-                                WarningText = "รหัสผ่านทั้ง 2 ครั้งไม่ตรงกัน";
-                                WarningVisible = true;
-                                try
-                                {
-                                    Vibration.Vibrate();
-                                    var duration = TimeSpan.FromSeconds(1);
-                                    Vibration.Vibrate(duration);
-                                }
-                                catch (FeatureNotSupportedException ex)
-                                {
-                                }
-                                catch (Exception ex)
-                                {
-                                }
-                            }
-
-                        }
+                        ChangeDataRepeatNewPin();
                     }
                     else
                     {
-                        await Application.Current.MainPage.Navigation.PopToRootAsync();
+                        ChangeDataNewPin(); 
                     }
-                }
-            }
-        }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
-        public async Task Register()
-        {
-            var registerData = await _authService.Register(register);
-            if (registerData != null && !registerData.IsError)
-            {
-                if (registerData.Model != null)
-                {
-                    string gender = ((int)register.Gender).ToString();
-                    string birthDate = register.BirthDate.ToString("dd/MM/yyyy");
-                    await SecureStorage.SetAsync("RefreshToken", registerData.Model.RefreshToken);
-                    await SecureStorage.SetAsync("AccessToken", registerData.Model.Token);
-                    await SecureStorage.SetAsync("AccountNumber", registerData.Model.Account);
-                    await SecureStorage.SetAsync("Email", register.Email);
-                    await SecureStorage.SetAsync("FirstName", register.FirstName);
-                    await SecureStorage.SetAsync("LastName", register.LastName);
-                    await SecureStorage.SetAsync("BirthDate", birthDate);
-                    await SecureStorage.SetAsync("MobileNumber", register.MobileNumber);
-                    await SecureStorage.SetAsync("Gender", gender);
-                    //TODO : Waiting Name of next view model
-                    //await Application.Current.MainPage.Navigation.PushAsync();
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "ไม่สามารถ Register ได้", "OK");
-                    await Application.Current.MainPage.Navigation.PopToRootAsync();
-                }
-            }
-            else
-            {
-                WarningText = "ไม่สามารถเชื่อมต่อได้";
-                WarningVisible = true;
-                try
-                {
-                    Vibration.Vibrate();
-                    var duration = TimeSpan.FromSeconds(1);
-                    Vibration.Vibrate(duration);
-                }
-                catch (FeatureNotSupportedException ex)
-                {
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-        }
-        public async Task Login()
-        {
-            var loginData = await _authService.LoginByCustomer(email, pin);
-            if (loginData != null && !loginData.IsError)
-            {
-                if (loginData.Model != null)
-                {
-                    string gender = ((int)loginData.Model.Gender).ToString();
-                    string birthDate = loginData.Model.BirthDate.ToString("dd/MM/yyyy");
-                    await SecureStorage.SetAsync("RefreshToken", loginData.Model.RefreshToken);
-                    await SecureStorage.SetAsync("AccessToken", loginData.Model.Token);
-                    await SecureStorage.SetAsync("Account", loginData.Model.Account);
-                    await SecureStorage.SetAsync("Email", email);
-                    await SecureStorage.SetAsync("FirstName", loginData.Model.FirstName);
-                    await SecureStorage.SetAsync("LastName", loginData.Model.LastName);
-                    await SecureStorage.SetAsync("BirthDate", birthDate);
-                    await SecureStorage.SetAsync("MobileNumber", loginData.Model.MobileNumber);
-                    await SecureStorage.SetAsync("Gender", gender);
-                    //TODO : Waiting Name of next view model
-                    //await Application.Current.MainPage.Navigation.PushAsync();
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "ไม่สามารถ Register ได้", "OK");
-                    await Application.Current.MainPage.Navigation.PopToRootAsync();
-                }
-            }
-            else
-            {
-                WarningText = "ไม่สามารถเชื่อมต่อได้";
-                WarningVisible = true;
-                try
-                {
-                    Vibration.Vibrate();
-                    var duration = TimeSpan.FromSeconds(1);
-                    Vibration.Vibrate(duration);
-                }
-                catch (FeatureNotSupportedException ex)
-                {
-                }
-                catch (Exception ex)
-                {
                 }
             }
         }
@@ -388,40 +256,38 @@ namespace EV.Customer.ViewModels
         public ICommand GoBack { get; set; }
         //TODO : Input Name Page;
         //TODO : Waiting Name of next view model
-        public async void BackPageByLogin()
+        public async void BackPage()
         {
-            if (repeatPin == "")
+            if (oldPin == "" && newPin == "")
             {
-                //TODO : Waiting Name of next view model
-                //await Application.Current.MainPage.Navigation.PushAsync();
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
+            else if (oldPin == "")
+            {
+                newPin = "";
+                ChangeDataRepeatNewPin();
             }
             else
             {
-                DataJoint();
-            }
-        }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
-        public async void BackPageByRegis()
-        {
-            if (repeatPin == "")
-            {
-                //TODO : Waiting Name of next view model
-                //await Application.Current.MainPage.Navigation.PushAsync();
-            }
-            else
-            {
-                DataJoint();
+                repeatNewPin = "";
+                ChangeDataNewPin();
             }
         }
 
-        public void ChangeDataJoint()
+        public void ChangeDataNewPin()
         {
-            Title = "ยืนยันรหัสผ่าน";
+            BlackDetail = "สร้างรหัสผ่าน";
+            GrayDetail = "ใส่รหัสผ่านของคุณ";
+            oldPin = pin;
+            pin = "";
+        }
+
+        public void ChangeDataRepeatNewPin()
+        {
             BlackDetail = "ยืนยันรหัสผ่าน";
             GrayDetail = "ใส่รหัสผ่านของคุณอีกครั้ง";
+            newPin = pin;
             pin = "";
-            repeatPin = pin;
         }
 
         private void HintColorChange(int length)
@@ -525,6 +391,12 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
+        }
+
+        private void ForceLogout()
+        {
+            SecureStorage.RemoveAll();
+            //Application.Current.MainPage = new NavigationPage(new Page());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
