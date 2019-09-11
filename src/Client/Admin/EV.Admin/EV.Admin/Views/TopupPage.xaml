@@ -17,7 +17,7 @@
                                  HeightRequest="30" 
                                  Margin="20,0" 
                                  HorizontalOptions="Start"
-                                 Command="{Binding GobackCommand}"
+                                 Command="{Binding BacktoPreviousCommand}"
                                  ></ImageButton>
                 <Label Text="เติมเงิน" HorizontalOptions="CenterAndExpand" FontSize="20" TextColor="Black" FontAttributes="Bold"/>
             </Grid>
@@ -31,12 +31,14 @@
                        HorizontalTextAlignment="Center"
                        WidthRequest="120"
                        MaxLength="7"
+                       Text="{Binding Amount,Mode=OneWayToSource}"/>
                        />
                 <Label x:Name="thbTag" Text="THB" Margin="-10,20,0,0"/>
             </StackLayout>
             <components:EW_ButtonView VerticalOptions="EndAndExpand" Margin="10,20"
                     TextButton="ตกลง"
-                    TextColor="White"       
+                    TextColor="White"  
+                    Command="{Binding GenerateQRcodeCommand}"                 
                     />
         </StackLayout>
     </ContentPage.Content>
