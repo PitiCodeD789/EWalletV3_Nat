@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             xmlns:components="clr-namespace:EV.Merchant.Components"
+             mc:Ignorable="d"
+             x:Class="EV.Merchant.Views.GenerateQRcodePage"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Content>
+        <StackLayout   Margin="20,20,20,15">
+            <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="0,30,0,0">
+                <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" 
+                       Padding="0,10,0,25" IsClippedToBounds="True"
+                       >
+                    <StackLayout>
+                        <zxing:ZXingBarcodeImageView WidthRequest="400" 
+                                         HeightRequest="400" 
+                                         BarcodeValue="{Binding MerchantAccount}" 
+                                         BarcodeFormat="QR_CODE"
+                                         HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="FillAndExpand"
+                                         Margin="-120,-50,-120,-60"
+                                         >
+                            <zxing:ZXingBarcodeImageView.BarcodeOptions>
+                                <zxcm:EncodingOptions Width="300" Height="300" />
+                            </zxing:ZXingBarcodeImageView.BarcodeOptions>
+                        </zxing:ZXingBarcodeImageView>
+                        <Frame CornerRadius="50" BackgroundColor="White" Padding="0" Margin="0,5" HasShadow="True"
+                       HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" Grid.Column="0">
+                            <Image Source="walletIcon" Aspect="AspectFit" VerticalOptions="Center"
+                           HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
+                        </Frame>
+                        <Label Text="{Binding StoreName}" FontSize="14" TextColor="#B6B6B6" HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <StackLayout VerticalOptions="EndAndExpand" Margin="0,10"> 
+                <components:EW_ButtonView TextButton="บันทึก"  />
+                <components:EW_ButtonView TextButton="กลับสู่หน้าหลัก" 
+                                          BackgroundButton="White" 
+                                          TextColor="#EBA406" 
+                                          Command="{Binding GoBackCommand}"
+                                          />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

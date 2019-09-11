@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:EV.Merchant.Components"
+             mc:Ignorable="d"
+             x:Class="EV.Merchant.Views.LoginPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundImageSource="Splash"
+             >
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout 
+                VerticalOptions="CenterAndExpand"
+                Margin="50,80"
+                >
+                <Image Source="walletIcon" WidthRequest="100" HeightRequest="100" Margin="0,0,0,30"/>
+                <components:EW_EntryView Placeholder="Username" />
+                <components:EW_EntryView Placeholder="Password" IsPassword="True"/>
+                <components:EW_ButtonView  TextButton="SIGN IN" TextColor="White"/>
+            </StackLayout>
+            <ContentView IsVisible="False" 
+                         HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="FillAndExpand" 
+                         BackgroundColor="Black"
+                         Opacity="0.5"                       
+                         >
+                <ActivityIndicator 
+                               Color="Red" 
+                               IsRunning="True" 
+                               IsVisible="True" 
+                                   VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="FillAndExpand"
+                               />
+            </ContentView>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>
