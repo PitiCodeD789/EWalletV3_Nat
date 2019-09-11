@@ -254,13 +254,21 @@ namespace EV.Customer.ViewModels
         public async Task Register()
         {
             var registerData = await _authService.Register(register);
-            if (registerData.IsError)
+            if (registerData != null && !registerData.IsError)
             {
                 if (registerData.Model != null)
                 {
+                    string gender = ((int)register.Gender).ToString();
+                    string birthDate = register.BirthDate.ToString("dd/MM/yyyy");
                     await SecureStorage.SetAsync("RefreshToken", registerData.Model.RefreshToken);
                     await SecureStorage.SetAsync("AccessToken", registerData.Model.Token);
                     await SecureStorage.SetAsync("AccountNumber", registerData.Model.Account);
+                    await SecureStorage.SetAsync("Email", register.Email);
+                    await SecureStorage.SetAsync("FirstName", register.FirstName);
+                    await SecureStorage.SetAsync("LastName", register.LastName);
+                    await SecureStorage.SetAsync("BirthDate", birthDate);
+                    await SecureStorage.SetAsync("MobileNumber", register.MobileNumber);
+                    await SecureStorage.SetAsync("Gender", gender);
                     //TODO : Waiting Name of next view model
                     //await Application.Current.MainPage.Navigation.PushAsync();
                 }
@@ -291,13 +299,21 @@ namespace EV.Customer.ViewModels
         public async Task Login()
         {
             var loginData = await _authService.LoginByCustomer(email, pin);
-            if (loginData.IsError)
+            if (loginData != null && !loginData.IsError)
             {
                 if (loginData.Model != null)
                 {
+                    string gender = ((int)loginData.Model.Gender).ToString();
+                    string birthDate = loginData.Model.BirthDate.ToString("dd/MM/yyyy");
                     await SecureStorage.SetAsync("RefreshToken", loginData.Model.RefreshToken);
                     await SecureStorage.SetAsync("AccessToken", loginData.Model.Token);
-                    await SecureStorage.SetAsync("AccountNumber", loginData.Model.Account);
+                    await SecureStorage.SetAsync("Account", loginData.Model.Account);
+                    await SecureStorage.SetAsync("Email", email);
+                    await SecureStorage.SetAsync("FirstName", loginData.Model.FirstName);
+                    await SecureStorage.SetAsync("LastName", loginData.Model.LastName);
+                    await SecureStorage.SetAsync("BirthDate", birthDate);
+                    await SecureStorage.SetAsync("MobileNumber", loginData.Model.MobileNumber);
+                    await SecureStorage.SetAsync("Gender", gender);
                     //TODO : Waiting Name of next view model
                     //await Application.Current.MainPage.Navigation.PushAsync();
                 }

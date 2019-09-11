@@ -134,7 +134,7 @@ namespace EV.Customer.ViewModels
             if (isExistEmail)
             {
                 var signInData = await _authService.SignIn(email);
-                if (signInData.IsError)
+                if (signInData != null && !signInData.IsError)
                 {
                     Status.LastPage lastPage;
                     if (signInData.Model.IsExist)
@@ -209,14 +209,14 @@ namespace EV.Customer.ViewModels
                 if (countPin == 6)
                 {
                     var checkOtpData = await _authService.CheckOtp(email, pin, reference);
-                    if (checkOtpData.IsError)
+                    if (checkOtpData != null && !checkOtpData.IsError)
                     {
                         if (checkOtpData.Model != null || checkOtpData.Model.IsValidateOtp)
                         {
                             if (checkProcess == Status.LastPage.Login)
                             {
-                                //TODO : Waiting Name of next view model
-                                //await Application.Current.MainPage.Navigation.PushAsync();
+                                SetPinForAuthViewModel setPinForAuth = new SetPinForAuthViewModel(email);
+                                //await Application.Current.MainPage.Navigation.PushAsync(new Page(setPinForAuth));
                             }
                             else if (checkProcess == Status.LastPage.Register)
                             {
