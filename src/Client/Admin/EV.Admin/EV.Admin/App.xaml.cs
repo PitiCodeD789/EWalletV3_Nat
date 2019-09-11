@@ -11,7 +11,7 @@ namespace EV.Admin
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ChildHomeTabPage());
+            MainPage = new NavigationPage(new AdminTabbedPage());
         }
 
         protected override void OnStart()
