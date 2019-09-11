@@ -7,11 +7,9 @@
              xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
              mc:Ignorable="d"
              x:Class="EV.Merchant.Views.TopupPage"
-             NavigationPage.HasNavigationBar="False"
-             >
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout  Margin="30,0,30,20">
-
             <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
                 <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" Margin="0,40,0,0">
                     <StackLayout>

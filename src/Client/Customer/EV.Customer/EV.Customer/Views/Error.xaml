@@ -6,8 +6,7 @@
              mc:Ignorable="d"
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-                 xmlns:components="clr-namespace:EV.Customer.Components"
-             x:Class="EV.Customer.Views.ForgotPassword">
+             x:Class="EV.Customer.Views.Error">
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Center"
@@ -26,13 +25,13 @@
                    VerticalOptions="Center"                   
                    HorizontalOptions="FillAndExpand"
                    Margin="20,0"
-                   HeightRequest="330">
+                   HeightRequest="250">
             <StackLayout>
-                <components:EW_TitleEntryView TextTitle="อีเมล์" KeyboardType="Email" Margin="0,0,0,10"/>
-                <components:EW_TitleEntryView TextTitle="วัน/เดือน/ปี เกิด" KeyboardType="Numeric"/>
-                <components:EW_ButtonView TextButton="ถัดไป" Margin="0,5" VerticalOptions="EndAndExpand"/>
-                <components:EW_ButtonView TextButton="ยกเลิก" BackgroundButton="#B8B8B8"/>
-            </StackLayout>            
+                <Image Source="Error" HorizontalOptions="CenterAndExpand" Margin="0,30"/>
+                <Label Text="{Binding TextError}" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="20"/>
+                <Button BackgroundColor="#FFFFFF" TextColor="#FC0000" Text="ตกลง" HorizontalOptions="FillAndExpand"
+                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22"/>
+            </StackLayout>
         </Frame>
     </StackLayout>
     </pages:PopupPage>
