@@ -254,7 +254,7 @@ namespace EV.Customer.ViewModels
         public async Task Register()
         {
             var registerData = await _authService.Register(register);
-            if (registerData.IsError)
+            if (!registerData.IsError)
             {
                 if (registerData.Model != null)
                 {
@@ -299,7 +299,7 @@ namespace EV.Customer.ViewModels
         public async Task Login()
         {
             var loginData = await _authService.LoginByCustomer(email, pin);
-            if (loginData.IsError)
+            if (!loginData.IsError)
             {
                 if (loginData.Model != null)
                 {
