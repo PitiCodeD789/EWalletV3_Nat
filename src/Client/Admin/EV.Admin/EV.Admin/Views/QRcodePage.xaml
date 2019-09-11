@@ -23,7 +23,7 @@
                             </Grid.RowDefinitions>
                         <zxing:ZXingBarcodeImageView WidthRequest="300" 
                                          HeightRequest="400" 
-                                         BarcodeValue="5555555555555555555555555555555555555555555" 
+                                         BarcodeValue="{Binding QrcodeData}" 
                                          BarcodeFormat="QR_CODE"
                                          HorizontalOptions="FillAndExpand"
                                          Margin="-100,-40,-120,0"
@@ -60,6 +60,7 @@
                     TextButton="กลับสู่หน้าหลัก"
                     TextColor="White"   
                     BackgroundColor="White"
+                    Command ="{Binding BacktoPrevious}"
                     />
             </StackLayout>
         </StackLayout>
