@@ -16,5 +16,6 @@ namespace EV.Service.Interfaces
         Task<ResultServiceModel<GetTokenByRefreshTokenViewModel>> GetTokenByRefreshToken(string email, string refreshToken);
         Task<ResultServiceModel<LoginUserAndPassViewModel>> LoginUserAndPass(string username, string password);
         Task<ResultServiceModel<DummyModel>> Logout(string email);
+        Task<ResultServiceModel<LoginByCustomerViewModel>> LoginByCustomer(string email, string pin);
     }
 }

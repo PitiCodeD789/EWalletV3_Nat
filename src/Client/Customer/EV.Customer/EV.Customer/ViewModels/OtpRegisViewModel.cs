@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -12,10 +13,9 @@ namespace EV.Customer.ViewModels
 {
     public class OtpRegisViewModel : INotifyPropertyChanged
     {
-        private readonly AuthService _authService;
+        private readonly AuthService _authService = new AuthService();
         public OtpRegisViewModel(string passEmail, string passReference, Status.LastPage lastPage)
         {
-            _authService = new AuthService();
             title = "การยืนยัน OTP";
             image = "";
             blackDetail = "กรุณาใส่ OTP\nเพื่อยืนยัน email ของคุณ";
@@ -26,12 +26,12 @@ namespace EV.Customer.ViewModels
             orangeVisible = true;
             warningText = "";
             warningVisible = false;
+            OrangeTextTab = new Command(SentOtpAgain);
+            InputPin = new Command<string>(CheckOtp);
             email = passEmail;
             checkProcess = lastPage;
             reference = passReference;
             pin = "";
-            OrangeTextTab = new Command(SentOtpAgain);
-            InputPin = new Command<string>(CheckOtp);
         }
 
         private string title;
@@ -49,7 +49,7 @@ namespace EV.Customer.ViewModels
         }
 
         private string blackDetail;
-        public string BalckDetail
+        public string BlackDetail
         {
             get { return blackDetail; }
             set { blackDetail = value; }
@@ -134,7 +134,7 @@ namespace EV.Customer.ViewModels
             if (isExistEmail)
             {
                 var signInData = await _authService.SignIn(email);
-                if (signInData.IsError)
+                if (signInData != null && !signInData.IsError)
                 {
                     Status.LastPage lastPage;
                     if (signInData.Model.IsExist)
@@ -175,34 +175,50 @@ namespace EV.Customer.ViewModels
         public ICommand InputPin { get; set; }
         //TODO : Input Name Page;
         //TODO : Waiting Name of next view model
-        //TODO : Change Color of 6 Circle;
         public async void CheckOtp(string value)
         {
-            bool isExistvalue = Unities.CheckDigitaAndLength(value, 1);
-            if (!isExistvalue)
+            if (value == "Delete")
             {
-                WarningText = "ค่าที่ใส่ไม่ใช่ตัวเลข";
-                WarningVisible = true;
+                pin = pin.Remove(pin.Length - 1);
+                int countPin = pin.Length;
+                HintColorChange(countPin);
             }
-            pin += value;
-            int countPin = pin.Length;
-            //TODO : Change Color of 6 Circle;
-            if(countPin == 6)
+            else
             {
-                bool isExistEmail = Unities.CheckEmailFormat(email);
-                if (isExistEmail)
+                bool isExistvalue = Unities.CheckDigitaAndLength(value, 1);
+                if (!isExistvalue)
+                {
+                    WarningText = "ค่าที่ใส่ไม่ใช่ตัวเลข";
+                    WarningVisible = true;
+                    try
+                    {
+                        Vibration.Vibrate();
+                        var duration = TimeSpan.FromSeconds(1);
+                        Vibration.Vibrate(duration);
+                    }
+                    catch (FeatureNotSupportedException ex)
+                    {
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+                pin += value;
+                int countPin = pin.Length;
+                HintColorChange(countPin);
+                if (countPin == 6)
                 {
                     var checkOtpData = await _authService.CheckOtp(email, pin, reference);
-                    if (checkOtpData.IsError)
+                    if (checkOtpData != null && !checkOtpData.IsError)
                     {
-                        if (checkOtpData.Model.IsValidateOtp)
+                        if (checkOtpData.Model != null || checkOtpData.Model.IsValidateOtp)
                         {
-                            if(checkProcess == Status.LastPage.Login)
+                            if (checkProcess == Status.LastPage.Login)
                             {
-                                //TODO : Waiting Name of next view model
-                                //await Application.Current.MainPage.Navigation.PushAsync();
+                                SetPinForAuthViewModel setPinForAuth = new SetPinForAuthViewModel(email);
+                                //await Application.Current.MainPage.Navigation.PushAsync(new Page(setPinForAuth));
                             }
-                            else if(checkProcess == Status.LastPage.Register)
+                            else if (checkProcess == Status.LastPage.Register)
                             {
                                 //TODO : Waiting Name of next view model
                                 //await Application.Current.MainPage.Navigation.PushAsync();
@@ -248,11 +264,110 @@ namespace EV.Customer.ViewModels
                         }
                     }
                 }
-                else
-                {
-                    await Application.Current.MainPage.Navigation.PopToRootAsync();
-                }
             }
+        }
+
+        private void HintColorChange(int length)
+        {
+            var hasKeyColor = "Gray";
+            var hasNoKeyColor = "White";
+            if (length == 0)
+            {
+                PwHint0 = hasNoKeyColor;
+                PwHint1 = hasNoKeyColor;
+                PwHint2 = hasNoKeyColor;
+                PwHint3 = hasNoKeyColor;
+                PwHint4 = hasNoKeyColor;
+                PwHint5 = hasNoKeyColor;
+            }
+            else if (length == 1)
+            {
+                PwHint0 = hasKeyColor;
+                PwHint1 = hasNoKeyColor;
+                PwHint2 = hasNoKeyColor;
+                PwHint3 = hasNoKeyColor;
+                PwHint4 = hasNoKeyColor;
+                PwHint5 = hasNoKeyColor;
+            }
+            else if (length == 2)
+            {
+                PwHint0 = hasKeyColor;
+                PwHint1 = hasKeyColor;
+                PwHint2 = hasNoKeyColor;
+                PwHint3 = hasNoKeyColor;
+                PwHint4 = hasNoKeyColor;
+                PwHint5 = hasNoKeyColor;
+            }
+            else if (length == 3)
+            {
+                PwHint0 = hasKeyColor;
+                PwHint1 = hasKeyColor;
+                PwHint2 = hasKeyColor;
+                PwHint3 = hasNoKeyColor;
+                PwHint4 = hasNoKeyColor;
+                PwHint5 = hasNoKeyColor;
+            }
+            else if (length == 4)
+            {
+                PwHint0 = hasKeyColor;
+                PwHint1 = hasKeyColor;
+                PwHint2 = hasKeyColor;
+                PwHint3 = hasKeyColor;
+                PwHint4 = hasNoKeyColor;
+                PwHint5 = hasNoKeyColor;
+            }
+            else if (length == 5)
+            {
+                PwHint0 = hasKeyColor;
+                PwHint1 = hasKeyColor;
+                PwHint2 = hasKeyColor;
+                PwHint3 = hasKeyColor;
+                PwHint4 = hasKeyColor;
+                PwHint5 = hasNoKeyColor;
+            }
+            else if (length == 6)
+            {
+                PwHint0 = hasKeyColor;
+                PwHint1 = hasKeyColor;
+                PwHint2 = hasKeyColor;
+                PwHint3 = hasKeyColor;
+                PwHint4 = hasKeyColor;
+                PwHint5 = hasKeyColor;
+            }
+        }
+
+        // ------------------------------ Propfull ------------------------------
+
+        private string[] _pwHint = new string[] { "White", "White", "White", "White", "White", "White" };
+        public string PwHint0
+        {
+            get { return _pwHint[0]; }
+            set { _pwHint[0] = value; OnPropertyChanged(nameof(PwHint0)); }
+        }
+        public string PwHint1
+        {
+            get { return _pwHint[1]; }
+            set { _pwHint[1] = value; OnPropertyChanged(nameof(PwHint1)); }
+        }
+        public string PwHint2
+        {
+            get { return _pwHint[2]; }
+            set { _pwHint[2] = value; OnPropertyChanged(nameof(PwHint2)); }
+        }
+        public string PwHint3
+        {
+            get { return _pwHint[3]; }
+            set { _pwHint[3] = value; OnPropertyChanged(nameof(PwHint3)); }
+        }
+        public string PwHint4
+        {
+            get { return _pwHint[4]; }
+            set { _pwHint[4] = value; OnPropertyChanged(nameof(PwHint4)); }
+        }
+        public string PwHint5
+        {
+            get { return _pwHint[5]; }
+            set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
         }
 
         public ICommand GoBack { get; set; }
