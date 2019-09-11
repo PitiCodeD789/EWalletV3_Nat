@@ -11,7 +11,8 @@ namespace EV.Customer
         {
             InitializeComponent();
 
-            MainPage = new RegisterPage();
+            //MainPage = new MainPage();
+            MainPage = new NavigationPage(new ForgotPassword());
         }
 
         protected override void OnStart()

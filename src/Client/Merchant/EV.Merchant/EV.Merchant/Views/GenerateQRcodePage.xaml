@@ -36,12 +36,9 @@
                         </Frame>
                         <Label Text="{Binding StoreName}" FontSize="14" TextColor="#B6B6B6" HorizontalTextAlignment="Center"/>
                     </StackLayout>
-
                 </Frame>
             </StackLayout>
-            <StackLayout VerticalOptions="EndAndExpand" Margin="0,10">
-
- 
+            <StackLayout VerticalOptions="EndAndExpand" Margin="0,10"> 
                 <components:EW_ButtonView TextButton="บันทึก"  />
                 <components:EW_ButtonView TextButton="กลับสู่หน้าหลัก" 
                                           BackgroundButton="White" 

@@ -11,7 +11,8 @@ namespace EV.Admin
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            //MainPage = new MainPage();
+            MainPage = new NavigationPage(new TransactionsOne());
         }
 
         protected override void OnStart()

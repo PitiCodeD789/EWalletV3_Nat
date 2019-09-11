@@ -115,8 +115,18 @@
     <AndroidResource Include="Resources\drawable\Splash.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\AccountOrange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Wallet.png" />
     <AndroidResource Include="Resources\drawable\walletIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Error.png" />
+ </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon_camera_circle.png" />
   </ItemGroup>
