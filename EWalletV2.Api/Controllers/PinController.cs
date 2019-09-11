@@ -87,7 +87,7 @@ namespace EWalletV2.Api.Controllers
             string refNumber = _authService.SaveOtp(forgotPinCommand.Email);
             if (string.IsNullOrEmpty(refNumber))
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
+                return BadRequest();
             }
 
             return Ok(refNumber);

@@ -22,7 +22,7 @@ namespace EV.Merchant.ViewModels
             set
             {
                 qrcodeData = value;
-                OnPropertyCHanged();
+                OnPropertyChanged();
             }
         }
     }

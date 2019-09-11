@@ -19,7 +19,7 @@ namespace EV.Merchant.ViewModels
             {
                 merchantAccount = value;
 
-                OnPropertyCHanged();
+                OnPropertyChanged();
             }
         }
         private string storeName;
@@ -30,7 +30,7 @@ namespace EV.Merchant.ViewModels
             set
             {
                 storeName = value;
-                OnPropertyCHanged();
+                OnPropertyChanged();
             }
         }
         public ICommand BacktoPreviousCommand { get; set; }

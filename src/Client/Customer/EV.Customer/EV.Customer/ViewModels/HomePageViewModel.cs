@@ -69,7 +69,13 @@ namespace EV.Customer.ViewModels
 
                 if (result != null)
                 {
-                    //PaymentDetailModel = JsonConvert.DeserializeObject<TopUpInfomationModel>(result);
+                    GeneratePaymentViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GeneratePaymentViewModel>(result);
+                    if (CheckSum(QrCodeInfomation))
+                    {
+                        string merchantName = QrCodeInfomation.FirstName;
+                        string merchantAccountNumber = QrCodeInfomation.AccountNumber;
+                        PopupNavigation.PushAsync(new Views.PaymentPopUpView(merchantName, merchantAccountNumber));
+                    }
                 }
             }
             catch (Exception ex)
@@ -81,7 +87,7 @@ namespace EV.Customer.ViewModels
         public ICommand ScanToTopupCommand { get; set; }
 
 
-        private bool CheckSum(GenerateTopupViewModel data)
+        private bool CheckSum(object data)
         {
             if (true)
             {
