@@ -11,27 +11,18 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class TopUpViewModel
+    public class PaymentPageViewModel
     {
         private readonly ITransactionServices _transactionServices;
-
-        public TopUpViewModel()
+        public PaymentPageViewModel()
         {
             //Initial
             _transactionServices = new TransactionServices();
 
-
             //Command
             CancelCommand = new Command(Cancel);
             BackToHomeCommand = new Command(BackToHome);
-            TopUpCommand = new Command(TopUp);
-        }
-
-        public void GetDetail()
-        {
-            //เอาอีเมลมาจาก Class static
-            Email = "mock@mock.mock";
-            CustomerAccountNumber = "9999999";
+            PaymentCommand = new Command(Payment);
         }
 
         public ICommand CancelCommand { get; set; }
@@ -44,22 +35,22 @@ namespace EV.Customer.ViewModels
         {
             //Application.Current.MainPage = new Views.HomePageView();
         }
-        public ICommand TopUpCommand { get; set; }
-        private async void TopUp()
+
+        public ICommand PaymentCommand { get; set; }
+        private async void Payment()
         {
-            ResultServiceModel<TopupViewModel> TopUpResult = await _transactionServices.Topup(Email, QRCodeReference);
-            if (!TopUpResult.IsError || TopUpResult.Model.IsSuccess)
+            ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount);
+            if (!paymentResult.IsError)
             {
-                PopupNavigation.PushAsync(new Views.TopUpSuccessPopUpView(this));
+                CreateDate = paymentResult.Model.CreateDatetime;
+                PopupNavigation.PushAsync(new Views.PaymentSuccessPopUpView(this));
             }
             else
             {
-                Application.Current.MainPage.DisplayAlert("Error", "TopUp Fail", "Ok");
+                Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
             }
         }
 
-
-        //รอแก้ให้ API รีเทรินกลับมาให้
         private DateTime _createDate;
         public DateTime CreateDate
         {
@@ -67,36 +58,34 @@ namespace EV.Customer.ViewModels
             set { _createDate = value; }
         }
 
-
         private decimal _amount;
         public decimal Amount
         {
             get { return _amount; }
             set { _amount = value; }
         }
-        private string _adminName;
-        public string AdminName
+
+        private decimal _customerBalance;
+        public decimal CustomerBalance
         {
-            get { return _adminName; }
-            set { _adminName = value; }
+            get { return _customerBalance; }
+            set { _customerBalance = value; }
         }
-        private string _adminAccountNumber;
-        public string AdminAccountNumber
+        private string _merchantName;
+        public string MerchantName
         {
-            get { return _adminAccountNumber; }
-            set { _adminAccountNumber = value; }
+            get { return _merchantName; }
+            set { _merchantName = value; }
         }
-        private string _qrcodeReference;
-        public string QRCodeReference
+        private string _merchantAccountNumber;
+        public string MerchantAccountNumber
         {
-            get { return _qrcodeReference; }
-            set { _qrcodeReference = value; }
+            get { return _merchantAccountNumber; }
+            set { _merchantAccountNumber = value; }
         }
 
         public string Email { get; set; }
         public string CustomerAccountNumber { get; set; }
-
-
 
     }
 }
