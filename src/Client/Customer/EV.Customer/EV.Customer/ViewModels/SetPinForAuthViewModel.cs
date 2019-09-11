@@ -43,6 +43,7 @@ namespace EV.Customer.ViewModels
             orangeVisible = false;
             warningText = "";
             warningVisible = false;
+            backVisible = true;
             pin = "";
             repeatPin = "";
             InputPin = new Command<string>(InputPinMethod);
@@ -130,6 +131,13 @@ namespace EV.Customer.ViewModels
                 warningVisible = value;
                 OnPropertyChanged(nameof(WarningVisible));
             }
+        }
+
+        private bool backVisible;
+        public bool BackVisible
+        {
+            get { return backVisible; }
+            set { backVisible = value; }
         }
 
         private Status.LastPage lastPage;
