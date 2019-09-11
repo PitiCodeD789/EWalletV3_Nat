@@ -1,4 +1,5 @@
-﻿using Plugin.Fingerprint;
+﻿
+using Plugin.Fingerprint;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
