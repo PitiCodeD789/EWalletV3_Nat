@@ -19,7 +19,7 @@ namespace EV.Admin.ViewModels
             set
             {
                 qrcodeData = value;
-                OnPropertyCHanged();
+                OnPropertyChanged();
             }
         }
         private GenerateTopupViewModel displayData;
@@ -28,7 +28,7 @@ namespace EV.Admin.ViewModels
         {
             get { return displayData; }
             set { displayData = value;
-                OnPropertyCHanged();
+                OnPropertyChanged();
             }
         }
 
