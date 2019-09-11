@@ -9,11 +9,12 @@ namespace EV.Admin.ViewModels
 {
     public class GenerateQRcodeViewModel : BaseViewModel
     {
-
+        public ICommand BacktoPreviousCommand { get; set; }
         public GenerateQRcodeViewModel(GenerateTopupViewModel generateTopup)
         {
             var topupJson = JsonConvert.SerializeObject(generateTopup);
             QrcodeData = topupJson;
+            BacktoPreviousCommand = new Command(Goback);
         }
         private string qrcodeData;
 
@@ -23,6 +24,10 @@ namespace EV.Admin.ViewModels
             set { qrcodeData = value;
                 OnPropertyCHanged();
             }
+        }
+        private async void Goback()
+        {
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
 
     }
