@@ -35,13 +35,10 @@ namespace EV.Merchant.ViewModels
                 OnPropertyChanged();
             }
         }
-        public GenerateQRcodeViewModel(GeneratePaymentViewModel generateTopup)
+        public GenerateQRcodeViewModel()
         {
-            var topupJson = JsonConvert.SerializeObject(generateTopup);
-            QrcodeData = topupJson;
-            FullName = SecureStorage.GetAsync("FirstName").Result;
+            FullName = App.StoreName;
             BacktoPreviousCommand = new Command(Goback);
-
         }
         private async void Goback()
         {

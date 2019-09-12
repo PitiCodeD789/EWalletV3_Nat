@@ -20,7 +20,11 @@ namespace EV.Admin.Views
             InitializeComponent();
         }
 
-     
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            inputMoney.Focus();
+        }
 
         private void TextSizeChange(object sender, TextChangedEventArgs e)
         {

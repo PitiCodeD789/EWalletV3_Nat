@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -29,8 +30,9 @@ namespace EV.Customer.ViewModels
             //Initial
             _userService = new UserService();
             _transactionServices = new TransactionServices();
+            Email = App.Email;
             Greeting = CheckDatetime();
-            GetTotalBalance();
+            FullName = App.FirstName + " " + App.LastName;
 
             //Command
             ScanToPayCommand = new Command(ScanToPay);
@@ -132,10 +134,14 @@ namespace EV.Customer.ViewModels
             return false;
         }
 
-        private async void GetTotalBalance()
+        public async Task GetTotalBalance()
         {
             ResultServiceModel<AccountViewModel> account = await _userService.GetBalance(Email);
-            Balance = account.Model.Balance;
+            if (account != null)
+            {
+                Balance = account.Model.Balance;
+            }
+
             // รอข้อมูลชื่อนามสกุล จากพี่เสริท
             // AccountNumber , FullName 
         }

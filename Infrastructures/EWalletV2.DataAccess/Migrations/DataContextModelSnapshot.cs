@@ -139,6 +139,7 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasDefaultValueSql("GetUtcDate()");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnName("email")
                         .HasMaxLength(100);
 
@@ -170,6 +171,9 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasDefaultValueSql("GetUtcDate()");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Email")
+                        .HasName("EmailUser_AK");
 
                     b.ToTable("Users");
                 });

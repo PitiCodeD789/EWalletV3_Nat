@@ -1,4 +1,5 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,13 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class OtpRegisViewModel : INotifyPropertyChanged
+    public class OtpRegisViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly AuthService _authService = new AuthService();
         public OtpRegisViewModel(string passEmail, string passReference, Status.LastPage lastPage)
         {
             title = "การยืนยัน OTP";
-            image = "";
+            image = "icon_mail";
             blackDetail = "กรุณาใส่ OTP\nเพื่อยืนยัน email ของคุณ";
             grayDetail = "เราได้ส่ง OTP ไปที่ email ของคุณแล้ว";
             referenceText = "ref. " + passReference;
@@ -30,6 +31,7 @@ namespace EV.Customer.ViewModels
             fingerTabVisible = false;
             OrangeTextTab = new Command(SentOtpAgain);
             InputPin = new Command<string>(CheckOtp);
+            GoBack = new Command(BackPage);
             email = passEmail;
             checkProcess = lastPage;
             reference = passReference;
@@ -143,7 +145,6 @@ namespace EV.Customer.ViewModels
         private string pin;
 
         public ICommand OrangeTextTab { get; set; }
-        //TODO : Input Name Page;
         public async void SentOtpAgain()
         {
             bool isExistEmail = Unities.CheckEmailFormat(email);
@@ -162,7 +163,7 @@ namespace EV.Customer.ViewModels
                         lastPage = Status.LastPage.Register;
                     }
                     OtpRegisViewModel otpRegis = new OtpRegisViewModel(email, signInData.Model.RefNumber, lastPage);
-                    //await Application.Current.MainPage.Navigation.PushAsync(new Page(otpRegis));
+                    await Application.Current.MainPage.Navigation.PushAsync(new PinPage(otpRegis));
                 }
                 else
                 {
@@ -189,15 +190,16 @@ namespace EV.Customer.ViewModels
         }
 
         public ICommand InputPin { get; set; }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
         public async void CheckOtp(string value)
         {
             if (value == "Delete")
             {
-                pin = pin.Remove(pin.Length - 1);
-                int countPin = pin.Length;
-                HintColorChange(countPin);
+                if (pin.Length > 0)
+                {
+                    pin = pin.Remove(pin.Length - 1);
+                    int countPin = pin.Length;
+                    HintColorChange(countPin);
+                }
             }
             else
             {
@@ -232,12 +234,11 @@ namespace EV.Customer.ViewModels
                             if (checkProcess == Status.LastPage.Login)
                             {
                                 SetPinForAuthViewModel setPinForAuth = new SetPinForAuthViewModel(email);
-                                //await Application.Current.MainPage.Navigation.PushAsync(new Page(setPinForAuth));
+                                await Application.Current.MainPage.Navigation.PushAsync(new PinPage(setPinForAuth));
                             }
                             else if (checkProcess == Status.LastPage.Register)
                             {
-                                //TODO : Waiting Name of next view model
-                                //await Application.Current.MainPage.Navigation.PushAsync();
+                                await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
                             }
                             else
                             {
@@ -267,6 +268,9 @@ namespace EV.Customer.ViewModels
                     }
                     else
                     {
+                        pin = "";
+                        countPin = pin.Length;
+                        HintColorChange(countPin);
                         WarningText = "ไม่สามารถเชื่อมต่อได้";
                         WarningVisible = true;
                         try
@@ -393,13 +397,6 @@ namespace EV.Customer.ViewModels
         public async void BackPage()
         {
             await Application.Current.MainPage.Navigation.PopAsync();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

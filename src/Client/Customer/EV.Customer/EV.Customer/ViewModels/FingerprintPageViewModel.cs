@@ -1,5 +1,8 @@
 ﻿
+using EV.Customer.Views;
+using EWalletV2.Api.ViewModels;
 using Plugin.Fingerprint;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,19 +61,22 @@ namespace EV.Customer.ViewModels
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("ok", "Finger not Authenticate", "error");
+                    await PopupNavigation.PushAsync(new Error(new ErrorViewModel("ลายนิ้วมือไม่ถูกต้อง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));
+                 
 
                 }
             }else
             {
-                Application.Current.MainPage.DisplayAlert("ok", "not device", "error");
+                await PopupNavigation.PushAsync(new Error(new ErrorViewModel("ไม่พบอุปกรณ์", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));
+
+            
             }
           
         }      
 
         private void FingerprintClick()
         {
-            Application.Current.MainPage.Navigation.PushAsync(new Page());
+            Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
         }
         private bool isShowFingerButton;
 

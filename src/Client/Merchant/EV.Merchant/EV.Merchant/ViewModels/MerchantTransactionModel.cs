@@ -1,28 +1,47 @@
 ﻿using EV.Service.Interfaces;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Transaction;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace EV.Merchant.ViewModels
 {
-    public class AdminTransactionViewModel
+    public class MerchantTransactionModel : INotifyPropertyChanged
     {
         private readonly ITransactionServices _transactionService;
-        public AdminTransactionViewModel()
+        public MerchantTransactionModel()
         {
             //Initial
             _transactionService = new TransactionServices();
-            GetTransactions();
+            FullName = App.FirstName + " " + App.LastName;
+            AccountNumber = App.Account;
+            Email = App.Email;
+            //MockData();
+            LastestMonth = DateTime.Now;
+            Transactionlist = new List<TransactionViewModel>();
+            FirstTransactionList = new List<TransactionViewModel>();
+            SecondTransactionList = new List<TransactionViewModel>();
+            ThridTransactionList = new List<TransactionViewModel>();
+
 
             //Command
             ViewTransactionDetailCommand = new Command<int>(ViewTransactionDetail);
-        }
+            BackButtonCommand = new Command(BackButton);
 
+        }
+        public ICommand BackButtonCommand { get; private set; }
+        private void BackButton(object obj)
+        {
+            PopupNavigation.PopAsync();
+        }
         public ICommand ViewTransactionDetailCommand { get; set; }
         private void ViewTransactionDetail(int transactionId)
         {
@@ -42,14 +61,42 @@ namespace EV.Merchant.ViewModels
                 FullName2 = transaction.FirstName + " " + transaction.LastName;
                 AccountNumber2 = transaction.Account;
             }
+            PopupNavigation.PushAsync(new Views.TransactionsOne(this));
+        }
+        private void MockData()
+        {
+            Transactionlist = new List<TransactionViewModel>()
+            {
+                new TransactionViewModel(){ TransactionId = 2 , TransactionType = "Payment", TransactionReference = "Payment", FirstName = "test2", LastName = "test2", Account = "Acc222", CreateDateTime = DateTime.MaxValue.AddMonths(-1), Balance = 4444444},
+                new TransactionViewModel(){ TransactionId = 3 , TransactionType = "Payment", FirstName = "test3", LastName = "test3", Account = "Acc333", CreateDateTime = DateTime.MaxValue.AddMonths(-2), Balance = 66666},
+            };
+
+            LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
+            FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
+            SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
+            ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
         }
 
-        public async void GetTransactions()
+        public async Task<List<TransactionViewModel>> GetTransactions()
         {
-            var result = await _transactionService.GetTransaction30Days(Email);
+            var result = await _transactionService.GetTransaction30Days("nomustang11@gmail.com");
+            var a = result.Model;
             if (result.IsError != true)
+            {
                 Transactionlist = result.Model;
+                FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
+                SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
+                ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+            }
+            return a;
             //If Error popup errorPopupPage
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public string Image1 { get; set; }
@@ -64,7 +111,68 @@ namespace EV.Merchant.ViewModels
         public decimal TransactionPaid { get; set; }
         public string TransactionReference { get; set; }
 
-        public List<TransactionViewModel> Transactionlist { get; set; }
+        private List<TransactionViewModel> _transactionlist;
+        public List<TransactionViewModel> Transactionlist
+        {
+            get { return _transactionlist; }
+            set
+            {
+                _transactionlist = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<TransactionViewModel> _firstTransactionList;
+        public List<TransactionViewModel> FirstTransactionList
+        {
+            get { return _firstTransactionList; }
+            set
+            {
+                _firstTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<TransactionViewModel> SecondTransactionList { get; set; }
+        public List<TransactionViewModel> ThridTransactionList { get; set; }
+        public DateTime LastestMonth { get; set; } 
+        public DateTime Month2
+        {
+            get { return LastestMonth.AddMonths(-1); }
+            set { Month2 = value; }
+        }
+        public DateTime Month3
+        {
+            get { return Month2.AddMonths(-1); }
+            set { Month3 = value; }
+        }
+
+        public bool FirstMonth
+        {
+            get
+            {
+                if (FirstTransactionList.Count != 0) return true;
+                return false;
+            }
+            set { FirstMonth = value; }
+        }
+        public bool SecondMonth
+        {
+            get
+            {
+                if (SecondTransactionList.Count != 0) return true;
+                return false;
+            }
+            set { SecondMonth = value; }
+        }
+        public bool ThirdMonth
+        {
+            get
+            {
+                if (ThridTransactionList.Count != 0) return true;
+                return false;
+            }
+            set { ThirdMonth = value; }
+        }
 
         private DateTime _createDate;
         public DateTime CreateDate

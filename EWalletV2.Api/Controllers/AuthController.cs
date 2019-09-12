@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EWalletV2.Api.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -146,7 +145,7 @@ namespace EWalletV2.Api.Controllers
             LoginUserAndPassDto loginUserAndPassDto = _authService.LoginWithUsernameAndPassword(username, password);
 
             if (loginUserAndPassDto == null)
-                return NotFound();
+                return BadRequest();
             GetToken getToken = new GetToken(_configuration);
             LoginUserAndPassViewModel model = _mapper.Map<LoginUserAndPassViewModel>(loginUserAndPassDto);
 

@@ -29,12 +29,6 @@ namespace EV.Service.Services
             string hashedSum = SHA256Hash(sumString);
             return hashedSum;
         }
-
-
-
-
-
-
         public static string SHA256Hash(string input)
         {
             SHA256 sha256 = SHA256Managed.Create();

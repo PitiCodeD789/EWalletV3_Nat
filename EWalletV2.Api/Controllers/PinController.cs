@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EWalletV2.Api.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PinController : ControllerBase

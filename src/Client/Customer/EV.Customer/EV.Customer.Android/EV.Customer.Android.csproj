@@ -196,6 +196,9 @@
     <AndroidResource Include="Resources\drawable\Warning.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon_mail.png" />
+  </ItemGroup>
+    <ItemGroup>
     <AndroidResource Include="Resources\xml\file_paths.xml">
       <SubType>Designer</SubType>
     </AndroidResource>

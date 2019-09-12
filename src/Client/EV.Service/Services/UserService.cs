@@ -12,7 +12,7 @@ namespace EV.Service.Services
     {
         public async Task<ResultServiceModel<AccountViewModel>> GetUser(string email)
         {
-            string url = Helper.BaseUrl + "GetUser/" + email;
+            string url = Helper.BaseUrl + "user/GetUser/" + email;
             return await Get<AccountViewModel>(url);
         }
 
@@ -22,7 +22,7 @@ namespace EV.Service.Services
             {
                 Email = email
             };
-            string url = Helper.BaseUrl + "GetBalance";
+            string url = Helper.BaseUrl + "user/getBalance";
             return await Post<AccountViewModel>(url, emailModel);
         }
 
@@ -32,13 +32,13 @@ namespace EV.Service.Services
             {
                 AccountNumber = accountNumber
             };
-            string url = Helper.BaseUrl + "GetAccount";
+            string url = Helper.BaseUrl + "user/getAccount";
             return await Post<AccountViewModel>(url, accountCommand);
         }
 
         public async Task<ResultServiceModel<DummyModel>> UpdateUser(UpdateUserCommand updateUserCommand)
         {
-            string url = Helper.BaseUrl + "UpdateUser";
+            string url = Helper.BaseUrl + "user/UpdateUser";
             return await Post<DummyModel>(url, updateUserCommand);
         }
 

@@ -1,5 +1,7 @@
-﻿using EV.Service.Services;
+﻿using EV.Admin.Views;
+using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Transaction;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,15 +14,16 @@ namespace EV.Admin.ViewModels
     public class InputMoneyViewModel : BaseViewModel
     {
         private readonly TransactionServices _transactionService;
-        private decimal amount;
         public ICommand BacktoPreviousCommand { get; set; }
         public ICommand GenerateQRcodeCommand { get; set; }
+        private decimal amount;
         public decimal Amount
         {
             get { return amount; }
             set
             {
-                amount = value; ;
+                amount = value;
+                OnPropertyChanged();
             }
         }
         private GenerateTopupViewModel resultData;
@@ -28,27 +31,60 @@ namespace EV.Admin.ViewModels
         public GenerateTopupViewModel ResultData
         {
             get { return resultData; }
-            set { resultData = value; }
+            set { resultData = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool isProgress;
+
+        public bool IsProgress
+        {
+            get { return isProgress; }
+            set
+            {
+                isProgress = value;
+                OnPropertyChanged();
+            }
         }
 
         public InputMoneyViewModel()
         {
+            IsProgress = false;
             _transactionService = new TransactionServices();
             BacktoPreviousCommand = new Command(Goback);
             GenerateQRcodeCommand = new Command(GenerateQrcode);
         }
+      
+
 
         private async void GenerateQrcode()
         {
-            var email = await SecureStorage.GetAsync("Username");
-            var resultData = await _transactionService.GenerateTopup(email, Amount);
-            if (resultData.IsError == true)
+            IsProgress = true;
+            var accountNumber = App.Account;
+            var callData = await _transactionService.GenerateTopup(accountNumber, Amount);
+            var refNumber = callData.Model.ReferenceNumber;
+            var expireTime = callData.Model.ExpireDate.AddHours(7);
+            GenerateTopupViewModel resultData = new GenerateTopupViewModel()
             {
-                await Application.Current.MainPage.DisplayAlert("","Error","ok");
+                Amount = Amount,
+                AccountNumber = App.Account,
+                FirstName = App.AdminName,
+                ReferenceNumber = refNumber,
+                ExpireDate = expireTime,
+                CheckSum = "",
+                LastName = ""
+            };
+            resultData.CheckSum = Helper.CheckSumTopupCreate(resultData);
+            if (callData.IsError == true)
+            {
+                IsProgress = false;
+                ErrorViewModel errorView = new ErrorViewModel();
+                await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
             else
             {
-                //await Application.Current.MainPage.Navigation.PushAsync(new Test(resultData.Model));
+                await Application.Current.MainPage.Navigation.PushAsync(new QRcodePage(resultData));
+                IsProgress = false;
             }
         }
 

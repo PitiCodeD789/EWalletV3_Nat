@@ -4,11 +4,17 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:components="clr-namespace:EV.Admin.Components"
+             xmlns:binding="clr-namespace:EV.Admin.ViewModels"
              mc:Ignorable="d"
              x:Class="EV.Admin.Views.TopupPage"
              NavigationPage.HasNavigationBar="False"
              >
+    <ContentPage.BindingContext>
+        <binding:InputMoneyViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
+        <Grid>
+            
         <StackLayout>
             <Grid Margin="0,10,0,0">
                 <ImageButton Source="Back" 
@@ -31,7 +37,7 @@
                        HorizontalTextAlignment="Center"
                        WidthRequest="120"
                        MaxLength="7"
-                       Text="{Binding Amount,Mode=OneWayToSource}"/>
+                       Text="{Binding Amount,Mode=OneWayToSource}" />
                 <Label x:Name="thbTag" Text="THB" Margin="-10,20,0,0"/>
             </StackLayout>
             <components:EW_ButtonView VerticalOptions="EndAndExpand" Margin="10,20"
@@ -40,5 +46,20 @@
                     Command="{Binding GenerateQRcodeCommand}"                 
                     />
         </StackLayout>
+            <ContentView IsVisible="{Binding IsProgress}" 
+                         HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="FillAndExpand" 
+                         BackgroundColor="Black"
+                         Opacity="0.5"                       
+                         >
+                <ActivityIndicator 
+                               Color="Red" 
+                               IsRunning="True" 
+                               IsVisible="True" 
+                                   VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="FillAndExpand"
+                               />
+            </ContentView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

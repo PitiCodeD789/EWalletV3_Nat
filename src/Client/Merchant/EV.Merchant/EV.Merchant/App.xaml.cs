@@ -7,11 +7,19 @@ namespace EV.Merchant
 {
     public partial class App : Application
     {
+        public static string Account { get; set; }
+        public static string Username { get; set; }
+        public static string FirstName { get; set; }
+        public static string LastName { get; set; }
+        public static string PhoneNumber { get; set; }
+        public static string Email { get; set; }
+        public static string StoreName { get; set; }
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new GenerateQRcodePage());
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

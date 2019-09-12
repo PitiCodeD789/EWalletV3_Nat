@@ -1,5 +1,4 @@
-﻿using EV.Customer.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace EV.Customer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SettingPage : ContentPage
+    public partial class LoginPage : ContentPage
     {
-        public SettingPage()
+        public LoginPage()
         {
             InitializeComponent();
-            BindingContext = new CustomerSettingViewModel();
         }
     }
 }

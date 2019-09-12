@@ -1,6 +1,9 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using Plugin.Fingerprint;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,13 +14,14 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class LoginByPinViewModel : INotifyPropertyChanged
+    public class LoginByPinViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly PinService _pinService = new PinService();
+        private readonly AuthService _authService = new AuthService();
         public LoginByPinViewModel()
         {
             title = "";
-            image = "";
+            image = "icon_PIN";
             blackDetail = "ใส่รหัสผ่าน";
             grayDetail = "ใส่รหัสผ่านของคุณ";
             referenceText = "";
@@ -32,9 +36,17 @@ namespace EV.Customer.ViewModels
             Fingerprint = new Command(LoginByFingerprint);
             OrangeTextTab = new Command(GoToForgotPasswordPage);
             InputPin = new Command<string>(LoginByPin);
-            email = SecureStorage.GetAsync("Email").Result;
-            bool isExistEmail = Unities.CheckEmailFormat(email);
-            if (!isExistEmail)
+            
+            try
+            {
+                email = SecureStorage.GetAsync("Email").Result;
+                bool isExistEmail = Unities.CheckEmailFormat(email);
+                if (!isExistEmail)
+                {
+                    ForceLogout();
+                }
+            }
+            catch(Exception e)
             {
                 ForceLogout();
             }
@@ -169,11 +181,24 @@ namespace EV.Customer.ViewModels
             {
                 try
                 {
-                    //Application.Current.MainPage = new NavigationPage(new Page());
+                    Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                 }
                 catch (Exception ex)
                 {
-                    // Possible that device doesn't support secure storage on device.
+                    WarningText = "โปรดเข้าสู่ระบบโดยใช้ Pin";
+                    WarningVisible = true;
+                    try
+                    {
+                        Vibration.Vibrate();
+                        var duration = TimeSpan.FromSeconds(1);
+                        Vibration.Vibrate(duration);
+                    }
+                    catch (FeatureNotSupportedException e)
+                    {
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
             }
             else
@@ -184,21 +209,22 @@ namespace EV.Customer.ViewModels
 
 
         public ICommand OrangeTextTab { get; set; }
-        //TODO : Input Name Page;
         public async void GoToForgotPasswordPage()
         {
-            //await Application.Current.MainPage.Navigation(new Page());
+            await Application.Current.MainPage.Navigation.PushAsync(new ForgotPassword());
         }
 
         public ICommand InputPin { get; set; }
-        //TODO : Input Name Page;
         public async void LoginByPin(string value)
         {
             if (value == "Delete")
             {
-                pin = pin.Remove(pin.Length - 1);
-                int countPin = pin.Length;
-                HintColorChange(countPin);
+                if (pin.Length > 0)
+                {
+                    pin = pin.Remove(pin.Length - 1);
+                    int countPin = pin.Length;
+                    HintColorChange(countPin);
+                }
             }
             else
             {
@@ -230,7 +256,56 @@ namespace EV.Customer.ViewModels
                     {
                         if (loginPinData.Model.IsLogin)
                         {
-                            //Application.Current.MainPage = new NavigationPage(new Page());
+                            try
+                            {
+                                var refreshToken = await SecureStorage.GetAsync("RefreshToken");
+                                var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
+                                if (tokenData != null || !tokenData.IsError)
+                                {
+                                    if (tokenData.Model == null || tokenData.Model.Token == null)
+                                    {
+                                        ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, ForceLogout);
+                                        await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
+                                    }
+                                    await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                                }
+                                else
+                                {
+                                    pin = "";
+                                    countPin = pin.Length;
+                                    HintColorChange(countPin);
+                                    WarningText = "ไม่สามารถเชื่อมต่อได้";
+                                    WarningVisible = true;
+                                    try
+                                    {
+                                        Vibration.Vibrate();
+                                        var duration = TimeSpan.FromSeconds(1);
+                                        Vibration.Vibrate(duration);
+                                    }
+                                    catch (FeatureNotSupportedException ex)
+                                    {
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                    }
+                                }
+                                App.Account = await SecureStorage.GetAsync("Account");
+                                App.Email = await SecureStorage.GetAsync("Email");
+                                App.FirstName = await SecureStorage.GetAsync("FirstName");
+                                App.LastName = await SecureStorage.GetAsync("LastName");
+                                string preBirthDate = await SecureStorage.GetAsync("BirthDate");
+                                string[] splitBirthDate = preBirthDate.Split('/');
+                                App.BirthDate = new DateTime(Int32.Parse(splitBirthDate[2]), Int32.Parse(splitBirthDate[1]), Int32.Parse(splitBirthDate[0]));
+                                App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
+                                int gender =  Int32.Parse(await SecureStorage.GetAsync("Gender"));
+                                App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
+                                Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
+                            }
+                            catch(Exception e)
+                            {
+                                ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                                await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
+                            }
                         }
                         else
                         {
@@ -261,6 +336,9 @@ namespace EV.Customer.ViewModels
                     }
                     else
                     {
+                        pin = "";
+                        countPin = pin.Length;
+                        HintColorChange(countPin);
                         WarningText = "ไม่สามารถเชื่อมต่อได้";
                         WarningVisible = true;
                         try
@@ -278,12 +356,6 @@ namespace EV.Customer.ViewModels
                     }
                 }
             }
-        }
-
-        private void ForceLogout()
-        {
-            SecureStorage.RemoveAll();
-            //Application.Current.MainPage = new NavigationPage(new Page());
         }
 
         private void HintColorChange(int length)
@@ -387,13 +459,6 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

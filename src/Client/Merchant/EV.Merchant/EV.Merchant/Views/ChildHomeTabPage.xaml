@@ -3,9 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:binding="clr-namespace:EV.Merchant.ViewModels"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
              x:Class="EV.Merchant.Views.ChildHomeTabPage">
+    <ContentPage.BindingContext>
+        <binding:HomePageViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
             <Grid>
@@ -16,7 +20,6 @@
                 <Image Source="https://sv1.picz.in.th/images/2019/09/01/ZsSakW.jpg"
                        Aspect="AspectFill" Grid.Row="0"/>
                 <StackLayout Margin="0,20,0,0">
-                    <!--<Label Text="{Binding FullName,StringFormat='ยินดีตอนรับ {0}'} " LineBreakMode="WordWrap"-->
                     <Grid VerticalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
@@ -36,12 +39,12 @@
                                HorizontalOptions="End" VerticalOptions="Center"
                                WidthRequest="40"
                                HeightRequest="40"/>
-                        <Label Text="ยินดีต้อนรับ ดำรงเดช ลลิหกดฟหกดหฟห" LineBreakMode="TailTruncation" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"
+                        <Label Text="{Binding FullName,StringFormat='ยินดีตอนรับ {0}'} "  LineBreakMode="TailTruncation" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"
                            FontSize="28" TextColor="White"
                            FontAttributes="Bold"
                            VerticalOptions="EndAndExpand"
                            HorizontalOptions="Center"/>
-                        <Label Text="สวัสดีตอนเช้า" TextColor="White" FontSize="20"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+                        <Label Text="{Binding TimeString}" TextColor="White" FontSize="20"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
                            FontAttributes="Bold"
                            VerticalOptions="StartAndExpand"
                            HorizontalOptions="StartAndExpand"/>
@@ -66,8 +69,7 @@
                        Grid.Row="0"
                        Margin="10,5,5,10">
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer x:Name="TapCreateQRCode" NumberOfTapsRequired="1" 
-                                              Tapped="TapCreateQRCode_Tapped"/>
+                        <TapGestureRecognizer  Command="{Binding GotoQRCodePageCommand}"/>
                     </Frame.GestureRecognizers>
                     <StackLayout>
                         <Image Source="qricon.png"
