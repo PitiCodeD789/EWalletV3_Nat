@@ -1,7 +1,9 @@
 ﻿using EV.Customer.Helper;
 using EV.Customer.Views;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using Plugin.Fingerprint;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +17,7 @@ namespace EV.Customer.ViewModels
     public class LoginByPinViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly PinService _pinService = new PinService();
+        private readonly AuthService _authService = new AuthService();
         public LoginByPinViewModel()
         {
             title = "";
@@ -252,8 +255,37 @@ namespace EV.Customer.ViewModels
                         {
                             try
                             {
-                                App.RefreshToken = await SecureStorage.GetAsync("RefreshToken");
-                                App.Token = await SecureStorage.GetAsync("AccessToken");
+                                var refreshToken = await SecureStorage.GetAsync("RefreshToken");
+                                var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
+                                if (tokenData != null || !tokenData.IsError)
+                                {
+                                    if (tokenData.Model == null || tokenData.Model.Token == null)
+                                    {
+                                        ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, ForceLogout);
+                                        await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
+                                    }
+                                    await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                                }
+                                else
+                                {
+                                    pin = "";
+                                    countPin = pin.Length;
+                                    HintColorChange(countPin);
+                                    WarningText = "ไม่สามารถเชื่อมต่อได้";
+                                    WarningVisible = true;
+                                    try
+                                    {
+                                        Vibration.Vibrate();
+                                        var duration = TimeSpan.FromSeconds(1);
+                                        Vibration.Vibrate(duration);
+                                    }
+                                    catch (FeatureNotSupportedException ex)
+                                    {
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                    }
+                                }
                                 App.Account = await SecureStorage.GetAsync("Account");
                                 App.Email = await SecureStorage.GetAsync("Email");
                                 App.FirstName = await SecureStorage.GetAsync("FirstName");
@@ -268,7 +300,8 @@ namespace EV.Customer.ViewModels
                             }
                             catch(Exception e)
                             {
-                                ForceLogout();
+                                ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                                await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                             }
                         }
                         else
@@ -300,6 +333,9 @@ namespace EV.Customer.ViewModels
                     }
                     else
                     {
+                        pin = "";
+                        countPin = pin.Length;
+                        HintColorChange(countPin);
                         WarningText = "ไม่สามารถเชื่อมต่อได้";
                         WarningVisible = true;
                         try
