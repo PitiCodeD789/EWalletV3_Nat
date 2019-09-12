@@ -6483,6 +6483,9 @@ namespace EV.Merchant.Droid
 			// aapt resource value: 0x7F070145
 			public const int walletIcon = 2131165509;
 			
+			// aapt resource value: 0x7F070146
+			public const int Warning = 2131165510;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

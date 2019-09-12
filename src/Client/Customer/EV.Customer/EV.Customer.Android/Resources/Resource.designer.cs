@@ -6529,6 +6529,9 @@ namespace EV.Customer.Droid
 			// aapt resource value: 0x7F070152
 			public const int Wallet = 2131165522;
 			
+			// aapt resource value: 0x7F070153
+			public const int Warning = 2131165523;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
