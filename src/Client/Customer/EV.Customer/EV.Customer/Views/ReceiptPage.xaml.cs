@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EWalletV2.Api.ViewModels.Transaction;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace EV.Customer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaymentSuccessPopUpView : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class ReceiptPage : ContentPage
     {
-        public PaymentSuccessPopUpView(ViewModels.PaymentPageViewModel vm)
+        public ReceiptPage(SlipViewModel paymentSlip)
         {
             InitializeComponent();
-            BindingContext = vm;
+            BindingContext = paymentSlip;
         }
     }
 }

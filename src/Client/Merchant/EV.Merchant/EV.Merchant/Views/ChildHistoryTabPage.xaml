@@ -8,9 +8,7 @@
              x:Name="TransactionsPageView"
                  xmlns:bindingViewModel="clr-namespace:EV.Merchant.ViewModels"
              x:Class="EV.Merchant.Views.ChildHistoryTabPage">
-    <ContentPage.BindingContext>
-        <bindingViewModel:MerchantTransactionModel />
-    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <Grid RowSpacing="0" BackgroundColor="#E2E2E2">
             <Grid.RowDefinitions>

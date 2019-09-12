@@ -40,7 +40,7 @@ namespace EV.Customer.Components
                         propertyName: "PushCommand",
                         returnType: typeof(ICommand),
                         declaringType: typeof(EW_Popup),
-                        defaultBindingMode: BindingMode.OneWay);
+                        defaultBindingMode: BindingMode.OneWay);       
 
         private void PopupButton_Clicked(object sender, EventArgs e)
         {

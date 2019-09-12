@@ -51,7 +51,7 @@ namespace EV.Merchant.ViewModels
 
             ClosePopup = new Command(PopPopup);
         }
-        public ErrorViewModel(string title, EW_Enumerations.EW_ErrorTypeEnum errorType, Action action)
+        public ErrorViewModel(string title, int errorType, Action action)
         {
             TextError = title;
             MyAction = action == null ? Pop : action;
