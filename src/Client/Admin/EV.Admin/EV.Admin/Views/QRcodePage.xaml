@@ -6,9 +6,13 @@
              xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              xmlns:components="clr-namespace:EV.Admin.Components"
+             xmlns:binding="clr-namespace:EV.Admin.ViewModels"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
              x:Class="EV.Admin.Views.QRcodePage">
+    <ContentPage.BindingContext>
+        <binding:GenerateQRcodeViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
             <StackLayout  Margin="20,20,20,15">
 

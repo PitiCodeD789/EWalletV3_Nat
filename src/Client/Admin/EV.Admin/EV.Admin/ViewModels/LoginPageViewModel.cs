@@ -19,10 +19,8 @@ namespace EV.Admin.ViewModels
 {
     public class LoginPageViewModel : BaseViewModel
     {
-        private readonly IAuthService _authService;
         public LoginPageViewModel()
         {
-            _authService = new AuthService();
             LoginCommand = new Command(async () => await Login());
         }
 
@@ -30,28 +28,12 @@ namespace EV.Admin.ViewModels
 
         async Task Login()
         {
-            if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
-            {
-                ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
-                if (!loginResult.IsError)
-                {
-                    ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
-                    await PopupNavigation.Instance.PushAsync(new Error(errorView));
-                }
-                else
-                {
-                   await StoreValue(loginResult.Model);
-                    await Application.Current.MainPage.Navigation.PushAsync(new AdminTabbedPage());
-                }
-            }
-            else
-            {
-                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password");
-                await PopupNavigation.Instance.PushAsync(new Error(errorView));
-            }
+            await StoreValue();
+            Application.Current.MainPage = new NavigationPage(new AdminTabbedPage());
+            
         }
 
-        private async Task StoreValue(LoginUserAndPassViewModel viewModel)
+        private async Task StoreValue()
         {
             try
             {

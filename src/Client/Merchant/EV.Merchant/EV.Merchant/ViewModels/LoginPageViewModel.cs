@@ -29,28 +29,11 @@ namespace EV.Merchant.ViewModels
 
         async Task Login()
         {
-            if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
-            {
-                ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
-                if (!loginResult.IsError)
-                {
-                    ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
-                    await PopupNavigation.Instance.PushAsync(new Error(errorView));
-                }
-                else
-                {
-                    await StoreValue(loginResult.Model);
-                    await Application.Current.MainPage.Navigation.PushAsync(new MerchantTabbedPage());
-                }
-            }
-            else
-            {
-                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password");
-                await PopupNavigation.Instance.PushAsync(new Error(errorView));
-            }
+            await StoreValue();
+            Application.Current.MainPage = new NavigationPage(new MerchantTabbedPage());
         }
 
-        private async Task StoreValue(LoginUserAndPassViewModel viewModel)
+        private async Task StoreValue()
         {
             try
             {

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using EV.Admin.ViewModels;
+using EWalletV2.Api.ViewModels.Transaction;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +15,12 @@ namespace EV.Admin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QRcodePage : ContentPage
     {
-        public QRcodePage()
+        public QRcodePage(GenerateTopupViewModel topupData)
         {
             InitializeComponent();
+            (BindingContext as GenerateQRcodeViewModel).DisplayData = topupData;
+            var topupJson = JsonConvert.SerializeObject(topupData);
+            (BindingContext as GenerateQRcodeViewModel).QrcodeData = topupJson;
         }
     }
 }
