@@ -38,7 +38,7 @@ namespace EV.Admin.ViewModels
                 if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
                 {
                     ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
-                    if (loginResult.IsError)
+                    if (loginResult == null || loginResult.IsError)
                     {
                         ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
                         IsProgress = false;
