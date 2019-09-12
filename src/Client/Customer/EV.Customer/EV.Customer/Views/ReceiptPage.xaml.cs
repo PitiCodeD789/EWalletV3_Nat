@@ -1,5 +1,6 @@
 ﻿using EV.Customer.Dependency;
 using EV.Customer.ViewModels;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Transaction;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static EWalletV2.Api.ViewModels.EW_Enumerations;
 
 namespace EV.Customer.Views
 {
@@ -28,9 +30,26 @@ namespace EV.Customer.Views
         public ReceiptPage(SlipViewModel slipViewModel)
         {
             InitializeComponent();
-            CreateReceipt();
-            receipt = slipViewModel;
-            BindingContext = new ReceiptPageViewModel();
+            try
+            {
+                slipViewModel = new SlipViewModel()
+                {
+                    Reference = "asdasdasdxzczxc",
+                    OtherName = "Admin",
+                    OtherAccountNumber = "0111111111",
+                    Amount = 2000,
+                    CreateDate = DateTime.Now,
+                    Type = EW_TypeTransectionEnum.TopUp
+                };
+                receipt = slipViewModel;
+                CreateReceipt();
+                BindingContext = new ReceiptPageViewModel();
+            }
+            catch (Exception e)
+            {
+                DisplayAlert("Error", e.Message, "Ok");
+            }
+
         }
 
         private void SKCanvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -160,10 +179,10 @@ namespace EV.Customer.Views
                 bitmap.Width / 4, canvasHeight / scale * 7, accountNumber);
             canvas.DrawText(receipt.OtherAccountNumber,
                 bitmap.Width / 4 * 3, canvasHeight / scale * 7, accountNumber);
-            canvas.DrawText("Payment (THB)",
-                bitmap.Width / 4 * 2, canvasHeight / scale * 8, paymentBrush);
+            canvas.DrawText(((receipt.Type == EW_TypeTransectionEnum.TopUp) ? "Topup" : "Payment") + " (THB)",
+                bitmap.Width / 4 * 2, canvasHeight / scale * 8, paymentBrush) ;
 
-            canvas.DrawText(receipt.Amount.ToString("{0:n}"),
+            canvas.DrawText(receipt.Amount.ToString("#,#.00#"),
                 bitmap.Width / 4 * 2, canvasHeight / scale * 10, amountBrush);
 
             canvas.DrawText(receipt.CreateDate.ToString("dd MMM yyyy hh:mm:ss"),
