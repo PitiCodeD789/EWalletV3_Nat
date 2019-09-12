@@ -38,7 +38,7 @@ namespace EV.Service.Services
 
         public async Task<ResultServiceModel<DummyModel>> UpdateUser(UpdateUserCommand updateUserCommand)
         {
-            string url = Helper.BaseUrl + "UpdateUser";
+            string url = Helper.BaseUrl + "user/UpdateUser";
             return await Post<DummyModel>(url, updateUserCommand);
         }
 
