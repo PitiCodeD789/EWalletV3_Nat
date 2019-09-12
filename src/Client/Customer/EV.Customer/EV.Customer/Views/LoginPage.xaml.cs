@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace EV.Admin.Views
+namespace EV.Customer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Page1 : ContentPage
+    public partial class LoginPage : ContentPage
     {
-        public Page1()
+        public LoginPage()
         {
             InitializeComponent();
         }

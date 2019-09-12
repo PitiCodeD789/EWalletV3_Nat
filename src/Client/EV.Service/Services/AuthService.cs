@@ -44,11 +44,18 @@ namespace EV.Service.Services
 
         public async Task<ResultServiceModel<LoginUserAndPassViewModel>> LoginUserAndPass(string username, string password)
         {
-            string url = Helper.BaseUrl + "auth/Login";
+            try
+            {
+                string url = Helper.BaseUrl + "auth/Login";
 
-            LoginUserAndPassCommand loginUser = new LoginUserAndPassCommand { Username = username, Password = password };
+                LoginUserAndPassCommand loginUser = new LoginUserAndPassCommand { Username = username, Password = password };
 
-            return await Post<LoginUserAndPassViewModel>(url,loginUser);
+                return await Post<LoginUserAndPassViewModel>(url, loginUser);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
 
         }
 

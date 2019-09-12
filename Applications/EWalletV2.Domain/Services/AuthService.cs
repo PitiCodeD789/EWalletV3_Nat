@@ -81,9 +81,9 @@ namespace EWalletV2.Domain.Services
             if (checkPassword == user.Pin)
             {
                 LoginUserAndPassDto loginUser = _mapper.Map<LoginUserAndPassDto>(user);
+                loginUser.phoneNumber = user.MobileNumber;
                 return loginUser;
             }
-
             return null;
         }
 
@@ -176,9 +176,9 @@ namespace EWalletV2.Domain.Services
             _otpRepository.Delete(otpValidate);
             if (otpValidate.CreateDateTime > DateTime.UtcNow.AddMinutes(-15))
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         public bool CheckRefreshToken(string email, string refeshToken)

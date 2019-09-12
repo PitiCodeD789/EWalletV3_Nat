@@ -61,5 +61,35 @@ namespace EV.Admin.Components
                 declaringType: typeof(EW_EntryView),
                 defaultBindingMode: BindingMode.TwoWay); //คนที่ประกาศ
         #endregion
+
+
+        #region KeyboardType
+        private Keyboard keyboardType;
+
+        public Keyboard KeyboardType
+        {
+            get { return keyboardType; }
+            set
+            {
+                keyboardType = value;
+                mEntry.Keyboard = keyboardType;
+            }
+        }
+        #endregion
+
+        #region Length
+        private int textLength;
+
+        public int TextLength
+        {
+            get { return textLength; }
+            set
+            {
+                textLength = value;
+                mEntry.MaxLength = textLength;
+            }
+        }
+
+        #endregion
     }
 }

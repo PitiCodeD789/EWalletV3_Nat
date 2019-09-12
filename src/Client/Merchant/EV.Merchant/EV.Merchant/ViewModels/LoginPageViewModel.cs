@@ -1,7 +1,10 @@
-﻿using EV.Service.Interfaces;
+﻿using EV.Merchant.Views;
+using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +17,12 @@ using Xamarin.Forms;
 
 namespace EV.Merchant.ViewModels
 {
-    public class LoginPageViewModel : INotifyPropertyChanged
+    public class LoginPageViewModel : BaseViewModel
     {
         private readonly IAuthService _authService;
         public LoginPageViewModel()
         {
+            IsProgress = false;
             _authService = new AuthService();
             LoginCommand = new Command(async () => await Login());
         }
@@ -27,50 +31,52 @@ namespace EV.Merchant.ViewModels
 
         async Task Login()
         {
+            IsProgress = true;
             if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
             {
                 ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
                 if (!loginResult.IsError)
                 {
-                    //TODO: Edit Alert
-                    await Application.Current.MainPage.DisplayAlert("", "Error Login", "Ok");
+                    ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
+                    IsProgress = false;
+                    await PopupNavigation.Instance.PushAsync(new Error(errorView));
                 }
                 else
                 {
-                    bool storeResult = StoreValue(loginResult.Model);
-                    if (!storeResult)
-                    {
-                        //TODO: Edit Alert
-                        await Application.Current.MainPage.DisplayAlert("", "Error Saving Secure Storage", "Ok");
-                    }
-                    else
-                    {
-                        //Application.Current.MainPage.Navigation.PushAsync(new HomePage());
-                    }
+                    await StoreValue(loginResult.Model);
+                    IsProgress = false;
+                    App.Email = Username;
+                    await Application.Current.MainPage.Navigation.PushAsync(new MerchantTabbedPage());
                 }
             }
             else
             {
-                //TODO: Edit Alert
-                await Application.Current.MainPage.DisplayAlert("", "Enter Username and Password", "Ok");
+                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password", (int)EWalletV2.Api.ViewModels.EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                IsProgress = false;
+                await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
         }
 
-        bool StoreValue(LoginUserAndPassViewModel viewModel)
+        private async Task StoreValue(LoginUserAndPassViewModel viewModel)
         {
             try
             {
-                SecureStorage.SetAsync("Account", viewModel.Account);
-                SecureStorage.SetAsync("FirstName", viewModel.FirstName);
-                SecureStorage.SetAsync("LastName", viewModel.LastName);
-                SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
-                SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
-                SecureStorage.SetAsync("Token", viewModel.Token);
-                return true;
+                await SecureStorage.SetAsync("Account", viewModel.Account);
+                await SecureStorage.SetAsync("Username", Username);
+                await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
+                await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
+                await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
+                await SecureStorage.SetAsync("Token", viewModel.Token);
+                App.Account = viewModel.Account;
+                App.Username = Username;
+                App.FirstName = viewModel.FirstName;
+                App.LastName = viewModel.LastName;
+                App.PhoneNumber = viewModel.PhoneNumber;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                return false;
+                ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
 
@@ -101,11 +107,21 @@ namespace EV.Merchant.ViewModels
                 OnPropertyChanged();
             }
         }
+        private bool _isProgress;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public bool IsProgress
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get { return _isProgress; }
+            set
+            {
+                if (value != _isProgress)
+                {
+                    _isProgress = value;
+                    OnPropertyChanged();
+                }
+
+            }
         }
+
     }
 }
