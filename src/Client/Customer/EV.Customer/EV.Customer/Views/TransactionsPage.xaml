@@ -6,12 +6,7 @@
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"             
              x:Name="TransactionsPageView"
-             
-             xmlns:bindingViewModel="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.TransactionsPage">
-    <ContentPage.BindingContext>
-        <bindingViewModel:CustomerTransactionViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid RowSpacing="0" BackgroundColor="#E2E2E2">
             <Grid.RowDefinitions>

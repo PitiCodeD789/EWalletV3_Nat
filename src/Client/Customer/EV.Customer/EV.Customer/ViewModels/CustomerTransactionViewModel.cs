@@ -7,14 +7,17 @@ using EWalletV2.Api.ViewModels.User;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class CustomerTransactionViewModel
+    public class CustomerTransactionViewModel : INotifyPropertyChanged
     {
         private readonly ITransactionServices _transactionService;
         private readonly IUserService _userServices;
@@ -25,13 +28,14 @@ namespace EV.Customer.ViewModels
             _transactionService = new TransactionServices();
             _userServices = new UserService();
             Email = App.Email;
-            //CustomerBalance = GetBalance();
             FullName = App.FirstName + " " + App.LastName;
             AccountNumber = App.Account;
-            //GetTransactions();
 
-            //MockUpForTestBinding
-            MockData();
+            LastestMonth = DateTime.Now;
+            Transactionlist = new List<TransactionViewModel>();
+            FirstTransactionList = new List<TransactionViewModel>();
+            SecondTransactionList = new List<TransactionViewModel>();
+            ThridTransactionList = new List<TransactionViewModel>();
 
             //Command
             ViewTransactionDetailCommand = new Command<int>(ViewTransactionDetail);
@@ -44,10 +48,16 @@ namespace EV.Customer.ViewModels
             PopupNavigation.PopAsync();
         }
 
-        private decimal GetBalance()
+        public async Task GetTotalBalance()
         {
-            ResultServiceModel<AccountViewModel> getBalance = _userServices.GetBalance(Email).Result;
-            return getBalance.Model.Balance;
+            ResultServiceModel<AccountViewModel> account = await _userServices.GetBalance("pesor1985@gmail.com");
+            if (account != null)
+            {
+                CustomerBalance = account.Model.Balance;
+            }
+
+            // รอข้อมูลชื่อนามสกุล จากพี่เสริท
+            // AccountNumber , FullName 
         }
 
         private void MockData()
@@ -78,7 +88,16 @@ namespace EV.Customer.ViewModels
             get { return Month2.AddMonths(-1); }
             set { Month3 = value; }
         }
-
+        private decimal _customerBalance;
+        public decimal CustomerBalance
+        {
+            get { return _customerBalance; }
+            set
+            {
+                _customerBalance = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand ViewTransactionDetailCommand { get; set; }
 
@@ -112,19 +131,102 @@ namespace EV.Customer.ViewModels
             PopupNavigation.PushAsync(new Views.TransactionsOne(this));
         }
 
-        public async void GetTransactions()
+        public async Task GetTransactions()
         {
             ResultServiceModel<List<TransactionViewModel>> result = await _transactionService.GetTransaction30Days(Email);
-            if(result.IsError != true)
+            if(result.IsError != true || result.Model.Count != 0)
             {
                 Transactionlist = result.Model;
                 LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
                 FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
                 SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
                 ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
-
             }
             //If Error popup errorPopupPage
+        }
+
+        private List<TransactionViewModel> _transactionlist;
+        public List<TransactionViewModel> Transactionlist
+        {
+            get { return _transactionlist; }
+            set
+            {
+                _transactionlist = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<TransactionViewModel> _firstTransactionList;
+        public List<TransactionViewModel> FirstTransactionList
+        {
+            get { return _firstTransactionList; }
+            set
+            {
+                _firstTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<TransactionViewModel> _secondTransactionList;
+        public List<TransactionViewModel> SecondTransactionList
+        {
+            get { return _secondTransactionList; }
+            set
+            {
+                _secondTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<TransactionViewModel> _thridTransactionList;
+        public List<TransactionViewModel> ThridTransactionList
+        {
+            get { return _thridTransactionList; }
+            set
+            {
+                _thridTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public bool FirstMonth
+        {
+            get
+            {
+                OnPropertyChanged();
+                if (FirstTransactionList.Count != 0) return true;
+                return false;
+            }
+            set
+            {
+                FirstMonth = value;
+            }
+        }
+        public bool SecondMonth
+        {
+            get
+            {
+                OnPropertyChanged();
+                if (SecondTransactionList.Count != 0) return true;
+                return false;
+            }
+            set { SecondMonth = value; }
+        }
+        public bool ThirdMonth
+        {
+            get
+            {
+                OnPropertyChanged();
+                if (ThridTransactionList.Count != 0) return true;
+                return false;
+            }
+            set { ThirdMonth = value; }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public string PayerImage { get; set; }
@@ -137,39 +239,7 @@ namespace EV.Customer.ViewModels
 
         public string TransactionName { get; set; }
         public decimal TransactionPaid { get; set; }
-
-        public bool FirstMonth
-        {
-            get
-            {
-                if (FirstTransactionList.Count != 0) return true;
-                return false;
-            }
-            set { FirstMonth = value; }
-        }
-        public bool SecondMonth
-        {
-            get
-            {
-                if (SecondTransactionList.Count != 0) return true;
-                return false;
-            }
-            set { SecondMonth = value; }
-        }
-        public bool ThirdMonth
-        {
-            get
-            {
-                if (ThridTransactionList.Count != 0) return true;
-                return false;
-            }
-            set { ThirdMonth = value; }
-        }
-        public List<TransactionViewModel> Transactionlist { get; set; }
-        public List<TransactionViewModel> FirstTransactionList { get; set; }
-        public List<TransactionViewModel> SecondTransactionList { get; set; }
-        public List<TransactionViewModel> ThridTransactionList { get; set; }
-
+                
 
         private string _fullName;
         public string FullName
@@ -190,13 +260,6 @@ namespace EV.Customer.ViewModels
         {
             get { return _email; }
             set { _email = value; }
-        }
-
-        private decimal _customerBalance;
-        public decimal CustomerBalance
-        {
-            get { return _customerBalance; }
-            set { _customerBalance = value; }
         }
 
     }
