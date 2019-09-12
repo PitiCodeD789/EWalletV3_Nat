@@ -90,7 +90,10 @@ namespace EWalletV2.Api.Controllers
                 return BadRequest();
             }
 
-            return Ok(refNumber);
+            CheckForgotPinViewModel checkForgot = new CheckForgotPinViewModel { RefNumber = refNumber };
+
+
+            return Ok(checkForgot);
         }
 
     }

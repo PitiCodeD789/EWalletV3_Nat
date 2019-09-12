@@ -7,9 +7,7 @@
              NavigationPage.HasNavigationBar="False"
              xmlns:bd="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.ChildHomeTabPage">
-    <ContentPage.BindingContext>
-        <bd:HomePageViewModel/>
-    </ContentPage.BindingContext>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="MenuFrame" TargetType="Frame">

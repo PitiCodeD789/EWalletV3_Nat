@@ -72,7 +72,7 @@ namespace EV.Customer.ViewModels
                 else
                 {
                     IsProcess = false;
-                    string resultRefOtp = resultCaller.Model;
+                    string resultRefOtp = resultCaller.Model.RefNumber;
                     await Application.Current.MainPage.Navigation.PushAsync(new PinPage(new OtpForgotPassViewModel(Email,resultRefOtp,birthDate)));
                 }
                 if (!string.IsNullOrEmpty(error))

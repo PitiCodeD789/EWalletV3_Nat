@@ -229,7 +229,7 @@ namespace EV.Customer.ViewModels
                     var checkOtpData = await _authService.CheckOtp(email, pin, reference);
                     if (checkOtpData != null && !checkOtpData.IsError)
                     {
-                        if (checkOtpData.Model != null || checkOtpData.Model.IsValidateOtp)
+                        if (checkOtpData.Model != null && checkOtpData.Model.IsValidateOtp)
                         {
                             if (checkProcess == Status.LastPage.Login)
                             {
