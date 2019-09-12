@@ -2,9 +2,11 @@
 using EV.Customer.Views;
 using EV.Service.Interfaces;
 using EV.Service.Services;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
@@ -18,11 +20,17 @@ namespace EV.Customer.ViewModels
         public ForgotPassViewModel( )
         {
             CallCheckForgotPin = new Command(execute: CheckPin);
+            CancelButton = new Command(ClosePopup);
         }
+
+        public ICommand CancelButton;
+
+
         private async void CheckPin()
         {
             DateTime birthDate = new DateTime();
             error = null;
+            int errorType = 0;
             try
             {
                 var inputDateTime = DateTime.ParseExact(BirthDate,"dd/MM/yyyy", null);
@@ -30,7 +38,7 @@ namespace EV.Customer.ViewModels
             }
             catch(Exception e)
             {
-                error =  "Please input datime follow format : dd/MM/yyyy";
+                error = "Invalid BirthDate format is\n Example : 25/12/2562";
             }
             bool checkEmailFormat = false;
             if (!string.IsNullOrEmpty(Email))
@@ -39,11 +47,12 @@ namespace EV.Customer.ViewModels
             }
             if (!checkEmailFormat)
             {
-                error += "\nYour input format email is incorrect";
+                error += "\n Invalid Email Format";
             }
             if (!string.IsNullOrEmpty(error))
             {
-                await Application.Current.MainPage.DisplayAlert("", error, "OK");
+                ErrorViewModel errorView = new ErrorViewModel(error, errorType);
+                await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
             else
             {
@@ -51,6 +60,7 @@ namespace EV.Customer.ViewModels
                 if (resultCaller.IsError)
                 {
                     error = "ขออภัย! ไม่สามารถเชื่อมต่อได้";
+                    errorType = 1;
                 }
                 else if (resultCaller == null)
                 {
@@ -60,11 +70,12 @@ namespace EV.Customer.ViewModels
                 {
                     string resultRefOtp = resultCaller.Model;
                     await Application.Current.MainPage.Navigation.PushAsync(new PinPage(new OtpForgotPassViewModel(Email,resultRefOtp,birthDate)));
-                    ////////////// ===========> Next page will show refOtp
                 }
                 if (!string.IsNullOrEmpty(error))
                 {
-                    await Application.Current.MainPage.DisplayAlert("", error, "OK");
+                    ErrorViewModel errorView = new ErrorViewModel(error,errorType);
+                    await PopupNavigation.Instance.PushAsync(new Error(errorView));
+
                 }
             }
         }
@@ -109,5 +120,10 @@ namespace EV.Customer.ViewModels
         }
 
         public Command CallCheckForgotPin { get; }
+
+        private void ClosePopup()
+        {
+            PopupNavigation.Instance.PopAllAsync();
+        }
     }
 }
