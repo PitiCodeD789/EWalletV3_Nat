@@ -19,6 +19,7 @@ namespace EV.Customer.ViewModels
 
         public ForgotPassViewModel( )
         {
+            IsProcess = false;
             CallCheckForgotPin = new Command(execute: CheckPin);
             CancelButton = new Command(ClosePopup);
         }
@@ -28,6 +29,7 @@ namespace EV.Customer.ViewModels
 
         private async void CheckPin()
         {
+            IsProcess = true;
             DateTime birthDate = new DateTime();
             error = null;
             int errorType = 0;
@@ -51,6 +53,7 @@ namespace EV.Customer.ViewModels
             }
             if (!string.IsNullOrEmpty(error))
             {
+                IsProcess = false;
                 ErrorViewModel errorView = new ErrorViewModel(error, errorType);
                 await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
@@ -68,11 +71,13 @@ namespace EV.Customer.ViewModels
                 }
                 else
                 {
+                    IsProcess = false;
                     string resultRefOtp = resultCaller.Model;
                     await Application.Current.MainPage.Navigation.PushAsync(new PinPage(new OtpForgotPassViewModel(Email,resultRefOtp,birthDate)));
                 }
                 if (!string.IsNullOrEmpty(error))
                 {
+                    IsProcess = false;
                     ErrorViewModel errorView = new ErrorViewModel(error,errorType);
                     await PopupNavigation.Instance.PushAsync(new Error(errorView));
 
@@ -115,6 +120,20 @@ namespace EV.Customer.ViewModels
                 if (value != _email)
                 {
                     _email = value; OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool isProcess;
+
+        public bool IsProcess
+        {
+            get { return isProcess; }
+            set
+            {
+                if (value != isProcess)
+                {
+                    isProcess = value; OnPropertyChanged();
                 }
             }
         }
