@@ -35,7 +35,7 @@ namespace EV.Merchant.ViewModels
             if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
             {
                 ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
-                if (!loginResult.IsError)
+                if (loginResult == null || loginResult.IsError)
                 {
                     ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
                     IsProgress = false;
@@ -63,17 +63,16 @@ namespace EV.Merchant.ViewModels
             {
                 await SecureStorage.SetAsync("Account", viewModel.Account);
                 await SecureStorage.SetAsync("Username", Username);
-                await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
+                await SecureStorage.SetAsync("StoreName", viewModel.FirstName);
                 await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
                 await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
                 await SecureStorage.SetAsync("Token", viewModel.Token);
                 App.Account = viewModel.Account;
                 App.Username = Username;
-                App.FirstName = viewModel.FirstName;
-                App.LastName = viewModel.LastName;
+                App.StoreName = viewModel.FirstName;
                 App.PhoneNumber = viewModel.PhoneNumber;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
                 await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));

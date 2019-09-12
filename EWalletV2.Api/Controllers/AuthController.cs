@@ -145,7 +145,7 @@ namespace EWalletV2.Api.Controllers
             LoginUserAndPassDto loginUserAndPassDto = _authService.LoginWithUsernameAndPassword(username, password);
 
             if (loginUserAndPassDto == null)
-                return NotFound();
+                return BadRequest();
             GetToken getToken = new GetToken(_configuration);
             LoginUserAndPassViewModel model = _mapper.Map<LoginUserAndPassViewModel>(loginUserAndPassDto);
 

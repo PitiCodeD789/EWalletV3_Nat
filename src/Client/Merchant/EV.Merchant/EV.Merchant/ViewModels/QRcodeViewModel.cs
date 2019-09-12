@@ -38,7 +38,7 @@ namespace EV.Merchant.ViewModels
         public QRcodeViewModel()
         {
             BacktoPreviousCommand = new Command(Goback);
-            MerchantAccount = SecureStorage.GetAsync("Account").Result;
+            MerchantAccount = App.Account;
 
         }
         private async void Goback()
