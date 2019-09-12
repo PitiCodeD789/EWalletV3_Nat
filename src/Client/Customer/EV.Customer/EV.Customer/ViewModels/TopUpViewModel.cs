@@ -1,4 +1,5 @@
-﻿using EV.Service.Interfaces;
+﻿using EV.Customer.Views;
+using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Transaction;
@@ -25,8 +26,25 @@ namespace EV.Customer.ViewModels
             CancelCommand = new Command(Cancel);
             BackToHomeCommand = new Command(BackToHome);
             TopUpCommand = new Command(TopUp);
+            FullName = App.FirstName + " " + App.LastName;
+            
         }
-
+        public ICommand ToSlip { get; set; }
+        public void PushToTopupSlip()
+        {
+            PopupNavigation.Instance.PopAllAsync();
+            SlipViewModel slip = new SlipViewModel()
+            {
+                Amount = Amount,
+                CreateDate = CreateDate,
+                OtherAccountNumber = AdminAccountNumber,
+                OtherName = AdminName,
+                Reference = QRCodeReference,
+                Type = EWalletV2.Api.ViewModels.EW_Enumerations.EW_TypeTransectionEnum.TopUp
+            };
+            Application.Current.MainPage.Navigation.PushAsync(new ReceiptPage(slip));
+        }
+        public string FullName { get; set; }
         public void GetDetail()
         {
             //เอาอีเมลมาจาก Class static
@@ -42,7 +60,7 @@ namespace EV.Customer.ViewModels
         public ICommand BackToHomeCommand { get; set; }
         private void BackToHome()
         {
-            //Application.Current.MainPage = new Views.HomePageView();
+            Application.Current.MainPage = new Views.UserTabbedPage();
         }
         public ICommand TopUpCommand { get; set; }
         private async void TopUp()
@@ -54,11 +72,10 @@ namespace EV.Customer.ViewModels
             }
             else
             {
-                Application.Current.MainPage.DisplayAlert("Error", "TopUp Fail", "Ok");
+                ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ");
+                PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
         }
-
-
         //รอแก้ให้ API รีเทรินกลับมาให้
         private DateTime _createDate;
         public DateTime CreateDate
@@ -95,8 +112,5 @@ namespace EV.Customer.ViewModels
 
         public string Email { get; set; }
         public string CustomerAccountNumber { get; set; }
-
-
-
     }
 }

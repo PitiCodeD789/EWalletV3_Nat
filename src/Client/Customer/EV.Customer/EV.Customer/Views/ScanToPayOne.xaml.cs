@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Customer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,11 @@ namespace EV.Customer.Views
     {
         private int textLength = 0;
         private int currentMargin = -20;
-        public ScanToPayOne()
+        public ScanToPayOne(string merchantName, string merchantAccountNumber)
         {
             InitializeComponent();
+            (BindingContext as PaymentPageViewModel).MerchantName = merchantName;
+            (BindingContext as PaymentPageViewModel).MerchantAccountNumber = merchantAccountNumber;
         }
         private void TextSizeChange(object sender, TextChangedEventArgs e)
         {
