@@ -176,9 +176,9 @@ namespace EWalletV2.Domain.Services
             _otpRepository.Delete(otpValidate);
             if (otpValidate.CreateDateTime > DateTime.UtcNow.AddMinutes(-15))
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         public bool CheckRefreshToken(string email, string refeshToken)
