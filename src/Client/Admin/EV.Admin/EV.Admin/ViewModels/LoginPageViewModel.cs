@@ -46,10 +46,34 @@ namespace EV.Admin.ViewModels
                     }
                     else
                     {
-                        IsProgress = false;
-                        await StoreValue(loginResult.Model);
-                        App.Email = Username;
-                        await Application.Current.MainPage.Navigation.PushAsync(new AdminTabbedPage());
+                        try
+                        {
+                            var checkRole = int.Parse(loginResult.Model.Account.Substring(0, 2)) == (int)EW_Enumerations.EW_UserTypeEnum.Merchant;
+                            if (checkRole)
+                            {
+                                IsProgress = false;
+                                var successSave = await StoreValue(loginResult.Model);
+                                if (successSave)
+                                {
+                                    App.Email = Username;
+                                    await Application.Current.MainPage.Navigation.PushAsync(new AdminTabbedPage());
+                                }
+
+                            }
+                            else
+                            {
+                                ErrorViewModel errorView = new ErrorViewModel("ไม่ได้รับอนุญาติให้เข้าใช้ระบบ", (int)EWalletV2.Api.ViewModels.EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                                IsProgress = false;
+                                await PopupNavigation.Instance.PushAsync(new Error(errorView));
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
+                            IsProgress = false;
+                            await PopupNavigation.Instance.PushAsync(new Error(errorView));
+                        }
                     }
                 }
                 else
@@ -66,7 +90,7 @@ namespace EV.Admin.ViewModels
 
         }
 
-        private async Task StoreValue(LoginUserAndPassViewModel viewModel)
+        private async Task<bool> StoreValue(LoginUserAndPassViewModel viewModel)
         {
             try
             {
@@ -80,11 +104,13 @@ namespace EV.Admin.ViewModels
                 App.Username = Username;
                 App.AdminName = viewModel.FirstName;
                 App.PhoneNumber = viewModel.PhoneNumber;
+                return true;
             }
             catch (Exception e)
             {
                 ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
                 await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
+                return false;
             }
         }
 

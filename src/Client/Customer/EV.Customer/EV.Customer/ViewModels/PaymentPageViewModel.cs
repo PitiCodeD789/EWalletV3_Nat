@@ -20,14 +20,14 @@ namespace EV.Customer.ViewModels
         {
             //Initial
             _transactionServices = new TransactionServices();
-
+            CreateDate = DateTime.Now;
             //Command
             CancelCommand = new Command(Cancel);
             BackToHomeCommand = new Command(BackToHome);
             PaymentCommand = new Command(Payment);
             InputPaymentCommand = new Command(InputPayment);
             ToSlip = new Command(PushToSlip);
-            FullName = App.FirstName + " " + App.LastName;
+            //FullName = App.FirstName + " " + App.LastName;
         }
 
         public ICommand CancelCommand { get; set; }
@@ -46,21 +46,30 @@ namespace EV.Customer.ViewModels
         public ICommand InputPaymentCommand { get; set; }
         private async void Payment()
         {
-            ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount);
-            if (!paymentResult.IsError)
+            try
             {
-                CreateDate = paymentResult.Model.CreateDatetime;
-                Reference = paymentResult.Model.Reference;
-                PopupNavigation.Instance.PopAllAsync();
-                PopupNavigation.Instance.PushAsync(new Views.ScanToPayThree(this));
+                ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount);
+                if (paymentResult == null || paymentResult.IsError) { 
+                    //Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
+                    ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ \n กรุณาตรวจสอบเงินคงเหลือในบัญชี", (int)EW_ErrorTypeEnum.Error);
+                    PopupNavigation.Instance.PushAsync(new Error(errorView));
+
+                }
+                else
                 
+                {
+                    CreateDate = paymentResult.Model.CreateDatetime;
+                    Reference = paymentResult.Model.Reference;
+                    PopupNavigation.Instance.PopAllAsync();
+                    PopupNavigation.Instance.PushAsync(new Views.ScanToPayThree(this));
+                }
             }
-            else
+            catch (Exception e)
             {
-                //Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
-                ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ \n กรุณาตรวจสอบเงินคงเหลือในบัญชี", (int)EW_ErrorTypeEnum.Error);
-                PopupNavigation.Instance.PushAsync(new Error(errorView));
+
+                throw;
             }
+            
         }
         private async void InputPayment()
         {
@@ -119,7 +128,7 @@ namespace EV.Customer.ViewModels
             set { _merchantAccountNumber = value; }
         }
         public string Reference { get; set; }
-        public string Email { get; set; }
+        public string Email { get; set; } = "t_t_oohh@hotmail.com";
         public string CustomerAccountNumber { get; set; }
 
     }
