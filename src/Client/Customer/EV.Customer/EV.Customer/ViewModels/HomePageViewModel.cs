@@ -73,12 +73,6 @@ namespace EV.Customer.ViewModels
             {
                 var scanner = DependencyService.Get<IQrScanningService>();
                 var result = await scanner.ScanAsync();
-                var model = new GeneratePaymentViewModel()
-                {
-                    FirstName = "merchant",
-                    AccountNumber = "0200000003"
-                };
-                //var result = JsonConvert.SerializeObject(model);
                 if (result != null)
                 {
                     GeneratePaymentViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GeneratePaymentViewModel>(result);
