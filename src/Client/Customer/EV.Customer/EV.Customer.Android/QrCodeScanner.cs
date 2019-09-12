@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using EV.Customer.Dependency;
 using EV.Customer.Droid;
 using EV.Customer.Interfaces;
 using Xamarin.Forms;
@@ -22,18 +23,16 @@ namespace EV.Customer.Droid
     {
         public async Task<string> ScanAsync()
         {
-            var optionsDefault = new MobileBarcodeScanningOptions();
-            var optionsCustom = new MobileBarcodeScanningOptions();
+            var scanner = new MobileBarcodeScanner();
 
-            var scanner = new MobileBarcodeScanner()
+            //var scanResult = await scanner.Scan();
+            //return scanResult.Text;
+            var result = await DependencyService.Get<IDeviceService>().ScanAsync();
+            if (!string.IsNullOrEmpty(result))
             {
-                TopText = "เติมเงิน",
-
-                BottomText = "Line up the QR code to scan it With your device's camera",
-            };
-
-            var scanResult = await scanner.Scan(optionsCustom);
-            return scanResult.Text;
+                return result;
+            }
+            return null;
         }
     }
 }
