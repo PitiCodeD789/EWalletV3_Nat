@@ -21,7 +21,8 @@ namespace EV.Customer.ViewModels
         }
         private async void CheckPin()
         {
-            DateTime birthDate = new DateTime();          
+            DateTime birthDate = new DateTime();
+            error = null;
             try
             {
                 var inputDateTime = DateTime.ParseExact(BirthDate,"dd/MM/yyyy", null);
@@ -46,7 +47,7 @@ namespace EV.Customer.ViewModels
             }
             else
             {
-                var resultCaller = _pinService.CheckForgotPin(birthDate, Email).Result;
+                var resultCaller = await _pinService.CheckForgotPin(birthDate, Email);
                 if (resultCaller.IsError)
                 {
                     error = "ขออภัย! ไม่สามารถเชื่อมต่อได้";
