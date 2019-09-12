@@ -4,16 +4,15 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace EV.Merchant.ViewModels
 {
     public class GenerateQRcodeViewModel : BaseViewModel
     {
-        public GenerateQRcodeViewModel(GeneratePaymentViewModel generateTopup)
-        {
-            var topupJson = JsonConvert.SerializeObject(generateTopup);
-            QrcodeData = topupJson;
-        }
+        public ICommand BacktoPreviousCommand { get; set; }
         private string qrcodeData;
 
         public string QrcodeData
@@ -24,6 +23,29 @@ namespace EV.Merchant.ViewModels
                 qrcodeData = value;
                 OnPropertyChanged();
             }
+        }
+        private string fullname;
+
+        public string FullName
+        {
+            get { return fullname; }
+            set
+            {
+                fullname = value;
+                OnPropertyChanged();
+            }
+        }
+        public GenerateQRcodeViewModel(GeneratePaymentViewModel generateTopup)
+        {
+            var topupJson = JsonConvert.SerializeObject(generateTopup);
+            QrcodeData = topupJson;
+            FullName = SecureStorage.GetAsync("FirstName").Result;
+            BacktoPreviousCommand = new Command(Goback);
+
+        }
+        private async void Goback()
+        {
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

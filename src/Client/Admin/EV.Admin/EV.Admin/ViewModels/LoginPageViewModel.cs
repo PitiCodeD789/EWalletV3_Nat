@@ -1,7 +1,10 @@
-﻿using EV.Service.Interfaces;
+﻿using EV.Admin.Views;
+using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Auth;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +17,7 @@ using Xamarin.Forms;
 
 namespace EV.Admin.ViewModels
 {
-    public class LoginPageViewModel : INotifyPropertyChanged
+    public class LoginPageViewModel : BaseViewModel
     {
         private readonly IAuthService _authService;
         public LoginPageViewModel()
@@ -32,46 +35,31 @@ namespace EV.Admin.ViewModels
                 ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
                 if (!loginResult.IsError)
                 {
-                    //TODO: Edit Alert
-                    await Application.Current.MainPage.DisplayAlert("","Error Login","Ok");
+                    ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
+                    await PopupNavigation.Instance.PushAsync(new Error(errorView));
                 }
                 else
                 {
-                    bool storeResult = StoreValue(loginResult.Model);
-                    if (!storeResult)
-                    {
-                        //TODO: Edit Alert
-                        await Application.Current.MainPage.DisplayAlert("", "Error Saving Secure Storage", "Ok");
-                    }
-                    else
-                    {
-                        //Application.Current.MainPage.Navigation.PushAsync(new HomePage());
-                    }
+                   await StoreValue(loginResult.Model);
+                    await Application.Current.MainPage.Navigation.PushAsync(new AdminTabbedPage());
                 }
             }
             else
             {
-                //TODO: Edit Alert
-                await Application.Current.MainPage.DisplayAlert("", "Enter Username and Password", "Ok");
+                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password");
+                await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
         }
 
-        bool StoreValue(LoginUserAndPassViewModel viewModel)
+        private async Task StoreValue(LoginUserAndPassViewModel viewModel)
         {
-            try
-            {
-                SecureStorage.SetAsync("Account", viewModel.Account);
-                SecureStorage.SetAsync("FirstName", viewModel.FirstName);
-                SecureStorage.SetAsync("LastName", viewModel.LastName);
-                SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
-                SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
-                SecureStorage.SetAsync("Token", viewModel.Token);
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+            await SecureStorage.SetAsync("Account", viewModel.Account);
+            await SecureStorage.SetAsync("Username", Username);
+            await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
+            await SecureStorage.SetAsync("LastName", viewModel.LastName);
+            await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
+            await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
+            await SecureStorage.SetAsync("Token", viewModel.Token);
         }
 
         private string _username;
@@ -100,12 +88,6 @@ namespace EV.Admin.ViewModels
                 }
                 OnPropertyChanged();
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -33,6 +33,7 @@ namespace EV.Admin.ViewModels
 
         public InputMoneyViewModel()
         {
+            _transactionService = new TransactionServices();
             BacktoPreviousCommand = new Command(Goback);
             GenerateQRcodeCommand = new Command(GenerateQrcode);
         }

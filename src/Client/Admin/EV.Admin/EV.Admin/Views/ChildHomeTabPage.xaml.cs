@@ -16,10 +16,5 @@ namespace EV.Admin.Views
         {
             InitializeComponent();
         }
-
-        private void TapPayment_Tapped(object sender, EventArgs e)
-        {
-
-        }
     }
 }
