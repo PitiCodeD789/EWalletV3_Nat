@@ -39,9 +39,9 @@ namespace EV.Admin.ViewModels
             BacktoPreviousCommand = new Command(Goback);
         }
        
-        private async void Goback()
+        private  void Goback()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new AdminTabbedPage());
+            Application.Current.MainPage = new NavigationPage(new AdminTabbedPage());
         }
 
     }

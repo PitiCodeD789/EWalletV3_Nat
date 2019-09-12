@@ -56,7 +56,7 @@ namespace EV.Admin.ViewModels
                                 if (successSave)
                                 {
                                     App.Email = Username;
-                                    await Application.Current.MainPage.Navigation.PushAsync(new AdminTabbedPage());
+                                    Application.Current.MainPage = new NavigationPage(new AdminTabbedPage());
                                 }
 
                             }

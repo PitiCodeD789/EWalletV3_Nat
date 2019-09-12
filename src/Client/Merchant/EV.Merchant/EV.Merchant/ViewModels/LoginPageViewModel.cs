@@ -53,7 +53,7 @@ namespace EV.Merchant.ViewModels
                             if (successSave)
                             {
                                 App.Email = Username;
-                                await Application.Current.MainPage.Navigation.PushAsync(new MerchantTabbedPage());
+                                Application.Current.MainPage = new NavigationPage(new MerchantTabbedPage());
                             }
 
                         }
