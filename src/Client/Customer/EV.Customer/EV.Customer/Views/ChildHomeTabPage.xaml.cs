@@ -15,16 +15,6 @@ namespace EV.Customer.Views
         public ChildHomeTabPage()
         {
             InitializeComponent();
-        }
-
-        private void TapPayment_Tapped(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TapTopupFromAdminApp_Tapped(object sender, EventArgs e)
-        {
-
-        }
+        }        
     }
 }

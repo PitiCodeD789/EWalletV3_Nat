@@ -5,7 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
+             xmlns:bd="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.ChildHomeTabPage">
+    <ContentPage.BindingContext>
+        <bd:HomePageViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="MenuFrame" TargetType="Frame">
@@ -55,12 +59,12 @@
                             HorizontalOptions="End" VerticalOptions="Center"
                             WidthRequest="40"
                             HeightRequest="40"/>
-                <Label Text="ยินดีต้อนรับ ดำรงเดช ลลิหกดฟหกดหฟห" LineBreakMode="TailTruncation" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"
+                <Label Text="{Binding FullName,StringFormat='ยินดีต้อนรับ {0}'}" LineBreakMode="TailTruncation" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"
                         FontSize="28" TextColor="White"
                         FontAttributes="Bold"
                         VerticalOptions="EndAndExpand"
                         HorizontalOptions="Center"/>
-                <Label Text="สวัสดีตอนเช้า" TextColor="White" FontSize="20"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+                <Label Text="{Binding Greeting}" TextColor="White" FontSize="20"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
                         FontAttributes="Bold"
                         VerticalOptions="StartAndExpand"
                         HorizontalOptions="StartAndExpand"/>
@@ -71,7 +75,7 @@
                                 VerticalTextAlignment="Center" HorizontalOptions="Start"
                                 Margin="10"/>
                     <!--<Label Text="{Binding CurrentBalance,StringFormat='{0:n} THB'}" TextColor="Orange" FontSize="25"-->
-                    <Label Text="3,800.50" TextColor="#EAA200" FontSize="25"
+                    <Label Text="{Binding Balance}" TextColor="#EAA200" FontSize="25"
                             VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand"
                             FontAttributes="Bold"/>
                     <Label Text="THB" TextColor="#EAA200" FontSize="12"
@@ -86,8 +90,8 @@
                        Grid.Column="0"
                        Grid.Row="0">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="TapPayment" NumberOfTapsRequired="1" 
-                                              Tapped="TapPayment_Tapped"/>
+                            <TapGestureRecognizer x:Name="TapPayment" NumberOfTapsRequired="1"                                               
+                                                  Command="{Binding ScanToPayCommand}"/>
                         </Frame.GestureRecognizers>
                         <StackLayout>
                             <Image Source="qricon.png"
@@ -110,8 +114,8 @@
                        Grid.Column="1"
                        Grid.Row="0">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="TapTopupFromAdminApp" NumberOfTapsRequired="1" 
-                                              Tapped="TapTopupFromAdminApp_Tapped"/>
+                            <TapGestureRecognizer x:Name="TapTopupFromAdminApp" NumberOfTapsRequired="1"                                              
+                                                  Command="{Binding ScanToTopupCommand}"/>
                         </Frame.GestureRecognizers>
                         <StackLayout>
                             <Image Source="phoneicon.png"

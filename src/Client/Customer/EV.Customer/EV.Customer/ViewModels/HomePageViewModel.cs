@@ -25,6 +25,7 @@ namespace EV.Customer.ViewModels
             //Initial
             _userService = new UserService();
             _transactionServices = new TransactionServices();
+            Greeting = CheckDatetime();
             GetTotalBalance();
 
             //Command
@@ -82,6 +83,31 @@ namespace EV.Customer.ViewModels
             {
                 throw ex;
             }
+        }
+        public string Greeting { get; set; }
+        private string CheckDatetime()
+        {
+            int dateTime = DateTime.UtcNow.AddHours(7).Hour;
+
+            string Greeting = "";
+
+            if (dateTime >= 0 && dateTime <= 11)
+            {
+                Greeting = "สวัสดีตอนเช้า";
+            }
+            else if (dateTime > 11 && dateTime <= 16)
+            {
+                Greeting = "สวัสดีตอนกลางวัน";
+            }
+            else if (dateTime > 16 && dateTime <= 19)
+            {
+                Greeting = "สวัสดีตอนเย็น";
+            }
+            else
+            {
+                Greeting = "สวัสดีตอนค่ำ";
+            }
+            return Greeting;
         }
 
         public ICommand ScanToTopupCommand { get; set; }

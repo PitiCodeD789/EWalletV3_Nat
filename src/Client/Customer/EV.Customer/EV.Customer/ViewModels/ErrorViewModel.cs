@@ -58,7 +58,6 @@ namespace EV.Customer.ViewModels
             if ((int)errorType == 0)
             {
                 ImageError = "Warning";
-
             }
             else
             {
