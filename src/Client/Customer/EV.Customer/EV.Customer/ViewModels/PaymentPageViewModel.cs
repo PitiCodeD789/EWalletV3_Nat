@@ -1,4 +1,5 @@
-﻿using EV.Service.Interfaces;
+﻿using EV.Customer.Views;
+using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Transaction;
@@ -8,10 +9,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using static EWalletV2.Api.ViewModels.EW_Enumerations;
 
 namespace EV.Customer.ViewModels
 {
-    public class PaymentPageViewModel
+    public class PaymentPageViewModel : BaseViewModel
     {
         private readonly ITransactionServices _transactionServices;
         public PaymentPageViewModel()
@@ -23,9 +25,13 @@ namespace EV.Customer.ViewModels
             CancelCommand = new Command(Cancel);
             BackToHomeCommand = new Command(BackToHome);
             PaymentCommand = new Command(Payment);
+            InputPaymentCommand = new Command(InputPayment);
+            ToSlip = new Command(PushToSlip);
+            FullName = App.FirstName + " " + App.LastName;
         }
 
         public ICommand CancelCommand { get; set; }
+        public ICommand ToSlip { get; set; }
         private void Cancel()
         {
             PopupNavigation.PopAsync();
@@ -37,18 +43,43 @@ namespace EV.Customer.ViewModels
         }
 
         public ICommand PaymentCommand { get; set; }
+        public ICommand InputPaymentCommand { get; set; }
         private async void Payment()
         {
             ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount);
             if (!paymentResult.IsError)
             {
                 CreateDate = paymentResult.Model.CreateDatetime;
-                PopupNavigation.PushAsync(new Views.PaymentSuccessPopUpView(this));
+                Reference = paymentResult.Model.Reference;
+                PopupNavigation.Instance.PopAllAsync();
+                PopupNavigation.Instance.PushAsync(new Views.ScanToPayThree(this));
+                
             }
             else
             {
-                Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
+                //Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
+                ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ \n กรุณาตรวจสอบเงินคงเหลือในบัญชี", (int)EW_ErrorTypeEnum.Error);
+                PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
+        }
+        private async void InputPayment()
+        {
+            PopupNavigation.Instance.PopAllAsync();
+            PopupNavigation.Instance.PushAsync(new ScanToPayTwo(this)); 
+        }
+        private async void PushToSlip()
+        {
+            PopupNavigation.Instance.PopAllAsync();
+            SlipViewModel payment = new SlipViewModel()
+            {
+                Amount = Amount,
+                CreateDate = CreateDate,
+                OtherAccountNumber = MerchantAccountNumber,
+                OtherName = MerchantName,
+                Reference = Reference,
+                Type = EW_TypeTransectionEnum.Payment
+            };
+            Application.Current.MainPage.Navigation.PushAsync(new ReceiptPage(payment));
         }
 
         private DateTime _createDate;
@@ -57,12 +88,16 @@ namespace EV.Customer.ViewModels
             get { return _createDate; }
             set { _createDate = value; }
         }
-
+        public string FullName { get; set; }
         private decimal _amount;
         public decimal Amount
         {
             get { return _amount; }
-            set { _amount = value; }
+            set
+            {
+                _amount = value;
+                OnPropertyChanged(nameof(Amount));
+            }
         }
 
         private decimal _customerBalance;
@@ -83,7 +118,7 @@ namespace EV.Customer.ViewModels
             get { return _merchantAccountNumber; }
             set { _merchantAccountNumber = value; }
         }
-
+        public string Reference { get; set; }
         public string Email { get; set; }
         public string CustomerAccountNumber { get; set; }
 

@@ -7,6 +7,8 @@ namespace EV.Customer
 {
     public partial class App : Application
     {
+        public static string FirstName { get; set; }
+        public static string LastName { get; set; }
         public App()
         {
             InitializeComponent();

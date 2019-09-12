@@ -74,7 +74,7 @@ namespace EV.Customer.ViewModels
                     {
                         string merchantName = QrCodeInfomation.FirstName;
                         string merchantAccountNumber = QrCodeInfomation.AccountNumber;
-                        PopupNavigation.PushAsync(new Views.PaymentPopUpView(merchantName, merchantAccountNumber));
+                        PopupNavigation.PushAsync(new Views.ScanToPayOne(merchantName, merchantAccountNumber));
                     }
                 }
             }

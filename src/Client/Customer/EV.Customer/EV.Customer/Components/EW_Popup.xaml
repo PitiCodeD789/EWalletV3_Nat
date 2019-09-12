@@ -17,7 +17,7 @@
                     <Image Source="Correct" HorizontalOptions="CenterAndExpand" Margin="0,25"/>
                     <Label Text="{Binding TextSuccess}" x:Name="SuccessText" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="20"/>
                     <Button BackgroundColor="#EAA200" TextColor="White" Text="ตกลง" HorizontalOptions="FillAndExpand"
-                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22"/>
+                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22" x:Name="popupButton" Clicked="PopupButton_Clicked"/>
                 </StackLayout>
             </Frame>
         </StackLayout>
