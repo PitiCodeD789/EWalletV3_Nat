@@ -5,50 +5,33 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace EV.Service.Services
 {
     public class BaseService
     {
+        private readonly AuthService _authService = new AuthService();
         protected async Task<ResultServiceModel<T>> Post<T>(string url, object model) where T : class
         {
+            StartMethod:
             ResultServiceModel<T> resultService = new ResultServiceModel<T>();
             try
             {
                 HttpClient client = new HttpClient();
-                
-                HttpContent content = GetHttpContent(model);
 
-                var result = await client.PostAsync(url, content);
+                string token = "";
 
-                if (result.IsSuccessStatusCode)
+                try
                 {
-                    var json_result = await result.Content.ReadAsStringAsync();
-
-                    T obj = GetModelFormResult<T>(json_result);
-
-                    resultService.IsError = false;
-
-                    resultService.Model = obj;
-
-                    return resultService;
+                    token = await SecureStorage.GetAsync("Token");
                 }
-                client.Dispose();
-                return null;
-            }
-            catch (Exception e)
-            {
-                resultService.IsError = true;
-            }
-            return resultService;
-        }
+                catch(Exception e)
+                {
+                    throw e;
+                }
 
-        protected async Task<ResultServiceModel<T>> Post<T>(string url, object model, string token) where T : class
-        {
-            ResultServiceModel<T> resultService = new ResultServiceModel<T>();
-            try
-            {
-                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 HttpContent content = GetHttpContent(model);
 
@@ -66,8 +49,37 @@ namespace EV.Service.Services
 
                     return resultService;
                 }
-                client.Dispose();
-                return null;
+                else if(result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    try
+                    {
+                        string refreshToken = await SecureStorage.GetAsync("RefreshToken");
+                        string email = await SecureStorage.GetAsync("Email");
+                        var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
+                        if(tokenData != null || !tokenData.IsError)
+                        {
+                            if(tokenData.Model == null || tokenData.Model.Token == null)
+                            {
+                                CloseApp();
+                            }
+                            await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                            goto StartMethod;
+                        }
+                        else
+                        {
+                            resultService.IsError = true;
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        CloseApp();
+                    }
+                }
+                else
+                {
+                    client.Dispose();
+                    return null;
+                }
             }
             catch (Exception e)
             {
@@ -78,10 +90,24 @@ namespace EV.Service.Services
 
         protected async Task<ResultServiceModel<T>> Get<T>(string url) where T : class
         {
+            StartMethod:
             ResultServiceModel<T> resultService = new ResultServiceModel<T>();
             try
             {
                 HttpClient client = new HttpClient();
+
+                string token = "";
+
+                try
+                {
+                    token = await SecureStorage.GetAsync("Token");
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 var result = await client.GetAsync(url);
 
@@ -97,8 +123,37 @@ namespace EV.Service.Services
 
                     return resultService;
                 }
-                client.Dispose();
-                return null;
+                else if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    try
+                    {
+                        string refreshToken = await SecureStorage.GetAsync("RefreshToken");
+                        string email = await SecureStorage.GetAsync("Email");
+                        var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
+                        if (tokenData != null || !tokenData.IsError)
+                        {
+                            if (tokenData.Model == null || tokenData.Model.Token == null)
+                            {
+                                CloseApp();
+                            }
+                            await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                            goto StartMethod;
+                        }
+                        else
+                        {
+                            resultService.IsError = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        CloseApp();
+                    }
+                }
+                else
+                {
+                    client.Dispose();
+                    return null;
+                }
             }
             catch (Exception e)
             {
@@ -117,6 +172,12 @@ namespace EV.Service.Services
         {
 
             return JsonConvert.DeserializeObject<T>(json_result);
+        }
+
+        private void CloseApp()
+        {
+            SecureStorage.RemoveAll();
+            Environment.Exit(0);
         }
     }
 }

@@ -7,8 +7,6 @@ namespace EV.Merchant
 {
     public partial class App : Application
     {
-        public static string RefreshToken { get; set; }
-        public static string Token { get; set; }
         public static string Account { get; set; }
         public static string Username { get; set; }
         public static string FirstName { get; set; }
