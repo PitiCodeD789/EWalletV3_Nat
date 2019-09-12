@@ -18,8 +18,14 @@ namespace EV.Customer.Views
         public ScanToPayOne(string merchantName, string merchantAccountNumber)
         {
             InitializeComponent();
-            (BindingContext as PaymentPageViewModel).MerchantName = merchantName;
-            (BindingContext as PaymentPageViewModel).MerchantAccountNumber = merchantAccountNumber;
+            PaymentPageViewModel payment = new PaymentPageViewModel()
+            {
+                MerchantName = merchantName,
+                MerchantAccountNumber = merchantAccountNumber
+            };
+            BindingContext = payment;
+            //(BindingContext as PaymentPageViewModel).MerchantName = merchantName;
+            //(BindingContext as PaymentPageViewModel).MerchantAccountNumber = merchantAccountNumber;
         }
         private void TextSizeChange(object sender, TextChangedEventArgs e)
         {
