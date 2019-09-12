@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EWalletV2.DataAccess.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class ini_DB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,7 +63,7 @@ namespace EWalletV2.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.UniqueConstraint("AK_Users_email", x => x.email);
+                    table.UniqueConstraint("EmailUser_AK", x => x.email);
                 });
 
             migrationBuilder.CreateTable(
