@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Customer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,11 @@ namespace EV.Customer.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ForgotPassword : Rg.Plugins.Popup.Pages.PopupPage
     {
+        
         public ForgotPassword()
         {
             InitializeComponent();
+            BindingContext = new ForgotPassViewModel();
         }
     }
 }

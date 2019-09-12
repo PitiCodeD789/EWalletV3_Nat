@@ -1,4 +1,4 @@
-﻿using EV.Service.Services;
+﻿using EV.Customer.Views;
 using Plugin.Fingerprint;
 using System;
 using System.Collections.Generic;
@@ -14,11 +14,11 @@ namespace EV.Customer.ViewModels
         public CustomerSettingViewModel()
         {
             IsSwitchedToggled = Convert.ToBoolean(SecureStorage.GetAsync("IsFingerprintEnabled").Result);
-            NarvigatetoChangePasswordPageCommand = new Command(NarvigatetoChangePasswordPage);
+            NarvigateToChangePasswordPageCommand = new Command(NarvigateToChangePasswordPage);
             FingerprintSupported();
         }
 
-        public ICommand NarvigatetoChangePasswordPageCommand { get; set; }
+        public ICommand NarvigateToChangePasswordPageCommand { get; set; }
 
 
         private bool _isSwitchToggled = true;
@@ -93,9 +93,9 @@ namespace EV.Customer.ViewModels
             }
         }
 
-        private async void NarvigatetoChangePasswordPage()
+        private async void NarvigateToChangePasswordPage()
         {
-            //await Application.Current.MainPage.Navigation.PushAsync(new MainPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new PinPage(new ChangePasswordViewModel()));
         }
     }
 }

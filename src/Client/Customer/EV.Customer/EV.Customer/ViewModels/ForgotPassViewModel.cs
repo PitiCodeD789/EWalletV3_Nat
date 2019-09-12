@@ -10,11 +10,12 @@ namespace EV.Customer.ViewModels
 {
     public class ForgotPassViewModel : BaseViewModel
     {
-        private readonly IPinService _pinService;
+        private readonly IPinService _pinService = new PinService();
         string error;
-        public ForgotPassViewModel(IPinService pinService)
+        int beforeLength;
+
+        public ForgotPassViewModel( )
         {
-            _pinService = pinService;
             CallCheckForgotPin = new Command(execute: CheckPin);
         }
         private async void CheckPin()
@@ -70,6 +71,28 @@ namespace EV.Customer.ViewModels
                 {
                     _birthDate = value;
                     OnPropertyChanged();
+
+                    if ((BirthDate.Length == 2 && beforeLength < 2) || BirthDate.Length == 3 && 
+                        beforeLength == 2 && BirthDate.Substring(2) != "/")
+                    {
+                        if (int.Parse(BirthDate) > 31)
+                        {
+                            BirthDate = "31";
+                        }
+                        else
+                        {
+                            BirthDate = BirthDate.Insert(2, "/");
+
+                        }
+                    }
+                    if ((BirthDate.Length == 5 && beforeLength < 5) || BirthDate.Length == 6 && 
+                        beforeLength == 5 && BirthDate.Substring(5) != "/")
+                    {
+                        BirthDate = BirthDate.Insert(5, "/");
+                    }
+
+                    beforeLength = BirthDate.Length;
+
                 }
             }
         }
