@@ -63,7 +63,8 @@ namespace EV.Customer.ViewModels
             }
             catch (Exception ex)
             {
-                throw ex;
+                ErrorViewModel errorViewModel = new ErrorViewModel("QR Code ไม่ถูกต้อง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
         public ICommand ScanToPayCommand { get; set; }
