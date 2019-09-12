@@ -48,12 +48,12 @@ namespace EV.Admin.ViewModels
             var accountNumber = await SecureStorage.GetAsync("Account");
             var callData = await _transactionService.GenerateTopup(accountNumber, Amount);
             var refNumber = callData.Model.ReferenceNumber;
-            var expireTime = callData.Model.ExpireDate;
+            var expireTime = callData.Model.ExpireDate.AddHours(7);
             GenerateTopupViewModel resultData = new GenerateTopupViewModel()
             {
                 Amount = Amount,
                 AccountNumber = await SecureStorage.GetAsync("Account"),
-                FirstName = await SecureStorage.GetAsync("Storename"),
+                FirstName = await SecureStorage.GetAsync("AdminName"),
                 ReferenceNumber = refNumber,
                 ExpireDate = expireTime,
                 CheckSum = "",

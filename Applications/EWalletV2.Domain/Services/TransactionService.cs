@@ -20,7 +20,7 @@ namespace EWalletV2.Domain.Services
             _transactionRepository = transactionRepository;
         }
 
-        public string GenerateTopUp(string account, decimal amount)
+        public TopupResultDTO GenerateTopUp(string account, decimal amount)
         {
             string referenceNumber = GenerateReferenceNumber(18);
             bool isReference = _transactionRepository.CheckReference(referenceNumber);
@@ -42,8 +42,11 @@ namespace EWalletV2.Domain.Services
 
             int otherId = userEntity.Id;
             bool isCreateTopUP = _transactionRepository.CreateNewTopUp(referenceNumber, otherId, amount);
-
-            return isCreateTopUP ? referenceNumber : null;
+            var topupData = _transactionRepository.GetTransactionByReferenceNumber(referenceNumber);
+            TopupResultDTO returnData = new TopupResultDTO();
+            returnData.ReferenceNumber = referenceNumber;
+            returnData.ExpireDate = topupData.CreateDateTime.AddMinutes(15);
+            return isCreateTopUP ? returnData : null;
         }
 
         private string GenerateReferenceNumber(int length)

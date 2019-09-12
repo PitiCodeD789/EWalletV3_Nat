@@ -41,7 +41,6 @@ namespace EV.Merchant.ViewModels
             await SecureStorage.SetAsync("PhoneNumber", "0864479402");
             await SecureStorage.SetAsync("RefreshToken", "ABcD1236");
             await SecureStorage.SetAsync("Token", "12345678952");
-            await SecureStorage.SetAsync("ExpireDate", "12/02/2019 15:30:22");
         }
 
         private string _username;

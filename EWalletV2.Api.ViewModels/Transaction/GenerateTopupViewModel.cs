@@ -12,6 +12,6 @@ namespace EWalletV2.Api.ViewModels.Transaction
         public string CheckSum { get; set; }
         public decimal Amount { get; set; }
         public string AccountNumber { get; set; }
-        public string ExpireDate { get; set; }
+        public DateTime ExpireDate { get; set; }
     }
 }

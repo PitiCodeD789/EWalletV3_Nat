@@ -37,7 +37,7 @@ namespace EV.Admin.ViewModels
         {
             await SecureStorage.SetAsync("Account", "0200000005");
             await SecureStorage.SetAsync("Username", "knot@outlook.com");
-            await SecureStorage.SetAsync("Storename", "Knot Agent");
+            await SecureStorage.SetAsync("AdminName", "Knot Agent");
             await SecureStorage.SetAsync("PhoneNumber", "0864479402");
             await SecureStorage.SetAsync("RefreshToken", "ABcD1236");
             await SecureStorage.SetAsync("Token", "12345678952");

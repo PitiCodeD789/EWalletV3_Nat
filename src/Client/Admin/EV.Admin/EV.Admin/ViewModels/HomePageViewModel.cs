@@ -34,7 +34,7 @@ namespace EV.Admin.ViewModels
         public HomePageViewModel()
         {
             TimeString = CheckDatetime();
-            FullName = SecureStorage.GetAsync("Storename").Result;
+            FullName = SecureStorage.GetAsync("AdminName").Result;
             GotoQRCodePageCommand = new Command(GotoQRcodePageAsync);
         }
 

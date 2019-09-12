@@ -37,7 +37,7 @@ namespace EV.Merchant.ViewModels
         }
         public GenerateQRcodeViewModel()
         {
-            FullName = SecureStorage.GetAsync("FirstName").Result;
+            FullName = SecureStorage.GetAsync("StoreName").Result;
             BacktoPreviousCommand = new Command(Goback);
         }
         private async void Goback()
