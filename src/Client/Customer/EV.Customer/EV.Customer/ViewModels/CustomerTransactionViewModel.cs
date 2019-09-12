@@ -3,6 +3,7 @@ using EV.Service.Models;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Transaction;
+using EWalletV2.Api.ViewModels.User;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,17 @@ namespace EV.Customer.ViewModels
     public class CustomerTransactionViewModel
     {
         private readonly ITransactionServices _transactionService;
+        private readonly IUserService _userServices;
+
         public CustomerTransactionViewModel()
         {
             //Initial
             _transactionService = new TransactionServices();
-            CustomerBalance = App.CustomerBalance;
-            FullName = App.FirstName + " " + App.LastName;
-            AccountNumber = App.AccountNumber;
+            _userServices = new UserService();
             Email = App.Email;
+            CustomerBalance = GetBalance();
+            FullName = App.FirstName + " " + App.LastName;
+            AccountNumber = App.Account;
             //GetTransactions();
 
             //MockUpForTestBinding
@@ -38,6 +42,12 @@ namespace EV.Customer.ViewModels
         private void BackButton(object obj)
         {
             PopupNavigation.PopAsync();
+        }
+
+        private decimal GetBalance()
+        {
+            ResultServiceModel<AccountViewModel> getBalance = _userServices.GetBalance(Email).Result;
+            return getBalance.Model.Balance;
         }
 
         private void MockData()

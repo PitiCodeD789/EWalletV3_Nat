@@ -19,7 +19,7 @@ namespace EV.Merchant.ViewModels
             //Initial
             _transactionService = new TransactionServices();
             FullName = App.FirstName + " " + App.LastName;
-            AccountNumber = App.AccountNumber;
+            AccountNumber = App.Account;
             Email = App.Email;
             MockData();
             //GetTransactions();
