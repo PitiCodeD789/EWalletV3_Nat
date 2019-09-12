@@ -78,7 +78,7 @@ namespace EV.Service.Services
                 Pin = pin
             };
 
-            string url = serviceUrl + "loginbycustomer";
+            string url = serviceUrl + "LoginByCustomer";
             return await Post<LoginByCustomerViewModel>(url, model);
         }
     }

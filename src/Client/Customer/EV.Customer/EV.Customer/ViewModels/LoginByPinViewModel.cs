@@ -1,5 +1,6 @@
 ﻿using EV.Customer.Helper;
 using EV.Service.Services;
+using Plugin.Fingerprint;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,6 @@ namespace EV.Customer.ViewModels
             warningText = "";
             warningVisible = false;
             backVisible = false;
-            fingerTabVisible = true;
             pin = "";
             countLogin = 0;
             Fingerprint = new Command(LoginByFingerprint);
@@ -46,6 +46,15 @@ namespace EV.Customer.ViewModels
             {
                 countLogin = 0;
             }
+            var available = CrossFingerprint.Current.IsAvailableAsync(true).Result;
+            if (available)
+            {
+                fingerTabVisible = true;
+            }
+            else
+            {
+                fingerTabVisible = false;
+            } 
         }
 
         private string title;
@@ -155,7 +164,22 @@ namespace EV.Customer.ViewModels
         public ICommand Fingerprint { get; set; }
         public async void LoginByFingerprint()
         {
-
+            var result = await CrossFingerprint.Current.AuthenticateAsync("Prove you have fingers!");
+            if (result.Authenticated)
+            {
+                try
+                {
+                    //Application.Current.MainPage = new NavigationPage(new Page());
+                }
+                catch (Exception ex)
+                {
+                    // Possible that device doesn't support secure storage on device.
+                }
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Wrong Fingerprint", "Ok");
+            }
         }
 
 

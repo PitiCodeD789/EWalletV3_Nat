@@ -22,5 +22,6 @@ namespace EWalletV2.Domain.Interfaces
         bool UpdatePin(string email, string oldPin, string newPin);
         bool CheckRefreshToken(string email, string refeshToken);
         bool ChangePin(string email, string newPin);
+        LoginByCustomerDto LoginByCustomer(string email, string pin);
     }
 }
