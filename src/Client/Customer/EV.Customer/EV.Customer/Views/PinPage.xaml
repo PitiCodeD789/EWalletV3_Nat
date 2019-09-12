@@ -88,7 +88,7 @@
             <Button Style="{StaticResource Key=NumPad}" Text="1" Grid.Row="2" Grid.Column="1" Command="{Binding InputPin}" CommandParameter="1"/>
             <Button Style="{StaticResource Key=NumPad}" Text="2" Grid.Row="2" Grid.Column="2" Command="{Binding InputPin}" CommandParameter="2"/>
             <Button Style="{StaticResource Key=NumPad}" Text="3" Grid.Row="2" Grid.Column="3" Command="{Binding InputPin}" CommandParameter="3"/>
-            <Button Style="{StaticResource Key=NumPad}" Text="4" Grid.Row="3" Grid.Column="1" Command="{Binding InputPind}" CommandParameter="4"/>
+            <Button Style="{StaticResource Key=NumPad}" Text="4" Grid.Row="3" Grid.Column="1" Command="{Binding InputPin}" CommandParameter="4"/>
             <Button Style="{StaticResource Key=NumPad}" Text="5" Grid.Row="3" Grid.Column="2" Command="{Binding InputPin}" CommandParameter="5"/>
             <Button Style="{StaticResource Key=NumPad}" Text="6" Grid.Row="3" Grid.Column="3" Command="{Binding InputPin}" CommandParameter="6"/>
             <Button Style="{StaticResource Key=NumPad}" Text="7" Grid.Row="4" Grid.Column="1" Command="{Binding InputPin}" CommandParameter="7"/>
