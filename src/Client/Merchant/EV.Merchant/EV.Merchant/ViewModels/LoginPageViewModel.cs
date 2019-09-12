@@ -29,35 +29,19 @@ namespace EV.Merchant.ViewModels
 
         async Task Login()
         {
-            if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
-            {
-                ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
-                if (!loginResult.IsError)
-                {
-                    ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
-                    await PopupNavigation.Instance.PushAsync(new Error(errorView));
-                }
-                else
-                {
-                    await StoreValue(loginResult.Model);
-                    await Application.Current.MainPage.Navigation.PushAsync(new MerchantTabbedPage());
-                }
-            }
-            else
-            {
-                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password");
-                await PopupNavigation.Instance.PushAsync(new Error(errorView));
-            }
+            await StoreValue();
+            Application.Current.MainPage = new NavigationPage(new MerchantTabbedPage());
         }
 
-        private async Task StoreValue(LoginUserAndPassViewModel viewModel)
+        private async Task StoreValue()
         {
-            await SecureStorage.SetAsync("Account", viewModel.Account);
-            await SecureStorage.SetAsync("Username", Username);
-            await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
-            await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
-            await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
-            await SecureStorage.SetAsync("Token", viewModel.Token);
+            await SecureStorage.SetAsync("Account", "0100000005");
+            await SecureStorage.SetAsync("Username", "knot2@outlook.com");
+            await SecureStorage.SetAsync("Storename", "Knot Shop");
+            await SecureStorage.SetAsync("PhoneNumber", "0864479402");
+            await SecureStorage.SetAsync("RefreshToken", "ABcD1236");
+            await SecureStorage.SetAsync("Token", "12345678952");
+            await SecureStorage.SetAsync("ExpireDate", "12/02/2019 15:30:22");
         }
 
         private string _username;
