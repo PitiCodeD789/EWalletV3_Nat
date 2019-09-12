@@ -66,8 +66,8 @@
                 <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="50"/>
                 <Label Text="{Binding BlackDetail}" HorizontalOptions="Center" TextColor="Black" FontSize="Medium"/>
                 <Label Text="{Binding GrayDetail}" HorizontalOptions="Center" FontSize="Medium"/>
-                <Label Text="{Binding ReferenceText}" HorizontalOptions="Center" FontSize="Medium"/>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0" IsVisible="{Binding ReferenceVisible}">
+                <Label Text="{Binding ReferenceText}" HorizontalOptions="Center" FontSize="Medium" IsVisible="{Binding ReferenceVisible}"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0">
                     <Frame Style="{StaticResource Key=PasswordLength}" BackgroundColor="{Binding PwHint0}"/>
                     <Frame Style="{StaticResource Key=PasswordLength}" BackgroundColor="{Binding PwHint1}"/>
                     <Frame Style="{StaticResource Key=PasswordLength}" BackgroundColor="{Binding PwHint2}"/>
