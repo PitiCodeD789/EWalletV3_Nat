@@ -9,17 +9,17 @@ namespace EV.Customer
 
     public partial class App : Application
     {
-        public static string Account { get; set; }
+        public static string Account { get; set; } = "011111111100";
         public static string Email { get; set; } = "pesor1985@gmail.com";
         public static string FirstName { get; set; } = "คุณ ประเสริฐ";
         public static string LastName { get; set; } = "นามสกุลผมเองครับยยยยยยยยยย......นนนนน";
-        public static DateTime BirthDate { get; set; }
-        public static string MobileNumber { get; set; }
-        public static EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum Gender { get; set; }
+        public static DateTime BirthDate { get; set; } = DateTime.ParseExact("12/12/2018", "dd/MM/yyyy",null);
+        public static string MobileNumber { get; set; } = "0849981919";
+        public static EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum Gender { get; set; } = EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum.Men;
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new PinPage(new LoginByPinViewModel()));
+            MainPage = new NavigationPage(new Views.UserTabbedPage());
         }
 
         protected override void OnStart()

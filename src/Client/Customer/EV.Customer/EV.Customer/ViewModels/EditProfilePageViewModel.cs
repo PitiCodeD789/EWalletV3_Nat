@@ -69,7 +69,7 @@ namespace EV.Customer.ViewModels
                 {
                     UpdateUserCommand updateUserCommand = new UpdateUserCommand
                     {
-                        BitrhDate = DateTime.Parse(BirthDate),
+                        BitrhDate = DateTime.ParseExact(BirthDate,"dd/MM/yyyy",null),
                         Email = Email,
                         FirstName = FirstName,
                         LastName = LastName,

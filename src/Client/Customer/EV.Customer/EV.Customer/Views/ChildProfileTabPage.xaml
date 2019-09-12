@@ -5,7 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
+             xmlns:bd="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.ChildProfileTabPage">
+    <ContentPage.BindingContext>
+        <bd:ProfilePageViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid BackgroundColor="#E6E6E6">
             <Grid.RowDefinitions>
@@ -16,9 +20,9 @@
                 <Image Source="splash" Aspect="AspectFill" Grid.Column="0" Grid.Row="0"/>
                 <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0"  Padding="20">
                     <Image Source="icon_user_circle_filled" HorizontalOptions="Center" VerticalOptions="Center"  HeightRequest="50"/>
-                    <Label Text="ชื่ออออออออออออออออออออออออออออออออออออออออออ" TextColor="White" HorizontalOptions="Center" LineBreakMode="TailTruncation" FontAttributes="Bold"/>
-                    <Label Text="089-701-5XXX" TextColor="White" HorizontalOptions="Center"/>
-                    <Label Text="email@email.com" TextColor="White" HorizontalOptions="Center"/>
+                    <Label Text="{Binding FullName}" TextColor="White" HorizontalOptions="Center" LineBreakMode="TailTruncation" FontAttributes="Bold"/>
+                    <Label Text="{Binding TelNumber}" TextColor="White" HorizontalOptions="Center"/>
+                    <Label Text="{Binding Email}" TextColor="White" HorizontalOptions="Center"/>
                 </StackLayout>
             </Grid>
             <Frame BackgroundColor="White" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="0,20,0,0" CornerRadius="0" Grid.Row="1">
@@ -32,7 +36,7 @@
                     </Grid.RowDefinitions>
                     <Grid HorizontalOptions="FillAndExpand" Padding="20,0" Grid.Row="0" HeightRequest="50">
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Profile"/>
+                            <TapGestureRecognizer Command="{Binding ViewProfileCommand }" />
                         </Grid.GestureRecognizers>
                         <Label Text="โปรไฟล์ " TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
                         <Image Source="icon_left_black" Rotation="180" HeightRequest="30" HorizontalOptions="End"/>
