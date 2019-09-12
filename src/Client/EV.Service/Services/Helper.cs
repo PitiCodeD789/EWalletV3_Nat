@@ -8,7 +8,9 @@ namespace EV.Service.Services
 {
     public static class Helper
     {
-        public static string BaseUrl { get; set; } = "http://localhost:30000/api/";
+        //public static string BaseUrl { get; set; } = "http://localhost:30000/api/";
+        public static string BaseUrl { get; set; } = "http://192.168.1.40:30000/api/";
+
 
         public static bool CheckSumTopup(GenerateTopupViewModel viewModel)
         {

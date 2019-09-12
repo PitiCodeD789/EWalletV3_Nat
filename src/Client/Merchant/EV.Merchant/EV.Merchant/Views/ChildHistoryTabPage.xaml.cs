@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Merchant.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,20 @@ namespace EV.Merchant.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChildHistoryTabPage : ContentPage
     {
+        private MerchantTransactionModel vm;
         public ChildHistoryTabPage()
         {
             InitializeComponent();
+
+            vm = new MerchantTransactionModel();
+            BindingContext = vm;
+        }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+           await vm.GetTransactions();
         }
     }
 }

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EWalletV2.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TransactionController : ControllerBase
@@ -83,8 +83,7 @@ namespace EWalletV2.Api.Controllers
 
         }
 
-        //Topup
- 
+        //Topup 
         [HttpPost("Topup")]
         public IActionResult Topup(TopupCommand command)
         {

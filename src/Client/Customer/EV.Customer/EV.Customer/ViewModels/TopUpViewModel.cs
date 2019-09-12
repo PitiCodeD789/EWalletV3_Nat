@@ -19,7 +19,7 @@ namespace EV.Customer.ViewModels
         {
             //Initial
             _transactionServices = new TransactionServices();
-
+            GetDetail();
 
             //Command
             CancelCommand = new Command(Cancel);
@@ -29,9 +29,8 @@ namespace EV.Customer.ViewModels
 
         public void GetDetail()
         {
-            //เอาอีเมลมาจาก Class static
-            Email = "mock@mock.mock";
-            CustomerAccountNumber = "9999999";
+            Email = App.Email;
+            CustomerAccountNumber = App.Account;
         }
 
         public ICommand CancelCommand { get; set; }

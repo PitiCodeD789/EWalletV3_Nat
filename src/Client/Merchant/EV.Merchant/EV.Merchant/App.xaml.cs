@@ -22,7 +22,6 @@ namespace EV.Merchant
 
             //MainPage = new NavigationPage(new GenerateQRcodePage());
             MainPage = new NavigationPage(new Views.ChildHistoryTabPage());
-
         }
 
         protected override void OnStart()
