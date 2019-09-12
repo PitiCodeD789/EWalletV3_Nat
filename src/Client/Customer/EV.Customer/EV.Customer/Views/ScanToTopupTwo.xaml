@@ -9,6 +9,9 @@
              xmlns:components="clr-namespace:EV.Customer.Components"
                  xmlns:bd="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.ScanToTopupTwo">
+    <pages:PopupPage.BindingContext>
+        <bd:TopUpViewModel/>
+    </pages:PopupPage.BindingContext>
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Center"
@@ -60,8 +63,8 @@
                     </StackLayout>
                 </Grid>
                 <Grid VerticalOptions="EndAndExpand">
-                    <components:EW_ButtonView TextButton="ยืนยัน" Grid.Column="1"/>
-                    <components:EW_ButtonView TextButton="ยกเลิก" Grid.Column="0" BackgroundButton="#B8B8B8"/>
+                    <components:EW_ButtonView TextButton="ยืนยัน" Grid.Column="1" Command="{Binding TopUpCommand}"/>
+                    <components:EW_ButtonView TextButton="ยกเลิก" Grid.Column="0" BackgroundButton="#B8B8B8" Command="{Binding BackToHomeCommand}"/>
                 </Grid>
             </StackLayout>
         </Frame>
