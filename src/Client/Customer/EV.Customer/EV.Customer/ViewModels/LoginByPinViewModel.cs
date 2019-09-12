@@ -33,9 +33,10 @@ namespace EV.Customer.ViewModels
             Fingerprint = new Command(LoginByFingerprint);
             OrangeTextTab = new Command(GoToForgotPasswordPage);
             InputPin = new Command<string>(LoginByPin);
-            email = SecureStorage.GetAsync("Email").Result;
+            
             try
             {
+                email = SecureStorage.GetAsync("Email").Result;
                 bool isExistEmail = Unities.CheckEmailFormat(email);
                 if (!isExistEmail)
                 {
@@ -251,8 +252,8 @@ namespace EV.Customer.ViewModels
                         {
                             try
                             {
-                                Service.Services.Helper.RefreshToken = await SecureStorage.GetAsync("RefreshToken");
-                                Service.Services.Helper.Token = await SecureStorage.GetAsync("AccessToken");
+                                App.RefreshToken = await SecureStorage.GetAsync("RefreshToken");
+                                App.Token = await SecureStorage.GetAsync("AccessToken");
                                 App.Account = await SecureStorage.GetAsync("Account");
                                 App.Email = await SecureStorage.GetAsync("Email");
                                 App.FirstName = await SecureStorage.GetAsync("FirstName");
