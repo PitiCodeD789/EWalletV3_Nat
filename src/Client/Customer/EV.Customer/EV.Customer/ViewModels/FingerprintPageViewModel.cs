@@ -76,7 +76,7 @@ namespace EV.Customer.ViewModels
 
         private void FingerprintClick()
         {
-            Application.Current.MainPage.Navigation.PushAsync(new UserTabbedPage());
+            Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
         }
         private bool isShowFingerButton;
 

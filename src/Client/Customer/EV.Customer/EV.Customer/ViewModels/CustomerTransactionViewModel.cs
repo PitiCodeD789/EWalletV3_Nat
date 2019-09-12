@@ -25,7 +25,7 @@ namespace EV.Customer.ViewModels
             _transactionService = new TransactionServices();
             _userServices = new UserService();
             Email = App.Email;
-            CustomerBalance = GetBalance();
+            //CustomerBalance = GetBalance();
             FullName = App.FirstName + " " + App.LastName;
             AccountNumber = App.Account;
             //GetTransactions();

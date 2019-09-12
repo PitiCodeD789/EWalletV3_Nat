@@ -28,10 +28,11 @@
                    FontAttributes="Bold"/>
             </StackLayout>
             <Grid>
-                <Frame IsVisible="True"
+                <Frame 
                     BackgroundColor="White"
                    HasShadow="True"
                    CornerRadius="10"
+                   IsVisible="{Binding IsShowFingerButton}"
                    HorizontalOptions="FillAndExpand"
                    Padding="2"
                    VerticalOptions="End">
