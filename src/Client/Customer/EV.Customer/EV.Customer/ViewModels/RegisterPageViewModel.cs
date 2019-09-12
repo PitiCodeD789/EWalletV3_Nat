@@ -133,7 +133,7 @@ namespace EV.Customer.ViewModels
         
         public string MobileNumber { get; set; }
         public EW_Enumerations.EW_GenderEnum Gender { get; set; }
-        public string Email { get; set; }
+        public string Email { get; set; } = App.Email;
         public string Pin { get; set; }
 
        
