@@ -1,7 +1,9 @@
 ﻿using EV.Customer.Helper;
 using EV.Customer.Views;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +15,7 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class SetPinForAuthViewModel : INotifyPropertyChanged
+    public class SetPinForAuthViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly AuthService _authService = new AuthService();
         public SetPinForAuthViewModel(string passEmail)
@@ -293,8 +295,6 @@ namespace EV.Customer.ViewModels
                 }
             }
         }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
         public async Task Register()
         {
             var registerData = await _authService.Register(register);
@@ -307,7 +307,7 @@ namespace EV.Customer.ViewModels
                         string gender = ((int)register.Gender).ToString();
                         string birthDate = register.BirthDate.ToString("dd/MM/yyyy");
                         await SecureStorage.SetAsync("RefreshToken", registerData.Model.RefreshToken);
-                        await SecureStorage.SetAsync("AccessToken", registerData.Model.Token);
+                        await SecureStorage.SetAsync("Token", registerData.Model.Token);
                         await SecureStorage.SetAsync("AccountNumber", registerData.Model.Account);
                         await SecureStorage.SetAsync("Email", register.Email);
                         await SecureStorage.SetAsync("FirstName", register.FirstName);
@@ -315,8 +315,6 @@ namespace EV.Customer.ViewModels
                         await SecureStorage.SetAsync("BirthDate", birthDate);
                         await SecureStorage.SetAsync("MobileNumber", register.MobileNumber);
                         await SecureStorage.SetAsync("Gender", gender);
-                        App.RefreshToken = registerData.Model.RefreshToken;
-                        App.Token = registerData.Model.Token;
                         App.Account = registerData.Model.Account;
                         App.Email = register.Email;
                         App.FirstName = register.FirstName;
@@ -328,16 +326,8 @@ namespace EV.Customer.ViewModels
                     }
                     catch(Exception e)
                     {
-                        App.RefreshToken = registerData.Model.RefreshToken;
-                        App.Token = registerData.Model.Token;
-                        App.Account = registerData.Model.Account;
-                        App.Email = register.Email;
-                        App.FirstName = register.FirstName;
-                        App.LastName = register.LastName;
-                        App.BirthDate = register.BirthDate;
-                        App.MobileNumber = register.MobileNumber;
-                        App.Gender = register.Gender;
-                        await Application.Current.MainPage.Navigation.PushAsync(new RegistAndFingerSuccess());
+                        ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                        await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                     }
                 }
                 else
@@ -376,7 +366,7 @@ namespace EV.Customer.ViewModels
                         string gender = ((int)loginData.Model.Gender).ToString();
                         string birthDate = loginData.Model.BirthDate.ToString("dd/MM/yyyy");
                         await SecureStorage.SetAsync("RefreshToken", loginData.Model.RefreshToken);
-                        await SecureStorage.SetAsync("AccessToken", loginData.Model.Token);
+                        await SecureStorage.SetAsync("Token", loginData.Model.Token);
                         await SecureStorage.SetAsync("Account", loginData.Model.Account);
                         await SecureStorage.SetAsync("Email", email);
                         await SecureStorage.SetAsync("FirstName", loginData.Model.FirstName);
@@ -384,8 +374,6 @@ namespace EV.Customer.ViewModels
                         await SecureStorage.SetAsync("BirthDate", birthDate);
                         await SecureStorage.SetAsync("MobileNumber", loginData.Model.MobileNumber);
                         await SecureStorage.SetAsync("Gender", gender);
-                        App.RefreshToken = loginData.Model.RefreshToken;
-                        App.Token = loginData.Model.Token;
                         App.Account = loginData.Model.Account;
                         App.Email = email;
                         App.FirstName = loginData.Model.FirstName;
@@ -397,16 +385,8 @@ namespace EV.Customer.ViewModels
                     }
                     catch(Exception e)
                     {
-                        App.RefreshToken = loginData.Model.RefreshToken;
-                        App.Token = loginData.Model.Token;
-                        App.Account = loginData.Model.Account;
-                        App.Email = email;
-                        App.FirstName = loginData.Model.FirstName;
-                        App.LastName = loginData.Model.LastName;
-                        App.BirthDate = loginData.Model.BirthDate;
-                        App.MobileNumber = loginData.Model.MobileNumber;
-                        App.Gender = loginData.Model.Gender;
-                        await Application.Current.MainPage.Navigation.PushAsync(new RegistAndFingerSuccess());
+                        ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                        await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                     }
                 }
                 else
@@ -435,28 +415,24 @@ namespace EV.Customer.ViewModels
         }
 
         public ICommand GoBack { get; set; }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
+
         public async void BackPageByLogin()
         {
             if (repeatPin == "")
             {
-                //TODO : Waiting Name of next view model
-                //await Application.Current.MainPage.Navigation.PushAsync();
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
             else
             {
                 DataJoint();
             }
         }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
+
         public async void BackPageByRegis()
         {
             if (repeatPin == "")
             {
-                //TODO : Waiting Name of next view model
-                //await Application.Current.MainPage.Navigation.PushAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
             }
             else
             {
@@ -574,13 +550,6 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

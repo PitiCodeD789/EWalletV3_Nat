@@ -2,6 +2,7 @@
 using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -43,8 +44,6 @@ namespace EV.Merchant.ViewModels
                 await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
                 await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
                 await SecureStorage.SetAsync("Token", viewModel.Token);
-                App.RefreshToken = viewModel.RefreshToken;
-                App.Token = viewModel.Token;
                 App.Account = viewModel.Account;
                 App.Username = Username;
                 App.FirstName = viewModel.FirstName;
@@ -53,13 +52,8 @@ namespace EV.Merchant.ViewModels
             }
             catch(Exception e)
             {
-                App.RefreshToken = viewModel.RefreshToken;
-                App.Token = viewModel.Token;
-                App.Account = viewModel.Account;
-                App.Username = Username;
-                App.FirstName = viewModel.FirstName;
-                App.LastName = viewModel.LastName;
-                App.PhoneNumber = viewModel.PhoneNumber;
+                ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
 
