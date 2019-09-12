@@ -1,4 +1,5 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class ChangePasswordViewModel : INotifyPropertyChanged
+    public class ChangePasswordViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly PinService _pinService = new PinService();
         public ChangePasswordViewModel()
         {
             title = "เปลี่ยนรหัสผ่าน";
-            image = "";
+            image = "icon_PIN";
             blackDetail = "ใส่รหัสผ่าน";
             grayDetail = "ใส่รหัสผ่านของคุณ";
             referenceText = "";
@@ -27,6 +28,9 @@ namespace EV.Customer.ViewModels
             warningVisible = false;
             backVisible = false;
             fingerTabVisible = false;
+            OrangeTextTab = new Command(GoToForgotPasswordPage);
+            InputPin = new Command<string>(InputPinMethod);
+            GoBack = new Command(BackPage);
             pin = "";
             oldPin = "";
             newPin = "";
@@ -169,10 +173,9 @@ namespace EV.Customer.ViewModels
         private string repeatNewPin;
 
         public ICommand OrangeTextTab { get; set; }
-        //TODO : Input Name Page;
         public async void GoToForgotPasswordPage()
         {
-            //await Application.Current.MainPage.Navigation(new Page());
+            await Application.Current.MainPage.Navigation.PushAsync(new ForgotPassword());
         }
 
         public ICommand InputPin { get; set; }
@@ -254,8 +257,6 @@ namespace EV.Customer.ViewModels
         }
 
         public ICommand GoBack { get; set; }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
         public async void BackPage()
         {
             if (oldPin == "" && newPin == "")
@@ -391,19 +392,6 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
-        }
-
-        private void ForceLogout()
-        {
-            SecureStorage.RemoveAll();
-            //Application.Current.MainPage = new NavigationPage(new Page());
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

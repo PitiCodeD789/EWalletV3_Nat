@@ -1,4 +1,5 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Services;
 using Plugin.Fingerprint;
 using System;
@@ -11,13 +12,13 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class LoginByPinViewModel : INotifyPropertyChanged
+    public class LoginByPinViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly PinService _pinService = new PinService();
         public LoginByPinViewModel()
         {
             title = "";
-            image = "";
+            image = "icon_PIN";
             blackDetail = "ใส่รหัสผ่าน";
             grayDetail = "ใส่รหัสผ่านของคุณ";
             referenceText = "";
@@ -33,8 +34,15 @@ namespace EV.Customer.ViewModels
             OrangeTextTab = new Command(GoToForgotPasswordPage);
             InputPin = new Command<string>(LoginByPin);
             email = SecureStorage.GetAsync("Email").Result;
-            bool isExistEmail = Unities.CheckEmailFormat(email);
-            if (!isExistEmail)
+            try
+            {
+                bool isExistEmail = Unities.CheckEmailFormat(email);
+                if (!isExistEmail)
+                {
+                    ForceLogout();
+                }
+            }
+            catch(Exception e)
             {
                 ForceLogout();
             }
@@ -169,11 +177,24 @@ namespace EV.Customer.ViewModels
             {
                 try
                 {
-                    //Application.Current.MainPage = new NavigationPage(new Page());
+                    Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                 }
                 catch (Exception ex)
                 {
-                    // Possible that device doesn't support secure storage on device.
+                    WarningText = "โปรดเข้าสู่ระบบโดยใช้ Pin";
+                    WarningVisible = true;
+                    try
+                    {
+                        Vibration.Vibrate();
+                        var duration = TimeSpan.FromSeconds(1);
+                        Vibration.Vibrate(duration);
+                    }
+                    catch (FeatureNotSupportedException e)
+                    {
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
             }
             else
@@ -184,14 +205,12 @@ namespace EV.Customer.ViewModels
 
 
         public ICommand OrangeTextTab { get; set; }
-        //TODO : Input Name Page;
         public async void GoToForgotPasswordPage()
         {
-            //await Application.Current.MainPage.Navigation(new Page());
+            await Application.Current.MainPage.Navigation.PushAsync(new ForgotPassword());
         }
 
         public ICommand InputPin { get; set; }
-        //TODO : Input Name Page;
         public async void LoginByPin(string value)
         {
             if (value == "Delete")
@@ -230,7 +249,26 @@ namespace EV.Customer.ViewModels
                     {
                         if (loginPinData.Model.IsLogin)
                         {
-                            //Application.Current.MainPage = new NavigationPage(new Page());
+                            try
+                            {
+                                Service.Services.Helper.RefreshToken = await SecureStorage.GetAsync("RefreshToken");
+                                Service.Services.Helper.Token = await SecureStorage.GetAsync("AccessToken");
+                                App.Account = await SecureStorage.GetAsync("Account");
+                                App.Email = await SecureStorage.GetAsync("Email");
+                                App.FirstName = await SecureStorage.GetAsync("FirstName");
+                                App.LastName = await SecureStorage.GetAsync("LastName");
+                                string preBirthDate = await SecureStorage.GetAsync("BirthDate");
+                                string[] splitBirthDate = preBirthDate.Split('/');
+                                App.BirthDate = new DateTime(Int32.Parse(splitBirthDate[2]), Int32.Parse(splitBirthDate[1]), Int32.Parse(splitBirthDate[0]));
+                                App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
+                                int gender =  Int32.Parse(await SecureStorage.GetAsync("Gender"));
+                                App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
+                                Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
+                            }
+                            catch(Exception e)
+                            {
+                                ForceLogout();
+                            }
                         }
                         else
                         {
@@ -278,12 +316,6 @@ namespace EV.Customer.ViewModels
                     }
                 }
             }
-        }
-
-        private void ForceLogout()
-        {
-            SecureStorage.RemoveAll();
-            //Application.Current.MainPage = new NavigationPage(new Page());
         }
 
         private void HintColorChange(int length)
@@ -387,13 +419,6 @@ namespace EV.Customer.ViewModels
         {
             get { return _pwHint[5]; }
             set { _pwHint[5] = value; OnPropertyChanged(nameof(PwHint5)); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
