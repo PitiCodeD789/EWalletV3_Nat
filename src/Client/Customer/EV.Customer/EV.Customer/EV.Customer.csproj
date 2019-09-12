@@ -10,8 +10,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Media\enixer_logo.jpg" />
+    <None Remove="Media\icon_user_circle_filled.png" />
+    <None Remove="Media\icon_wallet_circle_filled.png" />
+    <None Remove="Media\THSarabunNew.ttf" />
+    <None Remove="Media\THSarabunNewBold.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Media\enixer_logo.jpg" />
+    <EmbeddedResource Include="Media\icon_user_circle_filled.png" />
+    <EmbeddedResource Include="Media\icon_wallet_circle_filled.png" />
+    <EmbeddedResource Include="Media\THSarabunNew.ttf" />
+    <EmbeddedResource Include="Media\THSarabunNewBold.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Plugin.Fingerprint" Version="1.4.9" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
+    <PackageReference Include="SkiaSharp" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.0" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
@@ -28,6 +48,9 @@
     </Compile>
     <Compile Update="Components\EW_EntryView.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ReceiptPage.xaml.cs">
+      <DependentUpon>ReceiptPage.xaml</DependentUpon>
     </Compile>    
     <EmbeddedResource Update="Components\EW_TitleEntryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -48,6 +71,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PinPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ReceiptPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SavedProfile.xaml">
@@ -99,7 +125,6 @@
   </ItemGroup>
 <ItemGroup>
   <Folder Include="Models\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>
