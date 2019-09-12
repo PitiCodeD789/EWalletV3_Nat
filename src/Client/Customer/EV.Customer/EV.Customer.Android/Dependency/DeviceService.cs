@@ -41,11 +41,11 @@ namespace EV.Customer.Droid.Dependency
             };
 
             View scanView = LayoutInflater.From(Application.Context).Inflate(Resource.Layout.ScanView, null);
-            //ImageView imgClose = scanView.FindViewById<ImageView>(Resource.Id.imgClose);
-            //imgClose.Click += delegate
-            //{
-            //    scanner.Cancel();
-            //};
+            ImageView imgClose = scanView.FindViewById<ImageView>(Resource.Id.imgClose);
+            imgClose.Click += delegate
+            {
+                scanner.Cancel();
+            };
             scanner.CustomOverlay = scanView;
 
             ZXing.Result scanResults = await scanner.Scan(CrossCurrentActivity.Current.Activity, options);

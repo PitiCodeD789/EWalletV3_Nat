@@ -10,6 +10,7 @@ namespace EV.Customer
 
     public partial class App : Application
     {
+        public static decimal CustomerBalance { get; set; }
         public static string Account { get; set; }// = "011111111100";
         public static string Email { get; set; }// = "pesor1985@gmail.com";
         public static string FirstName { get; set; }// = "คุณ ประเสริฐ";

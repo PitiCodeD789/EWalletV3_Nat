@@ -28,15 +28,6 @@ namespace EV.Customer.Views
             InitializeComponent();
             try
             {
-                slipViewModel = new SlipViewModel()
-                {
-                    Reference = "asdasdasdxzczxc",
-                    OtherName = "Admin",
-                    OtherAccountNumber = "0111111111",
-                    Amount = 2000,
-                    CreateDate = DateTime.Now,
-                    Type = EW_Enumerations.EW_TypeTransectionEnum.TopUp
-                };
                 receipt = slipViewModel;
                 CreateReceipt();
                 BindingContext = new ReceiptPageViewModel();

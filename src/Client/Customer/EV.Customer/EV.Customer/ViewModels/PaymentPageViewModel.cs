@@ -3,6 +3,7 @@ using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Transaction;
+using EWalletV2.Api.ViewModels.User;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace EV.Customer.ViewModels
         private readonly ITransactionServices _transactionServices;
         public PaymentPageViewModel()
         {
+
+            GetTotalBalance();
             //Initial
             _transactionServices = new TransactionServices();
             CreateDate = DateTime.Now;
@@ -27,7 +30,7 @@ namespace EV.Customer.ViewModels
             PaymentCommand = new Command(Payment);
             InputPaymentCommand = new Command(InputPayment);
             ToSlip = new Command(PushToSlip);
-            //FullName = App.FirstName + " " + App.LastName;
+            FullName = App.FirstName + " " + App.LastName;
         }
 
         public ICommand CancelCommand { get; set; }
@@ -97,7 +100,18 @@ namespace EV.Customer.ViewModels
             get { return _createDate; }
             set { _createDate = value; }
         }
-        public string FullName { get; set; }
+        private string fullName;
+
+        public string FullName
+        {
+            get { return fullName; }
+            set
+            {
+                fullName = value;
+                OnPropertyChanged();
+            }
+        }
+
         private decimal _amount;
         public decimal Amount
         {
@@ -110,11 +124,31 @@ namespace EV.Customer.ViewModels
         }
 
         private decimal _customerBalance;
+        private decimal customerBalance;
+
         public decimal CustomerBalance
         {
-            get { return _customerBalance; }
-            set { _customerBalance = value; }
+            get { return customerBalance; }
+            set { customerBalance = value;
+                OnPropertyChanged();
+            }
         }
+
+
+        public void GetTotalBalance()
+        {
+            IUserService _userService = new UserService();
+
+           var result = _userService.GetBalance("pesor1985@gmail.com").GetAwaiter();
+            result.OnCompleted(() => SetCustomerBalance(result.GetResult().Model.Balance));
+        }
+
+        public void SetCustomerBalance(decimal balance)
+        {
+            CustomerBalance = balance;
+        }
+
+
         private string _merchantName;
         public string MerchantName
         {
@@ -128,8 +162,16 @@ namespace EV.Customer.ViewModels
             set { _merchantAccountNumber = value; }
         }
         public string Reference { get; set; }
-        public string Email { get; set; } = "t_t_oohh@hotmail.com";
-        public string CustomerAccountNumber { get; set; }
+        public string Email {  get => App.Email; }
+
+        private string customerAccountNumber;
+
+        public string CustomerAccountNumber
+        {
+            get { return customerAccountNumber; }
+            set { customerAccountNumber = value; }
+        }
+
 
     }
 }
