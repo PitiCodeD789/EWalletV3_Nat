@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class TopUpViewModel
+    public class TopUpViewModel : BaseViewModel
     {
         private readonly ITransactionServices _transactionServices;
 
@@ -27,7 +27,10 @@ namespace EV.Customer.ViewModels
             BackToHomeCommand = new Command(BackToHome);
             TopUpCommand = new Command(TopUp);
             FullName = App.FirstName + " " + App.LastName;
-            
+
+            ToSlip = new Command(PushToTopupSlip);
+
+
         }
         public ICommand ToSlip { get; set; }
         public void PushToTopupSlip()
@@ -57,9 +60,10 @@ namespace EV.Customer.ViewModels
             PopupNavigation.PopAsync();
         }
         public ICommand BackToHomeCommand { get; set; }
-        private void BackToHome()
+        private async void BackToHome()
         {
-            Application.Current.MainPage = new Views.UserTabbedPage();
+            await PopupNavigation.Instance.PopAllAsync();
+            //Application.Current.MainPage = new Views.UserTabbedPage();
         }
         public ICommand TopUpCommand { get; set; }
         private async void TopUp()
@@ -72,7 +76,8 @@ namespace EV.Customer.ViewModels
             }
             else
             {
-                await PopupNavigation.PushAsync(new ScanToTopupThree(this));
+                await PopupNavigation.Instance.PopAsync();
+                await PopupNavigation.Instance.PushAsync(new ScanToTopupThree(this));
 
             }
         }
@@ -110,7 +115,29 @@ namespace EV.Customer.ViewModels
             set { _qrcodeReference = value; }
         }
 
-        public string Email { get; set; }
-        public string CustomerAccountNumber { get; set; }
+        private string email;
+
+        public string Email
+        {
+            get { return email; }
+            set
+            {
+                email = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string customerAccountNumber;
+
+        public string CustomerAccountNumber
+        {
+            get { return customerAccountNumber; }
+            set
+            {
+                customerAccountNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 }

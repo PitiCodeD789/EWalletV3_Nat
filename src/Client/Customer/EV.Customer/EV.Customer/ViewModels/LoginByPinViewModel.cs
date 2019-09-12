@@ -252,6 +252,7 @@ namespace EV.Customer.ViewModels
                 if (countPin == 6)
                 {
                     var loginPinData = await _pinService.LoginByPin(pin, email);
+
                     if (loginPinData != null && !loginPinData.IsError && loginPinData.Model != null)
                     {
                         if (loginPinData.Model.IsLogin)
@@ -268,6 +269,24 @@ namespace EV.Customer.ViewModels
                                         await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                                     }
                                     await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                                    App.Account = await SecureStorage.GetAsync("Account");
+                                    App.Email = await SecureStorage.GetAsync("Email");
+                                    App.FirstName = await SecureStorage.GetAsync("FirstName");
+                                    App.LastName = await SecureStorage.GetAsync("LastName");
+                                    string preBirthDate = await SecureStorage.GetAsync("BirthDate");
+                                    try
+                                    {
+                                        App.BirthDate = DateTime.Parse(preBirthDate);
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                    }
+                                    App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
+                                    int gender = 0;
+                                    int.TryParse(await SecureStorage.GetAsync("Gender"), out gender);
+                                    App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
+                                    Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                                 }
                                 else
                                 {
@@ -289,17 +308,6 @@ namespace EV.Customer.ViewModels
                                     {
                                     }
                                 }
-                                App.Account = await SecureStorage.GetAsync("Account");
-                                App.Email = await SecureStorage.GetAsync("Email");
-                                App.FirstName = await SecureStorage.GetAsync("FirstName");
-                                App.LastName = await SecureStorage.GetAsync("LastName");
-                                string preBirthDate = await SecureStorage.GetAsync("BirthDate");
-                                string[] splitBirthDate = preBirthDate.Split('/');
-                                App.BirthDate = new DateTime(Int32.Parse(splitBirthDate[2]), Int32.Parse(splitBirthDate[1]), Int32.Parse(splitBirthDate[0]));
-                                App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
-                                int gender =  Int32.Parse(await SecureStorage.GetAsync("Gender"));
-                                App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
-                                Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                             }
                             catch(Exception e)
                             {
