@@ -19,7 +19,6 @@ namespace EV.Customer.Views
             On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
             On<Xamarin.Forms.PlatformConfiguration.Android>().SetBarSelectedItemColor(Color.Orange);
             Children.Add(new ChildHomeTabPage());
-            //Children.Add(new ChildHistoryTabPage());
             Children.Add(new TransactionsPage());
             Children.Add(new ChildProfileTabPage());
             Children[0].Title = "หน้าแรก";

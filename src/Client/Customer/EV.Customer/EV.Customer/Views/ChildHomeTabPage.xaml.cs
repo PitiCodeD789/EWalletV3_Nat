@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Customer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,19 @@ namespace EV.Customer.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChildHomeTabPage : ContentPage
     {
+        private HomePageViewModel vm;
         public ChildHomeTabPage()
         {
             InitializeComponent();
-        }        
+            vm = new HomePageViewModel();
+            BindingContext = vm;
+        }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await vm.GetTotalBalance();
+        }
     }
 }

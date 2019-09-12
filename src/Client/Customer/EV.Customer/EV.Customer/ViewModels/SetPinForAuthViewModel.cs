@@ -189,9 +189,12 @@ namespace EV.Customer.ViewModels
         {
             if (value == "Delete")
             {
-                pin = pin.Remove(pin.Length - 1);
-                int countPin = pin.Length;
-                HintColorChange(countPin);
+                if (pin.Length > 0)
+                {
+                    pin = pin.Remove(pin.Length - 1);
+                    int countPin = pin.Length;
+                    HintColorChange(countPin);
+                }
             }
             else
             {
@@ -445,8 +448,9 @@ namespace EV.Customer.ViewModels
             Title = "ยืนยันรหัสผ่าน";
             BlackDetail = "ยืนยันรหัสผ่าน";
             GrayDetail = "ใส่รหัสผ่านของคุณอีกครั้ง";
-            pin = "";
             repeatPin = pin;
+            pin = "";
+            HintColorChange(pin.Length);
         }
 
         private void HintColorChange(int length)
