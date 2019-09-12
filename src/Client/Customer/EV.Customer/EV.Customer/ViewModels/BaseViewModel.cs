@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV.Customer.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -25,7 +26,7 @@ namespace EV.Customer.ViewModels
         public virtual void ForceLogout()
         {
             SecureStorage.RemoveAll();
-            //Application.Current.MainPage = new NavigationPage(new Page());
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
 
         public virtual void CloseApp()
