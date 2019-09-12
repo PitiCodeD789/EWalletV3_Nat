@@ -35,7 +35,7 @@ namespace EV.Customer.ViewModels
             oldPin = "";
             newPin = "";
             repeatNewPin = "";
-            email = SecureStorage.GetAsync("Email").Result;
+            email = App.Email;
             bool isExistEmail = Unities.CheckEmailFormat(email);
             if (!isExistEmail)
             {

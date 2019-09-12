@@ -315,8 +315,8 @@ namespace EV.Customer.ViewModels
                         await SecureStorage.SetAsync("BirthDate", birthDate);
                         await SecureStorage.SetAsync("MobileNumber", register.MobileNumber);
                         await SecureStorage.SetAsync("Gender", gender);
-                        Service.Services.Helper.RefreshToken = registerData.Model.RefreshToken;
-                        Service.Services.Helper.Token = registerData.Model.Token;
+                        App.RefreshToken = registerData.Model.RefreshToken;
+                        App.Token = registerData.Model.Token;
                         App.Account = registerData.Model.Account;
                         App.Email = register.Email;
                         App.FirstName = register.FirstName;
@@ -328,8 +328,8 @@ namespace EV.Customer.ViewModels
                     }
                     catch(Exception e)
                     {
-                        Service.Services.Helper.RefreshToken = registerData.Model.RefreshToken;
-                        Service.Services.Helper.Token = registerData.Model.Token;
+                        App.RefreshToken = registerData.Model.RefreshToken;
+                        App.Token = registerData.Model.Token;
                         App.Account = registerData.Model.Account;
                         App.Email = register.Email;
                         App.FirstName = register.FirstName;
@@ -384,8 +384,8 @@ namespace EV.Customer.ViewModels
                         await SecureStorage.SetAsync("BirthDate", birthDate);
                         await SecureStorage.SetAsync("MobileNumber", loginData.Model.MobileNumber);
                         await SecureStorage.SetAsync("Gender", gender);
-                        Service.Services.Helper.RefreshToken = loginData.Model.RefreshToken;
-                        Service.Services.Helper.Token = loginData.Model.Token;
+                        App.RefreshToken = loginData.Model.RefreshToken;
+                        App.Token = loginData.Model.Token;
                         App.Account = loginData.Model.Account;
                         App.Email = email;
                         App.FirstName = loginData.Model.FirstName;
@@ -397,8 +397,8 @@ namespace EV.Customer.ViewModels
                     }
                     catch(Exception e)
                     {
-                        Service.Services.Helper.RefreshToken = loginData.Model.RefreshToken;
-                        Service.Services.Helper.Token = loginData.Model.Token;
+                        App.RefreshToken = loginData.Model.RefreshToken;
+                        App.Token = loginData.Model.Token;
                         App.Account = loginData.Model.Account;
                         App.Email = email;
                         App.FirstName = loginData.Model.FirstName;

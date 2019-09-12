@@ -53,13 +53,33 @@ namespace EV.Admin.ViewModels
 
         private async Task StoreValue(LoginUserAndPassViewModel viewModel)
         {
-            await SecureStorage.SetAsync("Account", viewModel.Account);
-            await SecureStorage.SetAsync("Username", Username);
-            await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
-            await SecureStorage.SetAsync("LastName", viewModel.LastName);
-            await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
-            await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
-            await SecureStorage.SetAsync("Token", viewModel.Token);
+            try
+            {
+                await SecureStorage.SetAsync("Account", viewModel.Account);
+                await SecureStorage.SetAsync("Username", Username);
+                await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
+                await SecureStorage.SetAsync("LastName", viewModel.LastName);
+                await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
+                await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
+                await SecureStorage.SetAsync("Token", viewModel.Token);
+                App.RefreshToken = viewModel.RefreshToken;
+                App.Token = viewModel.Token;
+                App.Account = viewModel.Account;
+                App.Username = Username;
+                App.FirstName = viewModel.FirstName;
+                App.LastName = viewModel.LastName;
+                App.PhoneNumber = viewModel.PhoneNumber;
+            }
+            catch(Exception e)
+            {
+                App.RefreshToken = viewModel.RefreshToken;
+                App.Token = viewModel.Token;
+                App.Account = viewModel.Account;
+                App.Username = Username;
+                App.FirstName = viewModel.FirstName;
+                App.LastName = viewModel.LastName;
+                App.PhoneNumber = viewModel.PhoneNumber;
+            }
         }
 
         private string _username;
