@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,5 +29,22 @@ namespace EV.Customer.Components
                         returnType: typeof(string),
                         declaringType: typeof(EW_Popup),
                         defaultBindingMode: BindingMode.OneWay);
+        public ICommand PushCommand
+        {
+            get { return (ICommand)GetValue(PushCommandProperty); }
+            set { SetValue(PushCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty PushCommandProperty =
+                            BindableProperty.Create(
+                        propertyName: "PushCommand",
+                        returnType: typeof(ICommand),
+                        declaringType: typeof(EW_Popup),
+                        defaultBindingMode: BindingMode.OneWay);
+
+        private void PopupButton_Clicked(object sender, EventArgs e)
+        {
+            PushCommand?.Execute(null);
+        }
     }
 }

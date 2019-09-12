@@ -1,8 +1,10 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Interfaces;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,17 +22,18 @@ namespace EV.Customer.ViewModels
             _authService = new AuthService();
             RegisterClickCommand = new Command(Register);
             GendenRadioChangeCommand = new Command(GendenRadioChange);
+            Email = App.Email;
         }
 
         private void GendenRadioChange(object obj)
         {
-            if(obj == "F")
+            if(obj == "Female")
             {
                 Gender = EW_Enumerations.EW_GenderEnum.Women;
                 BgWomenRadio = "Black";
                 BgMenRadio = "White";
             }
-            else if(obj == "M")
+            else if(obj == "Male")
             {
                 Gender = EW_Enumerations.EW_GenderEnum.Men;
                 BgWomenRadio = "White";
@@ -41,9 +44,25 @@ namespace EV.Customer.ViewModels
         private async void Register()
         {
             bool isValidateName = Unities.ValidateName(FirstName);
+            if (!isValidateName)
+            {
+                FirstName = "";
+            }
             bool isValidateLastName = Unities.ValidateName(LastName);
+            if (!isValidateLastName)
+            {
+                LastName = "";
+            }
             bool isValidateDate = Unities.ValidateStringDateFormat(BirthDate);
+            if (!isValidateDate)
+            {
+                BirthDate = "";
+            }
             bool isValidateEmail = Unities.CheckEmailFormat(Email);
+            if (!isValidateEmail)
+            {
+                Email = "";
+            }
             if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
             {
                 RegisterCommand register = new RegisterCommand
@@ -57,11 +76,15 @@ namespace EV.Customer.ViewModels
                     Gender = Gender
 
                 };
-                await Application.Current.MainPage.Navigation.PushAsync(new Page());
+                SetPinForAuthViewModel authViewModel = new SetPinForAuthViewModel(register);
+              
+                await Application.Current.MainPage.Navigation.PushAsync(new PinPage(authViewModel));
 
             }else
             {
-                await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+          
+                await PopupNavigation.PushAsync(new Error(new ErrorViewModel("กรอกข้อมูลไม่ถูกต้อง",(int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));
+               
             }         
          
                 

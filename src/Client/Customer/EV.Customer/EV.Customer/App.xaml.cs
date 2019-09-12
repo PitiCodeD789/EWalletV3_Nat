@@ -5,6 +5,7 @@ using Xamarin.Forms.Xaml;
 
 namespace EV.Customer
 {
+
     public partial class App : Application
     {
         public static string Account { get; set; }
