@@ -29,7 +29,15 @@ namespace EV.Customer.ViewModels
             _userService = new UserService();
             EditClickCommand = new Command(Edit);
             GendenRadioChangeCommand = new Command(GendenRadioChange);
+            BackPageClickCommand = new Command(BackPageClick);
         }
+
+        private void BackPageClick(object obj)
+        {
+            PopupNavigation.Instance.PopAsync();
+        }
+
+        public ICommand BackPageClickCommand { get; set; }
         public ICommand EditClickCommand { get; set; }
         public ICommand GendenRadioChangeCommand { get; set; }
 
@@ -57,7 +65,7 @@ namespace EV.Customer.ViewModels
                 bool isValidateLastName = Unities.ValidateName(LastName);
                 bool isValidateDate = Unities.ValidateStringDateFormat(BirthDate);
                 bool isValidateEmail = Unities.CheckEmailFormat(Email);
-                if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
+                if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail )
                 {
                     UpdateUserCommand updateUserCommand = new UpdateUserCommand
                     {
@@ -111,6 +119,11 @@ namespace EV.Customer.ViewModels
                 SecureStorage.SetAsync("Gender", viewModel.Gender.ToString());
                 SecureStorage.SetAsync("LastName", viewModel.LastName);
                 SecureStorage.SetAsync("MobileNumber", viewModel.MobileNumber);
+                App.Email = viewModel.Email;
+                App.FirstName = viewModel.FirstName;
+                App.Gender = viewModel.Gender;
+                App.LastName = viewModel.LastName;
+                App.MobileNumber = viewModel.MobileNumber;
 
                 return true;
             }
