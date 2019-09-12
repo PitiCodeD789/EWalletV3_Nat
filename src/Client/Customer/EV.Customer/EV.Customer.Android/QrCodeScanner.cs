@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using EV.Customer.Dependency;
 using EV.Customer.Droid;
 using EV.Customer.Interfaces;
 using Xamarin.Forms;
@@ -24,8 +25,14 @@ namespace EV.Customer.Droid
         {
             var scanner = new MobileBarcodeScanner();
 
-            var scanResult = await scanner.Scan();
-            return scanResult.Text;
+            //var scanResult = await scanner.Scan();
+            //return scanResult.Text;
+            var result = await DependencyService.Get<IDeviceService>().ScanAsync();
+            if (!string.IsNullOrEmpty(result))
+            {
+                return result;
+            }
+            return null;
         }
     }
 }

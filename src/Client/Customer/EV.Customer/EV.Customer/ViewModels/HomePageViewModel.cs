@@ -1,7 +1,9 @@
 ﻿using EV.Customer.Interfaces;
+using EV.Customer.Views;
 using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Transaction;
 using EWalletV2.Api.ViewModels.User;
 using Newtonsoft.Json;
@@ -88,7 +90,8 @@ namespace EV.Customer.ViewModels
             }
             catch (Exception ex)
             {
-                throw ex;
+                ErrorViewModel errorViewModel = new ErrorViewModel("QR Code ไม่ถูกต้อง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
         public string Greeting { get; set; }

@@ -21,7 +21,8 @@ namespace EV.Customer.Droid
 
             base.OnCreate(savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
-                     
+            ZXing.Mobile.MobileBarcodeScanner.Initialize(Application);
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
