@@ -45,15 +45,15 @@ namespace EV.Admin.ViewModels
 
         private async void GenerateQrcode()
         {
-            var accountNumber = await SecureStorage.GetAsync("Account");
+            var accountNumber = App.Account;
             var callData = await _transactionService.GenerateTopup(accountNumber, Amount);
             var refNumber = callData.Model.ReferenceNumber;
             var expireTime = callData.Model.ExpireDate.AddHours(7);
             GenerateTopupViewModel resultData = new GenerateTopupViewModel()
             {
                 Amount = Amount,
-                AccountNumber = await SecureStorage.GetAsync("Account"),
-                FirstName = await SecureStorage.GetAsync("AdminName"),
+                AccountNumber = App.Account,
+                FirstName = App.AdminName,
                 ReferenceNumber = refNumber,
                 ExpireDate = expireTime,
                 CheckSum = "",

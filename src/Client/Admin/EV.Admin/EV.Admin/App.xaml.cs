@@ -14,6 +14,7 @@ namespace EV.Admin
         public static string LastName { get; set; }
         public static string PhoneNumber { get; set; }
         public static string Email { get; set; }
+        public static string AdminName { get; set; }
 
         public App()
         {

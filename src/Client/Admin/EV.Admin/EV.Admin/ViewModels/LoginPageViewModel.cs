@@ -73,14 +73,12 @@ namespace EV.Admin.ViewModels
                 await SecureStorage.SetAsync("Account", viewModel.Account);
                 await SecureStorage.SetAsync("Username", Username);
                 await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
-                await SecureStorage.SetAsync("LastName", viewModel.LastName);
                 await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
                 await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
                 await SecureStorage.SetAsync("Token", viewModel.Token);
                 App.Account = viewModel.Account;
                 App.Username = Username;
-                App.FirstName = viewModel.FirstName;
-                App.LastName = viewModel.LastName;
+                App.AdminName = viewModel.FirstName;
                 App.PhoneNumber = viewModel.PhoneNumber;
             }
             catch (Exception e)
