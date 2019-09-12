@@ -1,4 +1,5 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Interfaces;
 using EV.Service.Services;
 using System;
@@ -30,7 +31,11 @@ namespace EV.Customer.ViewModels
             {
                 error =  "Please input datime follow format : dd/MM/yyyy";
             }
-            bool checkEmailFormat = Unities.CheckEmailFormat(Email);
+            bool checkEmailFormat = false;
+            if (!string.IsNullOrEmpty(Email))
+            {
+                checkEmailFormat = Unities.CheckEmailFormat(Email);
+            }
             if (!checkEmailFormat)
             {
                 error += "\nYour input format email is incorrect";
@@ -53,6 +58,7 @@ namespace EV.Customer.ViewModels
                 else
                 {
                     string resultRefOtp = resultCaller.Model;
+                    await Application.Current.MainPage.Navigation.PushAsync(new PinPage(new OtpForgotPassViewModel(Email,resultRefOtp,birthDate)));
                     ////////////// ===========> Next page will show refOtp
                 }
                 if (!string.IsNullOrEmpty(error))
@@ -75,15 +81,7 @@ namespace EV.Customer.ViewModels
                     if ((BirthDate.Length == 2 && beforeLength < 2) || BirthDate.Length == 3 && 
                         beforeLength == 2 && BirthDate.Substring(2) != "/")
                     {
-                        if (int.Parse(BirthDate) > 31)
-                        {
-                            BirthDate = "31";
-                        }
-                        else
-                        {
-                            BirthDate = BirthDate.Insert(2, "/");
-
-                        }
+                        BirthDate = BirthDate.Insert(2, "/");
                     }
                     if ((BirthDate.Length == 5 && beforeLength < 5) || BirthDate.Length == 6 && 
                         beforeLength == 5 && BirthDate.Substring(5) != "/")

@@ -77,5 +77,21 @@ namespace EV.Customer.Components
                 declaringType: typeof(EW_TitleEntryView),
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
+
+        #region Length
+        private int textLength;
+
+        public int TextLength
+        {
+            get { return textLength; }
+            set
+            {
+                textLength = value;
+                mEntry.MaxLength = textLength;
+            }
+        }
+
+        #endregion
+
     }
 }
