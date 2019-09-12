@@ -172,7 +172,8 @@ namespace EWalletV2.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Email");
+                    b.HasAlternateKey("Email")
+                        .HasName("EmailUser_AK");
 
                     b.ToTable("Users");
                 });
