@@ -29,8 +29,8 @@ namespace EV.Merchant.ViewModels
         public HomePageViewModel()
         {
             TimeString = CheckDatetime();
-            FullName = SecureStorage.GetAsync("Storename").Result;
-            MerchantAccount = SecureStorage.GetAsync("Account").Result;
+            FullName = App.StoreName;
+            MerchantAccount = App.Account;
             GotoQRCodePageCommand = new Command(GotoQRcodePageAsync);
         }
 

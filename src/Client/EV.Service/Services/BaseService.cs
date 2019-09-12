@@ -31,7 +31,7 @@ namespace EV.Service.Services
                 //    throw e;
                 //}
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+               // client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 HttpContent content = GetHttpContent(model);
 
@@ -107,7 +107,7 @@ namespace EV.Service.Services
                 //    throw e;
                 //}
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 var result = await client.GetAsync(url);
 
