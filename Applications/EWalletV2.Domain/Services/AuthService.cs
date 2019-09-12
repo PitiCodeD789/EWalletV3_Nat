@@ -81,9 +81,9 @@ namespace EWalletV2.Domain.Services
             if (checkPassword == user.Pin)
             {
                 LoginUserAndPassDto loginUser = _mapper.Map<LoginUserAndPassDto>(user);
+                loginUser.phoneNumber = user.MobileNumber;
                 return loginUser;
             }
-
             return null;
         }
 

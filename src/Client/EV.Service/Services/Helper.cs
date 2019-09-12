@@ -8,7 +8,7 @@ namespace EV.Service.Services
 {
     public static class Helper
     {
-        public static string BaseUrl { get; set; } = "http://localhost:30000/api/";
+        public static string BaseUrl { get; set; } = "http://192.168.1.34:30000/api/";
 
         public static bool CheckSumTopup(GenerateTopupViewModel viewModel)
         {
@@ -29,12 +29,6 @@ namespace EV.Service.Services
             string hashedSum = SHA256Hash(sumString);
             return hashedSum;
         }
-
-
-
-
-
-
         public static string SHA256Hash(string input)
         {
             SHA256 sha256 = SHA256Managed.Create();

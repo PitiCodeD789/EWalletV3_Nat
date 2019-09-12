@@ -25,7 +25,7 @@
                 <components:EW_EntryView Placeholder="Password" IsPassword="True" TextEntry="{Binding Password}"/>
                 <components:EW_ButtonView  TextButton="SIGN IN" TextColor="White" Command="{Binding LoginCommand}"/>
             </StackLayout>
-            <ContentView IsVisible="False" 
+            <ContentView IsVisible="{Binding IsProgress}" 
                          HorizontalOptions="FillAndExpand" 
                          VerticalOptions="FillAndExpand" 
                          BackgroundColor="Black"
