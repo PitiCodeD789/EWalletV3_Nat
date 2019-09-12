@@ -10,6 +10,10 @@ namespace EV.Service.Services
     {
         public static string BaseUrl { get; set; } = "http://localhost:30000/api/";
 
+        public static string RefreshToken { get; set; }
+
+        public static string Token { get; set; }
+
         public static bool CheckSumTopup(GenerateTopupViewModel viewModel)
         {
             string sumString = "";

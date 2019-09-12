@@ -1,4 +1,5 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Auth;
 using System;
@@ -34,7 +35,7 @@ namespace EV.Customer.ViewModels
         public void DataJoint()
         {
             title = "สร้างรหัสผ่าน";
-            image = "";
+            image = "icon_PIN";
             blackDetail = "สร้างรหัสผ่าน";
             grayDetail = "ใส่รหัสผ่านของคุณ";
             referenceText = "";
@@ -301,19 +302,43 @@ namespace EV.Customer.ViewModels
             {
                 if (registerData.Model != null)
                 {
-                    string gender = ((int)register.Gender).ToString();
-                    string birthDate = register.BirthDate.ToString("dd/MM/yyyy");
-                    await SecureStorage.SetAsync("RefreshToken", registerData.Model.RefreshToken);
-                    await SecureStorage.SetAsync("AccessToken", registerData.Model.Token);
-                    await SecureStorage.SetAsync("AccountNumber", registerData.Model.Account);
-                    await SecureStorage.SetAsync("Email", register.Email);
-                    await SecureStorage.SetAsync("FirstName", register.FirstName);
-                    await SecureStorage.SetAsync("LastName", register.LastName);
-                    await SecureStorage.SetAsync("BirthDate", birthDate);
-                    await SecureStorage.SetAsync("MobileNumber", register.MobileNumber);
-                    await SecureStorage.SetAsync("Gender", gender);
-                    //TODO : Waiting Name of next view model
-                    //await Application.Current.MainPage.Navigation.PushAsync();
+                    try
+                    {
+                        string gender = ((int)register.Gender).ToString();
+                        string birthDate = register.BirthDate.ToString("dd/MM/yyyy");
+                        await SecureStorage.SetAsync("RefreshToken", registerData.Model.RefreshToken);
+                        await SecureStorage.SetAsync("AccessToken", registerData.Model.Token);
+                        await SecureStorage.SetAsync("AccountNumber", registerData.Model.Account);
+                        await SecureStorage.SetAsync("Email", register.Email);
+                        await SecureStorage.SetAsync("FirstName", register.FirstName);
+                        await SecureStorage.SetAsync("LastName", register.LastName);
+                        await SecureStorage.SetAsync("BirthDate", birthDate);
+                        await SecureStorage.SetAsync("MobileNumber", register.MobileNumber);
+                        await SecureStorage.SetAsync("Gender", gender);
+                        Service.Services.Helper.RefreshToken = registerData.Model.RefreshToken;
+                        Service.Services.Helper.Token = registerData.Model.Token;
+                        App.Account = registerData.Model.Account;
+                        App.Email = register.Email;
+                        App.FirstName = register.FirstName;
+                        App.LastName = register.LastName;
+                        App.BirthDate = register.BirthDate;
+                        App.MobileNumber = register.MobileNumber;
+                        App.Gender = register.Gender;
+                        await Application.Current.MainPage.Navigation.PushAsync(new RegistAndFingerSuccess());
+                    }
+                    catch(Exception e)
+                    {
+                        Service.Services.Helper.RefreshToken = registerData.Model.RefreshToken;
+                        Service.Services.Helper.Token = registerData.Model.Token;
+                        App.Account = registerData.Model.Account;
+                        App.Email = register.Email;
+                        App.FirstName = register.FirstName;
+                        App.LastName = register.LastName;
+                        App.BirthDate = register.BirthDate;
+                        App.MobileNumber = register.MobileNumber;
+                        App.Gender = register.Gender;
+                        await Application.Current.MainPage.Navigation.PushAsync(new RegistAndFingerSuccess());
+                    }
                 }
                 else
                 {
@@ -346,19 +371,43 @@ namespace EV.Customer.ViewModels
             {
                 if (loginData.Model != null)
                 {
-                    string gender = ((int)loginData.Model.Gender).ToString();
-                    string birthDate = loginData.Model.BirthDate.ToString("dd/MM/yyyy");
-                    await SecureStorage.SetAsync("RefreshToken", loginData.Model.RefreshToken);
-                    await SecureStorage.SetAsync("AccessToken", loginData.Model.Token);
-                    await SecureStorage.SetAsync("Account", loginData.Model.Account);
-                    await SecureStorage.SetAsync("Email", email);
-                    await SecureStorage.SetAsync("FirstName", loginData.Model.FirstName);
-                    await SecureStorage.SetAsync("LastName", loginData.Model.LastName);
-                    await SecureStorage.SetAsync("BirthDate", birthDate);
-                    await SecureStorage.SetAsync("MobileNumber", loginData.Model.MobileNumber);
-                    await SecureStorage.SetAsync("Gender", gender);
-                    //TODO : Waiting Name of next view model
-                    //await Application.Current.MainPage.Navigation.PushAsync();
+                    try
+                    {
+                        string gender = ((int)loginData.Model.Gender).ToString();
+                        string birthDate = loginData.Model.BirthDate.ToString("dd/MM/yyyy");
+                        await SecureStorage.SetAsync("RefreshToken", loginData.Model.RefreshToken);
+                        await SecureStorage.SetAsync("AccessToken", loginData.Model.Token);
+                        await SecureStorage.SetAsync("Account", loginData.Model.Account);
+                        await SecureStorage.SetAsync("Email", email);
+                        await SecureStorage.SetAsync("FirstName", loginData.Model.FirstName);
+                        await SecureStorage.SetAsync("LastName", loginData.Model.LastName);
+                        await SecureStorage.SetAsync("BirthDate", birthDate);
+                        await SecureStorage.SetAsync("MobileNumber", loginData.Model.MobileNumber);
+                        await SecureStorage.SetAsync("Gender", gender);
+                        Service.Services.Helper.RefreshToken = loginData.Model.RefreshToken;
+                        Service.Services.Helper.Token = loginData.Model.Token;
+                        App.Account = loginData.Model.Account;
+                        App.Email = email;
+                        App.FirstName = loginData.Model.FirstName;
+                        App.LastName = loginData.Model.LastName;
+                        App.BirthDate = loginData.Model.BirthDate;
+                        App.MobileNumber = loginData.Model.MobileNumber;
+                        App.Gender = loginData.Model.Gender;
+                        await Application.Current.MainPage.Navigation.PushAsync(new RegistAndFingerSuccess());
+                    }
+                    catch(Exception e)
+                    {
+                        Service.Services.Helper.RefreshToken = loginData.Model.RefreshToken;
+                        Service.Services.Helper.Token = loginData.Model.Token;
+                        App.Account = loginData.Model.Account;
+                        App.Email = email;
+                        App.FirstName = loginData.Model.FirstName;
+                        App.LastName = loginData.Model.LastName;
+                        App.BirthDate = loginData.Model.BirthDate;
+                        App.MobileNumber = loginData.Model.MobileNumber;
+                        App.Gender = loginData.Model.Gender;
+                        await Application.Current.MainPage.Navigation.PushAsync(new RegistAndFingerSuccess());
+                    }
                 }
                 else
                 {
