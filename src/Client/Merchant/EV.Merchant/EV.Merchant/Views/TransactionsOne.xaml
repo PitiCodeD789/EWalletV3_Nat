@@ -7,6 +7,7 @@
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:components="clr-namespace:EV.Merchant.Components"
+                 CloseWhenBackgroundIsClicked="False"
              x:Class="EV.Merchant.Views.TransactionsOne">
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
@@ -29,11 +30,11 @@
                    HeightRequest="380">
             <StackLayout>
                 <Label Text="Received (THB)" HorizontalOptions="CenterAndExpand" FontSize="18"/>
-                <Label Text="{Binding TransactionPaid}" FontSize="45" HorizontalOptions="FillAndExpand"
+                <Label Text="{Binding TransactionPaid,StringFormat='{0:n}'}" FontSize="45" HorizontalOptions="FillAndExpand"
                        HorizontalTextAlignment="Center"/>
                 <BoxView BackgroundColor="Black" HeightRequest="1"/>
-                <Label Text="Ref" HorizontalOptions="Center"/>
-                <Label Text="Day" HorizontalOptions="Center"/>
+                <Label Text="{Binding TransactionReference,StringFormat='Ref {0}'}" HorizontalOptions="Center"/>
+                <Label Text="{Binding CreateDate,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" HorizontalOptions="Center"/>
                 <Grid Margin="0,20,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -62,7 +63,7 @@
                 </Grid>
                 <Grid VerticalOptions="EndAndExpand">                    
                     <components:EW_ButtonView TextButton="ย้อนกลับ" VerticalOptions="EndAndExpand" BackgroundButton="#FFFFFF"
-                                              TextColor="#EAA200" HorizontalOptions="FillAndExpand"/>
+                                              TextColor="#EAA200" HorizontalOptions="FillAndExpand" Command="{Binding BackButtonCommand}"/>
                 </Grid>
             </StackLayout>
         </Frame>
