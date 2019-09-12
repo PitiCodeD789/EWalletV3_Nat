@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:components="clr-namespace:EV.Merchant.Components"
-             xmlns:binding="clr-namespace:EV.Merchant.ViewModels"
+             xmlns:components="clr-namespace:EV.Customer.Components"
+             xmlns:binding="clr-namespace:EV.Customer.ViewModels"
              mc:Ignorable="d"
-             x:Class="EV.Merchant.Views.LoginPage"
+             x:Class="EV.Customer.Views.LoginPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundImageSource="Splash"
              >
@@ -18,13 +18,13 @@
             <StackLayout 
                 VerticalOptions="CenterAndExpand"
                 Margin="50,80"
+                Spacing="10"
                 >
                 <Image Source="walletIcon" WidthRequest="100" HeightRequest="100" Margin="0,0,0,30"/>
                 <components:EW_EntryView Placeholder="Username" TextEntry="{Binding Username}" />
-                <components:EW_EntryView Placeholder="Password" IsPassword="True" TextEntry="{Binding Password}"/>
-                <components:EW_ButtonView  TextButton="SIGN IN" TextColor="White"  Command="{Binding LoginCommand}"/>
+                <components:EW_ButtonView  TextButton="SIGN IN" TextColor="White" Command="{Binding LoginCommand}"/>
             </StackLayout>
-            <ContentView IsVisible="{Binding IsProgress}"
+            <ContentView IsVisible="{Binding IsProgress}" 
                          HorizontalOptions="FillAndExpand" 
                          VerticalOptions="FillAndExpand" 
                          BackgroundColor="Black"
@@ -40,5 +40,4 @@
             </ContentView>
         </Grid>
     </ContentPage.Content>
-
 </ContentPage>

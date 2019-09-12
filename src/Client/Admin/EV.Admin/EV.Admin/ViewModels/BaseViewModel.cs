@@ -28,6 +28,11 @@ namespace EV.Admin.ViewModels
             //Application.Current.MainPage = new NavigationPage(new Page());
         }
 
+        public virtual void CloseApp()
+        {
+            Environment.Exit(0);
+        }
+
         public virtual event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

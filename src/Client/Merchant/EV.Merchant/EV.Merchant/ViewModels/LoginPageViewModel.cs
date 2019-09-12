@@ -2,6 +2,7 @@
 using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -21,6 +22,7 @@ namespace EV.Merchant.ViewModels
         private readonly IAuthService _authService;
         public LoginPageViewModel()
         {
+            IsProgress = false;
             _authService = new AuthService();
             LoginCommand = new Command(async () => await Login());
         }
@@ -29,23 +31,28 @@ namespace EV.Merchant.ViewModels
 
         async Task Login()
         {
+            IsProgress = true;
             if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
             {
                 ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
                 if (!loginResult.IsError)
                 {
                     ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
+                    IsProgress = false;
                     await PopupNavigation.Instance.PushAsync(new Error(errorView));
                 }
                 else
                 {
                     await StoreValue(loginResult.Model);
+                    IsProgress = false;
+                    App.Email = Username;
                     await Application.Current.MainPage.Navigation.PushAsync(new MerchantTabbedPage());
                 }
             }
             else
             {
-                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password");
+                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password", (int)EWalletV2.Api.ViewModels.EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                IsProgress = false;
                 await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
         }
@@ -60,8 +67,6 @@ namespace EV.Merchant.ViewModels
                 await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
                 await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);
                 await SecureStorage.SetAsync("Token", viewModel.Token);
-                App.RefreshToken = viewModel.RefreshToken;
-                App.Token = viewModel.Token;
                 App.Account = viewModel.Account;
                 App.Username = Username;
                 App.FirstName = viewModel.FirstName;
@@ -70,13 +75,8 @@ namespace EV.Merchant.ViewModels
             }
             catch(Exception e)
             {
-                App.RefreshToken = viewModel.RefreshToken;
-                App.Token = viewModel.Token;
-                App.Account = viewModel.Account;
-                App.Username = Username;
-                App.FirstName = viewModel.FirstName;
-                App.LastName = viewModel.LastName;
-                App.PhoneNumber = viewModel.PhoneNumber;
+                ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
 
@@ -105,6 +105,21 @@ namespace EV.Merchant.ViewModels
                     _password = value;
                 }
                 OnPropertyChanged();
+            }
+        }
+        private bool _isProgress;
+
+        public bool IsProgress
+        {
+            get { return _isProgress; }
+            set
+            {
+                if (value != _isProgress)
+                {
+                    _isProgress = value;
+                    OnPropertyChanged();
+                }
+
             }
         }
 

@@ -8,7 +8,8 @@ namespace EWalletV2.Domain.DtoModels.Auth
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
+        // Fixed Bug Get mobilephone match with entitymodel
+        public string phoneNumber { get; set; }
         public string Account { get; set; }
     }
 }

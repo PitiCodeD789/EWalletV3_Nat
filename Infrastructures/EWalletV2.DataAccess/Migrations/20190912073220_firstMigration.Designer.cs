@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EWalletV2.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190910061445_add_fk")]
-    partial class add_fk
+    [Migration("20190912073220_firstMigration")]
+    partial class firstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,10 +92,10 @@ namespace EWalletV2.DataAccess.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("GetUtcDate()");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnName("customer_id");
 
-                    b.Property<int>("OtherId")
+                    b.Property<int?>("OtherId")
                         .HasColumnName("other_id");
 
                     b.Property<bool>("Status");
@@ -141,6 +141,7 @@ namespace EWalletV2.DataAccess.Migrations
                         .HasDefaultValueSql("GetUtcDate()");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnName("email")
                         .HasMaxLength(100);
 
@@ -173,6 +174,8 @@ namespace EWalletV2.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("Email");
+
                     b.ToTable("Users");
                 });
 
@@ -187,8 +190,7 @@ namespace EWalletV2.DataAccess.Migrations
                     b.HasOne("EWalletV2.Domain.Entities.UserEntity", "UserOtherEntity")
                         .WithMany("TransactionOtherEntities")
                         .HasForeignKey("OtherId")
-                        .HasConstraintName("FK_UserOtherEntity")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK_UserOtherEntity");
                 });
 #pragma warning restore 612, 618
         }

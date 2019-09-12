@@ -28,6 +28,11 @@ namespace EV.Merchant.ViewModels
             //Application.Current.MainPage = new NavigationPage(new Page());
         }
 
+        public virtual void CloseApp()
+        {
+            Environment.Exit(0);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
