@@ -28,6 +28,9 @@
     </Compile>
     <Compile Update="Components\EW_EntryView.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LoginPage.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
     </Compile>    
     <EmbeddedResource Update="Components\EW_TitleEntryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -99,7 +102,6 @@
   </ItemGroup>
 <ItemGroup>
   <Folder Include="Models\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>

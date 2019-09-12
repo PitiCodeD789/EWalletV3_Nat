@@ -7,12 +7,11 @@ namespace EV.Customer
 {
     public partial class App : Application
     {
+        public static string Email = "";
         public App()
         {
             InitializeComponent();
-
-            //MainPage = new MainPage();
-            MainPage = new NavigationPage(new ForgotPassword());
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

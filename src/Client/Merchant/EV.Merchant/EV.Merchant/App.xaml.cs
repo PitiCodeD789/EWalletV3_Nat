@@ -7,6 +7,7 @@ namespace EV.Merchant
 {
     public partial class App : Application
     {
+        public static string Email = "";
         public App()
         {
             InitializeComponent();

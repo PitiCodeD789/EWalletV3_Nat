@@ -7,11 +7,10 @@ namespace EV.Admin
 {
     public partial class App : Application
     {
+        public static string Email = "";
         public App()
         {
             InitializeComponent();
-
-            //MainPage = new MainPage();
             MainPage = new NavigationPage(new LoginPage());
         }
 

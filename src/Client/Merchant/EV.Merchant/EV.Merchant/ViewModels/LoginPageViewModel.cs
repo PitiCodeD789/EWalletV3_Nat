@@ -21,6 +21,7 @@ namespace EV.Merchant.ViewModels
         private readonly IAuthService _authService;
         public LoginPageViewModel()
         {
+            IsProgress = false;
             _authService = new AuthService();
             LoginCommand = new Command(async () => await Login());
         }
@@ -29,23 +30,28 @@ namespace EV.Merchant.ViewModels
 
         async Task Login()
         {
+            IsProgress = true;
             if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
             {
                 ResultServiceModel<LoginUserAndPassViewModel> loginResult = await _authService.LoginUserAndPass(Username, Password);
                 if (!loginResult.IsError)
                 {
                     ErrorViewModel errorView = new ErrorViewModel("ไม่สามารถเชื่อมต่อกับระบบได้");
+                    IsProgress = false;
                     await PopupNavigation.Instance.PushAsync(new Error(errorView));
                 }
                 else
                 {
                     await StoreValue(loginResult.Model);
+                    IsProgress = false;
+                    App.Email = Username;
                     await Application.Current.MainPage.Navigation.PushAsync(new MerchantTabbedPage());
                 }
             }
             else
             {
-                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password");
+                ErrorViewModel errorView = new ErrorViewModel("โปรดกรอก Username และ Password", (int)EWalletV2.Api.ViewModels.EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                IsProgress = false;
                 await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
         }
@@ -85,6 +91,21 @@ namespace EV.Merchant.ViewModels
                     _password = value;
                 }
                 OnPropertyChanged();
+            }
+        }
+        private bool _isProgress;
+
+        public bool IsProgress
+        {
+            get { return _isProgress; }
+            set
+            {
+                if (value != _isProgress)
+                {
+                    _isProgress = value;
+                    OnPropertyChanged();
+                }
+
             }
         }
 
