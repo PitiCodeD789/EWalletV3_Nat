@@ -19,5 +19,10 @@ namespace EV.Customer.Views
             InitializeComponent();
             BindingContext = new ForgotPassViewModel();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }
