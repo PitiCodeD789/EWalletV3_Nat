@@ -19,7 +19,7 @@ namespace EV.Customer
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new Views.UserTabbedPage());
+            MainPage = new NavigationPage(new Views.TransactionsPage());
         }
 
         protected override void OnStart()
