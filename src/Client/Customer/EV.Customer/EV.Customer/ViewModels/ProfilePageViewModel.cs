@@ -26,9 +26,9 @@ namespace EV.Customer.ViewModels
         
 
         public ICommand ViewProfileCommand { get; set; }
-        public void ViewProfile()
+        public async void ViewProfile()
         {
-            //ไปหน้าโปรไฟล์
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.EditProfilePage());
         }
         public ICommand SettingCommand { get; set; }
         public void SettingAccount()

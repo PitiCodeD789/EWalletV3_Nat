@@ -63,7 +63,7 @@ namespace EWalletV2.Api.Controllers
             return Ok(account);
         }
         //UpdateUser
-        [Authorize]
+       // [Authorize]
         [HttpPost("UpdateUser")]
         public IActionResult UpdateUser([FromBody] UpdateUserCommand user)
         {

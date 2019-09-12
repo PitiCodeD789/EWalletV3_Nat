@@ -1,7 +1,9 @@
 ﻿using EV.Customer.Interfaces;
+using EV.Customer.Views;
 using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Transaction;
 using EWalletV2.Api.ViewModels.User;
 using Newtonsoft.Json;
@@ -14,9 +16,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace EV.Customer.ViewModels
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public class HomePageViewModel : INotifyPropertyChanged
     {
         private readonly IUserService _userService;
@@ -52,14 +56,15 @@ namespace EV.Customer.ViewModels
                         string AdminName = QrCodeInfomation.FirstName + " " + QrCodeInfomation.LastName;
                         string AccountNumber = QrCodeInfomation.AccountNumber;
                         string qrcodeReference = QrCodeInfomation.ReferenceNumber;
-                        PopupNavigation.PushAsync(new Views.TopUpPopUpView(Amount, AdminName, AccountNumber, qrcodeReference));
+                        await PopupNavigation.PushAsync(new Views.ScanToTopupTwo(Amount, AdminName, AccountNumber, qrcodeReference));
                     }
                     //Wrong QRCode or QRCode expired
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                ErrorViewModel errorViewModel = new ErrorViewModel("QR Code ไม่ถูกต้อง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
         public ICommand ScanToPayCommand { get; set; }
@@ -69,7 +74,6 @@ namespace EV.Customer.ViewModels
             {
                 var scanner = DependencyService.Get<IQrScanningService>();
                 var result = await scanner.ScanAsync();
-
                 if (result != null)
                 {
                     GeneratePaymentViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GeneratePaymentViewModel>(result);
@@ -83,7 +87,8 @@ namespace EV.Customer.ViewModels
             }
             catch (Exception ex)
             {
-                throw ex;
+                ErrorViewModel errorViewModel = new ErrorViewModel("QR Code ไม่ถูกต้อง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
         public string Greeting { get; set; }
