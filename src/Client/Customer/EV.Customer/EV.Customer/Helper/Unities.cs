@@ -10,6 +10,8 @@ namespace EV.Customer.Helper
     {
         public static bool CheckEmailFormat(string email)
         {
+            if (string.IsNullOrEmpty(email))
+                return false;
             try
             {
                 MailAddress m = new MailAddress(email);

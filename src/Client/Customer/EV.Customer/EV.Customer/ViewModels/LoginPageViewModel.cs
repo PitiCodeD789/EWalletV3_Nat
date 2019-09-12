@@ -20,16 +20,15 @@ namespace EV.Customer.ViewModels
         private readonly IAuthService _authService;
         public LoginPageViewModel()
         {
+            IsProcess = false;
             _authService = new AuthService();
             SignInCommand = new Command(SignIn);
         }
 
         private async void SignIn()
         {
-           
             IsProcess = true;
-            bool isEmail = Unities.CheckEmailFormat(Email);
-          
+            bool isEmail = Unities.CheckEmailFormat(Email);         
             if (isEmail)
             {
                 ResultServiceModel<CheckEmailViewModel> result = await _authService.SignIn(Email);
@@ -77,7 +76,6 @@ namespace EV.Customer.ViewModels
                 }
             }
         }
-
         private string _email;
         public string Email
         {

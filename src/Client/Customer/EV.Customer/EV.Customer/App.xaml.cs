@@ -18,9 +18,7 @@ namespace EV.Customer
         public App()
         {
             InitializeComponent();
-
-            //MainPage = new MainPage();
-            MainPage = new NavigationPage(new UserTabbedPage());
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()
