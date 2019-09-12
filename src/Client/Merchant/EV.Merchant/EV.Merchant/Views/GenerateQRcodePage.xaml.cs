@@ -1,4 +1,6 @@
 ﻿using EV.Merchant.ViewModels;
+using EV.Service.Services;
+using EWalletV2.Api.ViewModels.Transaction;
 using EWalletV2.Api.ViewModels.User;
 using Newtonsoft.Json;
 using System;
@@ -19,8 +21,9 @@ namespace EV.Merchant.Views
         public GenerateQRcodePage(string merchantAccount,string fullname)
         {
             InitializeComponent();
-            AccountCommand account = new AccountCommand();
+            GeneratePaymentViewModel account = new GeneratePaymentViewModel();
             account.AccountNumber = merchantAccount;
+            account.FirstName = fullname;
             var topupJson = JsonConvert.SerializeObject(account);
             (BindingContext as GenerateQRcodeViewModel).QrcodeData = topupJson;
             (BindingContext as GenerateQRcodeViewModel).FullName = fullname;
