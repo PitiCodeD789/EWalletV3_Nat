@@ -8,12 +8,8 @@
              xmlns:components="clr-namespace:EV.Admin.Components"
                  NavigationPage.HasNavigationBar="False"
                  CloseWhenBackgroundIsClicked="False"
-                 xmlns:bindingViewModel="clr-namespace:EV.Admin.ViewModels"
              mc:Ignorable="d"
              x:Class="EV.Admin.Views.TransactionsOne">
-    <pages:PopupPage.BindingContext>
-        <bindingViewModel:AdminTransactionViewModel />
-    </pages:PopupPage.BindingContext>
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Center"
@@ -49,21 +45,21 @@
                     <StackLayout Grid.Column="0">
                         <Frame CornerRadius="50" BackgroundColor="White" Padding="0" Margin="0,10"
                        HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" Grid.Column="2">
-                            <Image Source="Wallet" Aspect="AspectFit" VerticalOptions="Center"
+                            <Image Source="{Binding PayerImage}" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                         </Frame>
-                        <Label Text="{Binding FullName1}" HorizontalTextAlignment="Center" TextColor="Black"/>
-                        <Label Text="{Binding AccountNumber1}" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding PayerFullName}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding PayerAccountNumber}" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                     <Image Source="Next" Grid.Column="1"/>
                     <StackLayout Grid.Column="2">
                         <Frame CornerRadius="50" BackgroundColor="White" Padding="0" Margin="0,10"
                        HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" Grid.Column="0">
-                            <Image Source="AccountOrange" Aspect="AspectFit" VerticalOptions="Center"
+                            <Image Source="{Binding ReceiverImage}" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                         </Frame>
-                        <Label Text="{Binding FullName2}" HorizontalTextAlignment="Center" TextColor="Black"/>
-                        <Label Text="{Binding AccountNumber2}" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding ReceiverFullName}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding ReceiverAccountNumber}" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </Grid>
                 <Grid VerticalOptions="EndAndExpand">                    
