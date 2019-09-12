@@ -60,33 +60,27 @@ namespace EV.Customer.ViewModels
             // AccountNumber , FullName 
         }
 
-        private void MockData()
+        private DateTime lastMonth;
+
+        public DateTime LastestMonth
         {
-            Transactionlist = new List<TransactionViewModel>()
+            get { return lastMonth; }
+            set
             {
-                new TransactionViewModel(){ TransactionId = 1 , TransactionType = "TopUp", FirstName = "test1", LastName = "test1", Account = "Acc111", CreateDateTime = DateTime.MaxValue, Balance = 2000},
-                new TransactionViewModel(){ TransactionId = 4 , TransactionType = "TopUp", FirstName = "test1", LastName = "test1", Account = "Acc111", CreateDateTime = DateTime.MaxValue, Balance = 20200},
-
-                new TransactionViewModel(){ TransactionId = 2 , TransactionType = "Payment", FirstName = "test2", LastName = "test2", Account = "Acc222", CreateDateTime = DateTime.MaxValue.AddMonths(-1), Balance = 4444444},
-                new TransactionViewModel(){ TransactionId = 3 , TransactionType = "Payment", FirstName = "test3", LastName = "test3", Account = "Acc333", CreateDateTime = DateTime.MaxValue.AddMonths(-2), Balance = 66666},
-            };
-
-            LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
-            FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
-            SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
-            ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+                lastMonth = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Month2));
+                OnPropertyChanged(nameof(Month3));
+            }
         }
 
-        public DateTime LastestMonth { get; set; }
         public DateTime Month2
         {
-            get{ return LastestMonth.AddMonths(-1); }
-            set { Month2 = value; }
+            get { return LastestMonth.AddMonths(-1); }
         }
         public DateTime Month3
         {
-            get { return Month2.AddMonths(-1); }
-            set { Month3 = value; }
+            get { return LastestMonth.AddMonths(-2); }
         }
         private decimal _customerBalance;
         public decimal CustomerBalance
@@ -134,7 +128,7 @@ namespace EV.Customer.ViewModels
         public async Task GetTransactions()
         {
             ResultServiceModel<List<TransactionViewModel>> result = await _transactionService.GetTransaction30Days(Email);
-            if(result.IsError != true || result.Model.Count != 0)
+            if (result.IsError != true || result.Model.Count != 0)
             {
                 Transactionlist = result.Model;
                 LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
@@ -239,7 +233,7 @@ namespace EV.Customer.ViewModels
 
         public string TransactionName { get; set; }
         public decimal TransactionPaid { get; set; }
-                
+
 
         private string _fullName;
         public string FullName
