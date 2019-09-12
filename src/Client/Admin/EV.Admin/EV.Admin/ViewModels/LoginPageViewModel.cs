@@ -48,7 +48,7 @@ namespace EV.Admin.ViewModels
                     {
                         try
                         {
-                            var checkRole = int.Parse(loginResult.Model.Account.Substring(0, 2)) == (int)EW_Enumerations.EW_UserTypeEnum.Merchant;
+                            var checkRole = int.Parse(loginResult.Model.Account.Substring(0, 2)) == (int)EW_Enumerations.EW_UserTypeEnum.Admin;
                             if (checkRole)
                             {
                                 IsProgress = false;
