@@ -65,14 +65,15 @@ namespace EV.Customer.ViewModels
         private async void TopUp()
         {
             ResultServiceModel<TopupViewModel> TopUpResult = await _transactionServices.Topup(Email, QRCodeReference);
-            if (!TopUpResult.IsError || TopUpResult.Model.IsSuccess)
+            if (TopUpResult==null || TopUpResult.IsError || !TopUpResult.Model.IsSuccess) 
             {
-                PopupNavigation.PushAsync(new Views.TopUpSuccessPopUpView(this));
+                ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ");
+               await PopupNavigation.Instance.PushAsync(new Error(errorView));
             }
             else
             {
-                ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ");
-                PopupNavigation.Instance.PushAsync(new Error(errorView));
+                await PopupNavigation.PushAsync(new ScanToTopupThree(this));
+
             }
         }
         //รอแก้ให้ API รีเทรินกลับมาให้
