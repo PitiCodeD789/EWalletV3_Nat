@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EWalletV2.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("25620912090556_AddDatabase")]
-    partial class AddDatabase
+    [Migration("20190912120514_ini_DB")]
+    partial class ini_DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,7 +174,8 @@ namespace EWalletV2.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Email");
+                    b.HasAlternateKey("Email")
+                        .HasName("EmailUser_AK");
 
                     b.ToTable("Users");
                 });

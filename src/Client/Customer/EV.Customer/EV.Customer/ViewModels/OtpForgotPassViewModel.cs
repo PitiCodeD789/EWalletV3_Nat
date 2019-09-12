@@ -185,9 +185,12 @@ namespace EV.Customer.ViewModels
         {
             if (value == "Delete")
             {
-                pin = pin.Remove(pin.Length - 1);
-                int countPin = pin.Length;
-                HintColorChange(countPin);
+                if (pin.Length > 0)
+                {
+                    pin = pin.Remove(pin.Length - 1);
+                    int countPin = pin.Length;
+                    HintColorChange(countPin);
+                }
             }
             else
             {

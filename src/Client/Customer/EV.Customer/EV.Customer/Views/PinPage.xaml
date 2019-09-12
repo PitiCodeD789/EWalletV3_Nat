@@ -75,7 +75,11 @@
                     <Frame Style="{StaticResource Key=PasswordLength}" BackgroundColor="{Binding PwHint4}"/>
                     <Frame Style="{StaticResource Key=PasswordLength}" BackgroundColor="{Binding PwHint5}"/>
                 </StackLayout>
-                <Label Text="{Binding OrangeText}" HorizontalOptions="Center" TextColor="Orange" FontSize="Small" IsVisible="{Binding OrangeVisible}"/>
+                <Label Text="{Binding OrangeText}" HorizontalOptions="Center" TextColor="Orange" FontSize="Small" IsVisible="{Binding OrangeVisible}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OrangeTextTab}"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label Text="{Binding WarningText}" HorizontalOptions="Center" TextColor="Red" FontSize="Micro" IsVisible="{Binding WarningVisible}"/>
             </StackLayout>
 

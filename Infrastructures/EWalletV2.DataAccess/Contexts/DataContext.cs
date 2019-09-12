@@ -11,7 +11,7 @@ namespace EWalletV2.DataAccess.Contexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=EWalletDbV2;Trusted_Connection=True");
+            builder.UseSqlServer(@"Server=git.dookdik.me;Database=EWalletDbV2;Trusted_Connection=True;user id=sa;password=Gg123456789;Integrated Security=false;");
         }
 
         public DbSet<OtpEntity> Otps { get; set; }

@@ -33,7 +33,7 @@ namespace EWalletV2.DataAccess.Configurations
             e.Property(p => p.Email)
                 .HasColumnName("email")
                 .HasMaxLength(100);
-            e.HasAlternateKey(p => p.Email);
+            e.HasAlternateKey(p => p.Email).HasName("EmailUser_AK");
             e.Property(p => p.Pin)
                 .HasColumnName("pin")
                 .HasMaxLength(100);
