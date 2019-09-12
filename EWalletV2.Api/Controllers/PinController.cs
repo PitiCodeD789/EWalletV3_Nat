@@ -76,6 +76,7 @@ namespace EWalletV2.Api.Controllers
             return NoContent();
         }
         //CheckForgotPin
+        [AllowAnonymous]
         [HttpPost("CheckForgotPin")]
         public IActionResult CheckForgotPin([FromBody] CheckForgotPinCommand forgotPinCommand)
         {
