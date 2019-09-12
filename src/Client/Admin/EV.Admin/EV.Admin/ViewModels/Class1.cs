@@ -1,10 +1,12 @@
 ﻿using EV.Admin.Views;
+using EWalletV2.Api.ViewModels;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using static EWalletV2.Api.ViewModels.EW_Enumerations;
 
 namespace EV.Admin.ViewModels
 {
@@ -17,7 +19,7 @@ namespace EV.Admin.ViewModels
         public ICommand PushPopup { get; set; }
         public void Push()
         {
-            ErrorViewModel errorViewModel = new ErrorViewModel("รายว้า",MMMM);
+            ErrorViewModel errorViewModel = new ErrorViewModel("ทำรายการเกือบสำเร็จ", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning);
 
             PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
         }

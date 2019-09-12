@@ -7,6 +7,7 @@
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:bd="clr-namespace:EV.Merchant.ViewModels"
+                 xmlns:components="clr-namespace:EV.Merchant.Components"
              x:Class="EV.Merchant.Views.Error">
     <pages:PopupPage.BindingContext>
         <bd:ErrorViewModel/>
@@ -31,10 +32,10 @@
                    Margin="20,0"
                    HeightRequest="250">
             <StackLayout>
-                <Image Source="Error" HorizontalOptions="CenterAndExpand" Margin="0,30"/>
+                <Image Source="{Binding ImageError}" HorizontalOptions="CenterAndExpand" Margin="0,30"/>
                 <Label Text="{Binding TextError}" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="20"/>
-                <Button BackgroundColor="#FFFFFF" TextColor="#FC0000" Text="ตกลง" HorizontalOptions="FillAndExpand"
-                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22"/>
+                <components:EW_ButtonView BackgroundButton="#FFFFFF" Command="{Binding ClosePopup}" TextColor="Black" 
+                                             VerticalOptions="EndAndExpand" TextButton="ตกลง"/>
             </StackLayout>
         </Frame>
     </StackLayout>

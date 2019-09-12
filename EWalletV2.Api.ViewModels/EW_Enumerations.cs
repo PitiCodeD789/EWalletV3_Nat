@@ -32,5 +32,13 @@ namespace EWalletV2.Api.ViewModels
             TopUp,
             Payment
         }
+        /// <summary>
+        /// Warning = 0, Error = 1
+        /// </summary>
+        public enum EW_ErrorTypeEnum
+        {
+            Warning,
+            Error
+        }
     }
 }
