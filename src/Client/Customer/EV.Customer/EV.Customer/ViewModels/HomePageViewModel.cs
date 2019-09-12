@@ -23,10 +23,10 @@ namespace EV.Customer.ViewModels
         public HomePageViewModel()
         {
             //Initial
-            _userService = new UserService();
-            _transactionServices = new TransactionServices();
-            Greeting = CheckDatetime();
-            GetTotalBalance();
+            //_userService = new UserService();
+            //_transactionServices = new TransactionServices();
+            //Greeting = CheckDatetime();
+            //GetTotalBalance();
 
             //Command
             ScanToPayCommand = new Command(ScanToPay);
