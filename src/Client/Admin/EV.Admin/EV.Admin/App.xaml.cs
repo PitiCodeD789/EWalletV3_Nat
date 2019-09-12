@@ -19,8 +19,6 @@ namespace EV.Admin
         public App()
         {
             InitializeComponent();
-
-            //MainPage = new MainPage();
             MainPage = new NavigationPage(new LoginPage());
         }
 
