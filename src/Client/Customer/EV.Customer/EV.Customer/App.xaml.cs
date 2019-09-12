@@ -7,12 +7,14 @@ namespace EV.Customer
 {
     public partial class App : Application
     {
+        public static string FirstName { get; set; }
+        public static string LastName { get; set; }
         public App()
         {
             InitializeComponent();
 
             //MainPage = new MainPage();
-            MainPage = new NavigationPage(new ReceiptPage(new EWalletV2.Api.ViewModels.Transaction.SlipViewModel()));
+            MainPage = new NavigationPage(new UserTabbedPage());
         }
 
         protected override void OnStart()

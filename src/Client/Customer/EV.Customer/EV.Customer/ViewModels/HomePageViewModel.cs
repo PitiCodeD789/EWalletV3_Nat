@@ -13,9 +13,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace EV.Customer.ViewModels
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public class HomePageViewModel : INotifyPropertyChanged
     {
         private readonly IUserService _userService;
@@ -25,6 +27,7 @@ namespace EV.Customer.ViewModels
             //Initial
             _userService = new UserService();
             _transactionServices = new TransactionServices();
+            Greeting = CheckDatetime();
             GetTotalBalance();
 
             //Command
@@ -66,7 +69,12 @@ namespace EV.Customer.ViewModels
             {
                 var scanner = DependencyService.Get<IQrScanningService>();
                 var result = await scanner.ScanAsync();
-
+                var model = new GeneratePaymentViewModel()
+                {
+                    FirstName = "merchant",
+                    AccountNumber = "0200000003"
+                };
+                //var result = JsonConvert.SerializeObject(model);
                 if (result != null)
                 {
                     GeneratePaymentViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GeneratePaymentViewModel>(result);
@@ -74,7 +82,7 @@ namespace EV.Customer.ViewModels
                     {
                         string merchantName = QrCodeInfomation.FirstName;
                         string merchantAccountNumber = QrCodeInfomation.AccountNumber;
-                        PopupNavigation.PushAsync(new Views.PaymentPopUpView(merchantName, merchantAccountNumber));
+                        PopupNavigation.PushAsync(new Views.ScanToPayOne(merchantName, merchantAccountNumber));
                     }
                 }
             }
@@ -82,6 +90,31 @@ namespace EV.Customer.ViewModels
             {
                 throw ex;
             }
+        }
+        public string Greeting { get; set; }
+        private string CheckDatetime()
+        {
+            int dateTime = DateTime.UtcNow.AddHours(7).Hour;
+
+            string Greeting = "";
+
+            if (dateTime >= 0 && dateTime <= 11)
+            {
+                Greeting = "สวัสดีตอนเช้า";
+            }
+            else if (dateTime > 11 && dateTime <= 16)
+            {
+                Greeting = "สวัสดีตอนกลางวัน";
+            }
+            else if (dateTime > 16 && dateTime <= 19)
+            {
+                Greeting = "สวัสดีตอนเย็น";
+            }
+            else
+            {
+                Greeting = "สวัสดีตอนค่ำ";
+            }
+            return Greeting;
         }
 
         public ICommand ScanToTopupCommand { get; set; }

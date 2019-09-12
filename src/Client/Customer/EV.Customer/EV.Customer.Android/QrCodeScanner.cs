@@ -22,17 +22,9 @@ namespace EV.Customer.Droid
     {
         public async Task<string> ScanAsync()
         {
-            var optionsDefault = new MobileBarcodeScanningOptions();
-            var optionsCustom = new MobileBarcodeScanningOptions();
+            var scanner = new MobileBarcodeScanner();
 
-            var scanner = new MobileBarcodeScanner()
-            {
-                TopText = "เติมเงิน",
-
-                BottomText = "Line up the QR code to scan it With your device's camera",
-            };
-
-            var scanResult = await scanner.Scan(optionsCustom);
+            var scanResult = await scanner.Scan();
             return scanResult.Text;
         }
     }

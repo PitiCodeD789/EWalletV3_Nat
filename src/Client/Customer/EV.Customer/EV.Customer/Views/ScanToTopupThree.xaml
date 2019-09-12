@@ -7,7 +7,11 @@
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:components="clr-namespace:EV.Customer.Components"
+                 xmlns:bd="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.ScanToTopupThree">
+    <pages:PopupPage.BindingContext>
+        <bd:TopUpViewModel/>
+    </pages:PopupPage.BindingContext>
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Center"
@@ -20,5 +24,5 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-        <components:EW_Popup TextSuccess="ทำรายการสำเร็จ"/>
+        <components:EW_Popup TextSuccess="ทำรายการสำเร็จ" PushCommand="{Binding ToSlip}"/>
     </pages:PopupPage>
