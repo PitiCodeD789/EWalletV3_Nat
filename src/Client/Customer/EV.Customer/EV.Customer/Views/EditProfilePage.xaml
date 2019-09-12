@@ -5,7 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:components="clr-namespace:EV.Customer.Components"
              mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:bd="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.EditProfilePage">
+    <ContentPage.BindingContext>
+        <bd:EditProfilePageViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Frame">
@@ -39,11 +44,11 @@
             </Grid>
             <ScrollView Padding="20,0" Grid.Row="1">
                 <StackLayout>
-                    <components:EW_TitleEntryView TextTitle="ชื่อ"        TextEntry="" IsEntryEnabled="True"/>
-                    <components:EW_TitleEntryView TextTitle="นามสกุล"    TextEntry="" IsEntryEnabled="True"/>
-                    <components:EW_TitleEntryView TextTitle="เบอร์โทรศัพท์" TextEntry="" IsEntryEnabled="True"  KeyboardType="Telephone"/>
-                    <components:EW_TitleEntryView TextTitle="วันเกิด"     TextEntry="" IsEntryEnabled="True" KeyboardType="Numeric"/>
-                    <components:EW_TitleEntryView TextTitle="เพศ"       TextEntry="" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="ชื่อ"        TextEntry="{Binding FirstName}" IsEnabled="{Binding IsEditMode}" IsEntryEnabled="True"/>
+                    <components:EW_TitleEntryView TextTitle="นามสกุล"    TextEntry="{Binding LastName}" IsEnabled="{Binding IsEditMode}" IsEntryEnabled="True" />
+                    <components:EW_TitleEntryView TextTitle="เบอร์โทรศัพท์" TextEntry="{Binding MobileNumber}" IsEnabled="{Binding IsEditMode}" IsEntryEnabled="True"  KeyboardType="Telephone"/>
+                    <components:EW_TitleEntryView TextTitle="วันเกิด"     TextEntry="{Binding BirthDate}" IsEntryEnabled="True" IsEnabled="{Binding IsEditMode}" KeyboardType="Numeric"/>
+                    <!--<components:EW_TitleEntryView TextTitle="เพศ"       TextEntry="" IsEntryEnabled="True"/>-->
                     <Frame CornerRadius="10" Padding="7" >
                         <StackLayout>
                             <Label Text="เพศ"/>
@@ -53,27 +58,27 @@
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="Start">
+                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="Start" IsEnabled="{Binding IsEditMode}">
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding ChangeSexCommand}" CommandParameter="Male"/>
+                                        <TapGestureRecognizer Command="{Binding GendenRadioChangeCommand}" CommandParameter="Men"/>
                                     </StackLayout.GestureRecognizers>
-                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding MaleColor}"/>
+                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding  BgMenRadio}"/>
                                     <Label Text="ชาย" HorizontalOptions="Start" VerticalOptions="Center"/>
                                 </StackLayout>
-                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="End">
+                                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="End" IsEnabled="{Binding IsEditMode}">
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding ChangeSexCommand}" CommandParameter="Female"/>
+                                        <TapGestureRecognizer Command="{Binding GendenRadioChangeCommand}" CommandParameter="Women"/>
                                     </StackLayout.GestureRecognizers>
-                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding FemaleColor}"/>
+                                    <Frame HeightRequest="10" WidthRequest="10" CornerRadius="5" BorderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"  Padding="0" BackgroundColor="{Binding  BgWomenRadio}"/>
                                     <Label Text="หญิง" HorizontalOptions="Center" VerticalOptions="Center"/>
                                 </StackLayout>
                             </Grid>
                         </StackLayout>
                     </Frame>
-                    <components:EW_TitleEntryView TextTitle="อีเมลล์"     TextEntry="" IsEntryEnabled="False"/>
+                    <components:EW_TitleEntryView TextTitle="อีเมลล์"     TextEntry="{Binding Email}" IsEnabled="False" IsEntryEnabled="False"/>
                     <Grid>
-                        <Button Text="บันทึก" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding ValidateCommand}" IsEnabled="{Binding IsEditMode}"/>
-                        <Button Text="แก้ไข" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding EditModeCommand}" IsVisible="{Binding ShowEditButton}"/>
+                        <Button Text="บันทึก" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding EditClickCommand}" IsEnabled="{Binding IsEditMode}" />
+                        <Button Text="แก้ไข" BackgroundColor="#EAA200" Margin="0,10" CornerRadius="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Command="{Binding EditClickCommand}" IsVisible="{Binding ShowEditButton}"/>
                     </Grid>
                 </StackLayout>
             </ScrollView>

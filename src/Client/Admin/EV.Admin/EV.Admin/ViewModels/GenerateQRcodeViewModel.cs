@@ -1,4 +1,5 @@
-﻿using EV.Service.Services;
+﻿using EV.Admin.Views;
+using EV.Service.Services;
 using EWalletV2.Api.ViewModels.Transaction;
 using Newtonsoft.Json;
 using System;
@@ -33,16 +34,14 @@ namespace EV.Admin.ViewModels
         }
 
         public ICommand BacktoPreviousCommand { get; set; }
-        public GenerateQRcodeViewModel(GenerateTopupViewModel generateTopup)
+        public GenerateQRcodeViewModel()
         {
-            var topupJson = JsonConvert.SerializeObject(generateTopup);
-            QrcodeData = topupJson;
             BacktoPreviousCommand = new Command(Goback);
         }
        
         private async void Goback()
         {
-            await Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PushAsync(new AdminTabbedPage());
         }
 
     }

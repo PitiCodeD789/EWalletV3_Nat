@@ -1,9 +1,11 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Interfaces;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Auth;
 using EWalletV2.Api.ViewModels.User;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,24 +24,32 @@ namespace EV.Customer.ViewModels
         public EditProfilePageViewModel()
         {
             //TODO: CheckGender OnLoad
-            //GendenRadioChange(App.Gender());
+            GendenRadioChange(App.Gender.ToString());
             IsEditMode = false;
             _userService = new UserService();
             EditClickCommand = new Command(Edit);
             GendenRadioChangeCommand = new Command(GendenRadioChange);
+            BackPageClickCommand = new Command(BackPageClick);
         }
+
+        private void BackPageClick(object obj)
+        {
+            PopupNavigation.Instance.PopAsync();
+        }
+
+        public ICommand BackPageClickCommand { get; set; }
         public ICommand EditClickCommand { get; set; }
         public ICommand GendenRadioChangeCommand { get; set; }
 
         private void GendenRadioChange(object obj)
         {
-            if ((string)obj == "F")
+            if ((string)obj == EW_Enumerations.EW_GenderEnum.Women.ToString())
             {
                 Gender = EW_Enumerations.EW_GenderEnum.Women;
                 BgWomenRadio = "Black";
                 BgMenRadio = "White";
             }
-            else if ((string)obj == "M")
+            else if ((string)obj == EW_Enumerations.EW_GenderEnum.Men.ToString())
             {
                 Gender = EW_Enumerations.EW_GenderEnum.Men;
                 BgWomenRadio = "White";
@@ -55,7 +65,7 @@ namespace EV.Customer.ViewModels
                 bool isValidateLastName = Unities.ValidateName(LastName);
                 bool isValidateDate = Unities.ValidateStringDateFormat(BirthDate);
                 bool isValidateEmail = Unities.CheckEmailFormat(Email);
-                if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
+                if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail )
                 {
                     UpdateUserCommand updateUserCommand = new UpdateUserCommand
                     {
@@ -70,23 +80,31 @@ namespace EV.Customer.ViewModels
                     bool isError = editResult.IsError;
                     if (isError)
                     {
-                        await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+                        await PopupNavigation.PushAsync(new Error(new ErrorViewModel("Error", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));
+                       
                     }
                     else
                     {
                         //TODO: Show Completed Popup
                         StoreValue(updateUserCommand);
                         IsEditMode = false;
+                        await PopupNavigation.PushAsync(new SavedProfile());
+
+                        
                     }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("", "Error", "Ok");
+                        await PopupNavigation.PushAsync(new Error(new ErrorViewModel("กรอกข้อมูลไม่ถูกต้อง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));
+
+                    
                 }
             }
             else
             {
                 IsEditMode = true;
+                ShowEditButton = false;
+                
             }
 
         }
@@ -101,6 +119,12 @@ namespace EV.Customer.ViewModels
                 SecureStorage.SetAsync("Gender", viewModel.Gender.ToString());
                 SecureStorage.SetAsync("LastName", viewModel.LastName);
                 SecureStorage.SetAsync("MobileNumber", viewModel.MobileNumber);
+                App.Email = viewModel.Email;
+                App.FirstName = viewModel.FirstName;
+                App.Gender = viewModel.Gender;
+                App.LastName = viewModel.LastName;
+                App.MobileNumber = viewModel.MobileNumber;
+
                 return true;
             }
             catch (Exception e)
@@ -130,7 +154,7 @@ namespace EV.Customer.ViewModels
 
 
 
-        private bool _isEditMode;
+        private bool _isEditMode = false;
 
         public bool IsEditMode
         {
@@ -146,7 +170,7 @@ namespace EV.Customer.ViewModels
         }
 
 
-        private string birthDate;
+        private string birthDate = App.BirthDate.ToString("dd/MM/yyyy");
 
         public string BirthDate
         {
@@ -159,21 +183,22 @@ namespace EV.Customer.ViewModels
         }
 
 
-        private string _firstName;
+        private string _firstName = App.FirstName;
+
         public string FirstName
         {
             get { return _firstName; }
             set { _firstName = value; OnPropertyChanged(); }
         }
 
-        private string _lastName;
+        private string _lastName = App.LastName;
         public string LastName
         {
             get { return _lastName; }
             set { _lastName = value; OnPropertyChanged(); }
         }
 
-        private string _mobileNumber;
+        private string _mobileNumber = App.MobileNumber;
         public string MobileNumber
         {
             get { return _mobileNumber; }
@@ -188,12 +213,21 @@ namespace EV.Customer.ViewModels
         }
 
 
-        private string _email;
+        private string _email = App.Email;
         public string Email
         {
             get { return _email; }
             set { _email = value; OnPropertyChanged(); }
         }
+
+        private bool _showEditButton = true;
+
+        public bool ShowEditButton
+        {
+            get { return _showEditButton; }
+            set { _showEditButton = value; OnPropertyChanged(); }
+        }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

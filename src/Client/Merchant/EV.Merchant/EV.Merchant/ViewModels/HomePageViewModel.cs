@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace EV.Merchant.ViewModels
@@ -15,6 +16,7 @@ namespace EV.Merchant.ViewModels
             get { return _fullName; }
             set { _fullName = value; }
         }
+        public string MerchantAccount { get; set; }
         private string _email;
         public string Email
         {
@@ -27,12 +29,14 @@ namespace EV.Merchant.ViewModels
         public HomePageViewModel()
         {
             TimeString = CheckDatetime();
+            FullName = SecureStorage.GetAsync("Storename").Result;
+            MerchantAccount = SecureStorage.GetAsync("Account").Result;
             GotoQRCodePageCommand = new Command(GotoQRcodePageAsync);
         }
 
         private void GotoQRcodePageAsync()
         {
-            Application.Current.MainPage.Navigation.PushAsync(new GenerateQRcodePage());
+            Application.Current.MainPage.Navigation.PushAsync(new GenerateQRcodePage(MerchantAccount,FullName));
         }
         private string CheckDatetime()
         {

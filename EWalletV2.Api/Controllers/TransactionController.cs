@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EWalletV2.Api.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TransactionController : ControllerBase
@@ -133,13 +132,14 @@ namespace EWalletV2.Api.Controllers
                 return BadRequest();
             }
 
-            string referenceNumber = _transactionService.GenerateTopUp(command.Account, command.Amount);
-            if (referenceNumber == null)
+            TopupResultDTO result = _transactionService.GenerateTopUp(command.Account, command.Amount);
+            if (result == null)
                 return BadRequest();
 
             GenerateTopupViewModel viewModel = new GenerateTopupViewModel()
             {
-                ReferenceNumber = referenceNumber
+                ReferenceNumber = result.ReferenceNumber,
+                ExpireDate = result.ExpireDate
             };
 
             return Ok(viewModel);

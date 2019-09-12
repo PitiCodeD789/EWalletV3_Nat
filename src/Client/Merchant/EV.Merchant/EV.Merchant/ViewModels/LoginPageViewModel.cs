@@ -57,7 +57,7 @@ namespace EV.Merchant.ViewModels
             }
         }
 
-        private async Task StoreValue(LoginUserAndPassViewModel viewModel)
+        private async Task StoreValue()
         {
             try
             {
