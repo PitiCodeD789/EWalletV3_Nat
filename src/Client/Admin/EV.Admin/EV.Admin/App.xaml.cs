@@ -7,12 +7,17 @@ namespace EV.Admin
 {
     public partial class App : Application
     {
+        public static string FirstName { get; set; } = "TestKub";
+        public static string LastName { get; set; } = "TestKub";
+        public static string AccountNumber { get; set; } = "456789456";
+        public static string Email { get; set; } = "Test@Test.test";
         public App()
         {
             InitializeComponent();
 
             //MainPage = new MainPage();
-            MainPage = new NavigationPage(new TransactionsOne());
+            //MainPage = new NavigationPage(new TransactionsOne());
+            MainPage = new NavigationPage(new ChildHistoryTabPage());
         }
 
         protected override void OnStart()
