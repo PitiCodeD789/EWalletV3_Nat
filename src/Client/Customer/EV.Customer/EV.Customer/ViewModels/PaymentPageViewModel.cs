@@ -78,7 +78,7 @@ namespace EV.Customer.ViewModels
         }
         private async void PushToSlip()
         {
-            PopupNavigation.Instance.PopAllAsync();
+            await PopupNavigation.Instance.PopAllAsync();
             SlipViewModel payment = new SlipViewModel()
             {
                 Amount = Amount,

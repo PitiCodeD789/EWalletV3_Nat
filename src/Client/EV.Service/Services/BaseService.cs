@@ -11,10 +11,10 @@ namespace EV.Service.Services
 {
     public class BaseService
     {
-        //private readonly AuthService _authService = new AuthService();
+        private readonly TokenService _tokenService = new TokenService();
         protected async Task<ResultServiceModel<T>> Post<T>(string url, object model) where T : class
         {
-            //StartMethod:
+            StartMethod:
             ResultServiceModel<T> resultService = new ResultServiceModel<T>();
             try
             {
@@ -22,16 +22,16 @@ namespace EV.Service.Services
 
                 string token = "";
 
-                //try
-                //{
-                //    token = await SecureStorage.GetAsync("Token");
-                //}
-                //catch(Exception e)
-                //{
-                //    throw e;
-                //}
+                try
+                {
+                    token = await SecureStorage.GetAsync("Token");
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
 
-               // client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 HttpContent content = GetHttpContent(model);
 
@@ -49,32 +49,30 @@ namespace EV.Service.Services
 
                     return resultService;
                 }
-                //else if(result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                //{
-                //    try
-                //    {
-                //        string refreshToken = await SecureStorage.GetAsync("RefreshToken");
-                //        string email = await SecureStorage.GetAsync("Email");
-                //        var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
-                //        if(tokenData != null || !tokenData.IsError)
-                //        {
-                //            if(tokenData.Model == null || tokenData.Model.Token == null)
-                //            {
-                //                CloseApp();
-                //            }
-                //            await SecureStorage.SetAsync("Token", tokenData.Model.Token);
-                //            goto StartMethod;
-                //        }
-                //        else
-                //        {
-                //            resultService.IsError = true;
-                //        }
-                //    }
-                //    catch(Exception e)
-                //    {
-                //        CloseApp();
-                //    }
-                //}
+                else if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    try
+                    {
+                        var tokenData = await _tokenService.GetAccessToken();
+                        if (tokenData != null || !tokenData.IsError)
+                        {
+                            if (tokenData.Model == null || tokenData.Model.Token == null)
+                            {
+                                CloseApp();
+                            }
+                            await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                            goto StartMethod;
+                        }
+                        else
+                        {
+                            resultService.IsError = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        resultService.IsError = true;
+                    }
+                }
                 else
                 {
                     client.Dispose();
