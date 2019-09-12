@@ -1,4 +1,5 @@
-﻿using EV.Customer.Views;
+﻿using EV.Customer.ViewModels;
+using EV.Customer.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,7 +19,7 @@ namespace EV.Customer
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new PinPage(new LoginByPinViewModel()));
         }
 
         protected override void OnStart()

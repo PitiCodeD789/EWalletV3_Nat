@@ -153,7 +153,7 @@ namespace EV.Customer.ViewModels
                 var checkForgotData = await _pinService.CheckForgotPin(birthDate, email);
                 if (checkForgotData != null && !checkForgotData.IsError)
                 {
-                    OtpForgotPassViewModel otpForgotPass = new OtpForgotPassViewModel(email, checkForgotData.Model, birthDate);
+                    OtpForgotPassViewModel otpForgotPass = new OtpForgotPassViewModel(email, checkForgotData.Model.RefNumber, birthDate);
                     await Application.Current.MainPage.Navigation.PushAsync(new PinPage(otpForgotPass));
                 }
                 else

@@ -43,7 +43,7 @@ namespace EV.Service.Services
             string url = serviceUrl + "updatepin";
             return await Post<DummyModel>(url, model);
         }
-        public async Task<ResultServiceModel<string>> CheckForgotPin(DateTime birthday, string email)
+        public async Task<ResultServiceModel<CheckForgotPinViewModel>> CheckForgotPin(DateTime birthday, string email)
         {
             CheckForgotPinCommand model = new CheckForgotPinCommand()
             {
@@ -51,7 +51,7 @@ namespace EV.Service.Services
                 Email = email
             };
             string url = serviceUrl + "CheckForgotPin";
-            return await Post<string>(url, model);
+            return await Post<CheckForgotPinViewModel>(url, model);
         }
     }
 }
