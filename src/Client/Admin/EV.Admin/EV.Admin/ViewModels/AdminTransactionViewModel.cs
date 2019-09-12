@@ -4,36 +4,34 @@ using EWalletV2.Api.ViewModels.Transaction;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace EV.Admin.ViewModels
 {
-    public class AdminTransactionViewModel
+    public class AdminTransactionViewModel : INotifyPropertyChanged
     {
         private readonly ITransactionServices _transactionService;
+
         public AdminTransactionViewModel()
         {
             //Initial
             _transactionService = new TransactionServices();
-            FullName = App.FirstName + " " + App.LastName;
-            AccountNumber = App.Account;
             Email = App.Email;
-            //GetTransactions();
-
-            MockData();
+            LastestMonth = DateTime.Now;
+            Transactionlist = new List<TransactionViewModel>();
+            FirstTransactionList = new List<TransactionViewModel>();
+            SecondTransactionList = new List<TransactionViewModel>();
+            ThridTransactionList = new List<TransactionViewModel>();
 
             //Command
             ViewTransactionDetailCommand = new Command<int>(ViewTransactionDetail);
             BackButtonCommand = new Command(BackButton);
-
-        }
-        public ICommand BackButtonCommand { get; private set; }
-        private void BackButton(object obj)
-        {
-            PopupNavigation.PopAsync();
         }
 
         public ICommand ViewTransactionDetailCommand { get; set; }
@@ -47,53 +45,91 @@ namespace EV.Admin.ViewModels
             if (transaction.TransactionType == "TopUp")
             {
                 //TopUp
-                Image1 = "Wallet";
-                FullName1 = transaction.FirstName + " " + transaction.LastName;
-                AccountNumber1 = transaction.Account;
+                PayerImage = "Wallet";
+                PayerFullName = transaction.FirstName + " " + transaction.LastName;
+                PayerAccountNumber = transaction.Account;
 
-                Image2 = "AccountOrange";
-                FullName2 = FullName;
-                AccountNumber2 = AccountNumber;
+                ReceiverImage = "AccountOrange";
+                ReceiverFullName = FullName;
+                ReceiverAccountNumber = AccountNumber;
             }
             PopupNavigation.PushAsync(new Views.TransactionsOne(this));
         }
 
-        public async void GetTransactions()
+        public async Task GetTransactions()
         {
             var result = await _transactionService.GetTransaction30Days(Email);
             if (result.IsError != true)
+            {
                 Transactionlist = result.Model;
+                LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
+                FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
+                SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
+                ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+            }
             //If Error popup errorPopupPage
         }
 
-        private void MockData()
+
+        public ICommand BackButtonCommand { get; private set; }
+        private void BackButton(object obj)
         {
-            Transactionlist = new List<TransactionViewModel>()
-            {
-                new TransactionViewModel(){ TransactionId = 1 , TransactionType = "TopUp", FirstName = "test1", LastName = "test1", Account = "Acc111", CreateDateTime = DateTime.MaxValue, Balance = 2000 , TransactionReference = "sdf6156"},
-                new TransactionViewModel(){ TransactionId = 4 , TransactionType = "TopUp", FirstName = "test1", LastName = "test1", Account = "Acc111", CreateDateTime = DateTime.MaxValue, Balance = 20200 , TransactionReference = "sdf6156"},
-
-            };
-
-            LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
-            FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
-            SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
-            ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+            PopupNavigation.PopAsync();
         }
 
-        public string Image1 { get; set; }
-        public string FullName1 { get; set; }
-        public string AccountNumber1 { get; set; }
+        private List<TransactionViewModel> _transactionlist;
+        public List<TransactionViewModel> Transactionlist
+        {
+            get { return _transactionlist; }
+            set
+            {
+                _transactionlist = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Image2 { get; set; }
-        public string FullName2 { get; set; }
-        public string AccountNumber2 { get; set; }
+        private List<TransactionViewModel> _firstTransactionList;
+        public List<TransactionViewModel> FirstTransactionList
+        {
+            get { return _firstTransactionList; }
+            set
+            {
+                _firstTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<TransactionViewModel> _secondTransactionList;
+        public List<TransactionViewModel> SecondTransactionList
+        {
+            get { return _secondTransactionList; }
+            set
+            {
+                _secondTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<TransactionViewModel> _thridTransactionList;
+        public List<TransactionViewModel> ThridTransactionList
+        {
+            get { return _thridTransactionList; }
+            set
+            {
+                _thridTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string TransactionName { get; set; }
-        public decimal TransactionPaid { get; set; }
-        public string TransactionReference { get; set; }
+        private DateTime _lastestMonth;
+        public DateTime LastestMonth
 
-        public DateTime LastestMonth { get; set; }
+        {
+            get { return _lastestMonth; }
+            set
+            {
+                _lastestMonth = value;
+                OnPropertyChanged();
+            }
+        }
         public DateTime Month2
         {
             get { return LastestMonth.AddMonths(-1); }
@@ -109,15 +145,20 @@ namespace EV.Admin.ViewModels
         {
             get
             {
+                OnPropertyChanged();
                 if (FirstTransactionList.Count != 0) return true;
                 return false;
             }
-            set { FirstMonth = value; }
+            set
+            {
+                FirstMonth = value;
+            }
         }
         public bool SecondMonth
         {
             get
             {
+                OnPropertyChanged();
                 if (SecondTransactionList.Count != 0) return true;
                 return false;
             }
@@ -127,17 +168,26 @@ namespace EV.Admin.ViewModels
         {
             get
             {
+                OnPropertyChanged();
                 if (ThridTransactionList.Count != 0) return true;
                 return false;
             }
             set { ThirdMonth = value; }
         }
 
+        public string PayerImage { get; set; }
+        public string PayerFullName { get; set; }
+        public string PayerAccountNumber { get; set; }
 
-        public List<TransactionViewModel> Transactionlist { get; set; }
-        public List<TransactionViewModel> FirstTransactionList { get; set; }
-        public List<TransactionViewModel> SecondTransactionList { get; set; }
-        public List<TransactionViewModel> ThridTransactionList { get; set; }
+        public string ReceiverImage { get; set; }
+        public string ReceiverFullName { get; set; }
+        public string ReceiverAccountNumber { get; set; }
+
+        public string TransactionName { get; set; }
+        public decimal TransactionPaid { get; set; }
+        public string TransactionReference { get; set; }
+
+        
 
         private DateTime _createDate;
         public DateTime CreateDate
@@ -172,6 +222,12 @@ namespace EV.Admin.ViewModels
         {
             get { return _customerBalance; }
             set { _customerBalance = value; }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

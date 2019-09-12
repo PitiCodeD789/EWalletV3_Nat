@@ -13,14 +13,14 @@ namespace EV.Admin
         public static string FirstName { get; set; }
         public static string LastName { get; set; }
         public static string PhoneNumber { get; set; }
-        public static string Email { get; set; }
+        public static string Email { get; set; } = "nomustang11@gmail.com";
         public static string AdminName { get; set; }
 
         public App()
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new ChildHistoryTabPage());
         }
 
         protected override void OnStart()

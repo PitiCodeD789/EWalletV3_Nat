@@ -24,14 +24,13 @@ namespace EV.Merchant.ViewModels
             FullName = App.FirstName + " " + App.LastName;
             AccountNumber = App.Account;
             Email = App.Email;
-            //MockData();
+
             LastestMonth = DateTime.Now;
             Transactionlist = new List<TransactionViewModel>();
             FirstTransactionList = new List<TransactionViewModel>();
             SecondTransactionList = new List<TransactionViewModel>();
             ThridTransactionList = new List<TransactionViewModel>();
-
-
+            
             //Command
             ViewTransactionDetailCommand = new Command<int>(ViewTransactionDetail);
             BackButtonCommand = new Command(BackButton);
@@ -53,13 +52,13 @@ namespace EV.Merchant.ViewModels
             if (transaction.TransactionType == "Payment")
             {
                 //Payment
-                Image1 = "AccountOrange";
-                FullName1 = FullName;
-                AccountNumber1 = AccountNumber;
+                PayerImage = "AccountOrange";
+                PayerFullName = FullName;
+                PayerAccountNumber = AccountNumber;
 
-                Image2 = "Wallet";
-                FullName2 = transaction.FirstName + " " + transaction.LastName;
-                AccountNumber2 = transaction.Account;
+                ReceiverImage = "Wallet";
+                ReceiverFullName = transaction.FirstName + " " + transaction.LastName;
+                ReceiverAccountNumber = transaction.Account;
             }
             PopupNavigation.PushAsync(new Views.TransactionsOne(this));
         }
@@ -77,18 +76,18 @@ namespace EV.Merchant.ViewModels
             ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
         }
 
-        public async Task<List<TransactionViewModel>> GetTransactions()
+        public async Task GetTransactions()
         {
             var result = await _transactionService.GetTransaction30Days("nomustang11@gmail.com");
             var a = result.Model;
             if (result.IsError != true)
             {
                 Transactionlist = result.Model;
+                LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
                 FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
                 SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
                 ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
             }
-            return a;
             //If Error popup errorPopupPage
         }
 
@@ -99,13 +98,13 @@ namespace EV.Merchant.ViewModels
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string Image1 { get; set; }
-        public string FullName1 { get; set; }
-        public string AccountNumber1 { get; set; }
+        public string PayerImage { get; set; }
+        public string PayerFullName { get; set; }
+        public string PayerAccountNumber { get; set; }
 
-        public string Image2 { get; set; }
-        public string FullName2 { get; set; }
-        public string AccountNumber2 { get; set; }
+        public string ReceiverImage { get; set; }
+        public string ReceiverFullName { get; set; }
+        public string ReceiverAccountNumber { get; set; }
 
         public string TransactionName { get; set; }
         public decimal TransactionPaid { get; set; }
@@ -132,9 +131,38 @@ namespace EV.Merchant.ViewModels
                 OnPropertyChanged();
             }
         }
-        public List<TransactionViewModel> SecondTransactionList { get; set; }
-        public List<TransactionViewModel> ThridTransactionList { get; set; }
-        public DateTime LastestMonth { get; set; } 
+        private List<TransactionViewModel> _secondTransactionList;
+        public List<TransactionViewModel> SecondTransactionList
+        {
+            get { return _secondTransactionList; }
+            set
+            {
+                _secondTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<TransactionViewModel> _thridTransactionList;
+        public List<TransactionViewModel> ThridTransactionList
+        {
+            get { return _thridTransactionList; }
+            set
+            {
+                _thridTransactionList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _lastestMonth;
+        public DateTime LastestMonth
+
+        {
+            get { return _lastestMonth; }
+            set
+            {
+                _lastestMonth = value;
+                OnPropertyChanged();
+            }
+        }
         public DateTime Month2
         {
             get { return LastestMonth.AddMonths(-1); }
@@ -150,15 +178,20 @@ namespace EV.Merchant.ViewModels
         {
             get
             {
+                OnPropertyChanged();
                 if (FirstTransactionList.Count != 0) return true;
                 return false;
             }
-            set { FirstMonth = value; }
+            set
+            {
+                FirstMonth = value;
+            }
         }
         public bool SecondMonth
         {
             get
             {
+                OnPropertyChanged();
                 if (SecondTransactionList.Count != 0) return true;
                 return false;
             }
@@ -168,11 +201,13 @@ namespace EV.Merchant.ViewModels
         {
             get
             {
+                OnPropertyChanged();
                 if (ThridTransactionList.Count != 0) return true;
                 return false;
             }
             set { ThirdMonth = value; }
         }
+
 
         private DateTime _createDate;
         public DateTime CreateDate
