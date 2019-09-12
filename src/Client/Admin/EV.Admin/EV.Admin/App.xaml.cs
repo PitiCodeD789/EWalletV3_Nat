@@ -7,7 +7,15 @@ namespace EV.Admin
 {
     public partial class App : Application
     {
-        public static string Email = "";
+        public static string RefreshToken { get; set; }
+        public static string Token { get; set; }
+        public static string Account { get; set; }
+        public static string Username { get; set; }
+        public static string FirstName { get; set; }
+        public static string LastName { get; set; }
+        public static string PhoneNumber { get; set; }
+        public static string Email { get; set; }
+
         public App()
         {
             InitializeComponent();

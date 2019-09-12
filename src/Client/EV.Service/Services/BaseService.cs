@@ -16,6 +16,39 @@ namespace EV.Service.Services
             try
             {
                 HttpClient client = new HttpClient();
+                
+                HttpContent content = GetHttpContent(model);
+
+                var result = await client.PostAsync(url, content);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var json_result = await result.Content.ReadAsStringAsync();
+
+                    T obj = GetModelFormResult<T>(json_result);
+
+                    resultService.IsError = false;
+
+                    resultService.Model = obj;
+
+                    return resultService;
+                }
+                client.Dispose();
+                return null;
+            }
+            catch (Exception e)
+            {
+                resultService.IsError = true;
+            }
+            return resultService;
+        }
+
+        protected async Task<ResultServiceModel<T>> Post<T>(string url, object model, string token) where T : class
+        {
+            ResultServiceModel<T> resultService = new ResultServiceModel<T>();
+            try
+            {
+                HttpClient client = new HttpClient();
 
                 HttpContent content = GetHttpContent(model);
 

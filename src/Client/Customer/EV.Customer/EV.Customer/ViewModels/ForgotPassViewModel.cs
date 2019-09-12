@@ -1,4 +1,5 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Interfaces;
 using EV.Service.Services;
 using System;
@@ -10,16 +11,18 @@ namespace EV.Customer.ViewModels
 {
     public class ForgotPassViewModel : BaseViewModel
     {
-        private readonly IPinService _pinService;
+        private readonly IPinService _pinService = new PinService();
         string error;
-        public ForgotPassViewModel(IPinService pinService)
+        int beforeLength;
+
+        public ForgotPassViewModel( )
         {
-            _pinService = pinService;
             CallCheckForgotPin = new Command(execute: CheckPin);
         }
         private async void CheckPin()
         {
-            DateTime birthDate = new DateTime();          
+            DateTime birthDate = new DateTime();
+            error = null;
             try
             {
                 var inputDateTime = DateTime.ParseExact(BirthDate,"dd/MM/yyyy", null);
@@ -29,7 +32,11 @@ namespace EV.Customer.ViewModels
             {
                 error =  "Please input datime follow format : dd/MM/yyyy";
             }
-            bool checkEmailFormat = Unities.CheckEmailFormat(Email);
+            bool checkEmailFormat = false;
+            if (!string.IsNullOrEmpty(Email))
+            {
+                checkEmailFormat = Unities.CheckEmailFormat(Email);
+            }
             if (!checkEmailFormat)
             {
                 error += "\nYour input format email is incorrect";
@@ -40,7 +47,7 @@ namespace EV.Customer.ViewModels
             }
             else
             {
-                var resultCaller = _pinService.CheckForgotPin(birthDate, Email).Result;
+                var resultCaller = await _pinService.CheckForgotPin(birthDate, Email);
                 if (resultCaller.IsError)
                 {
                     error = "ขออภัย! ไม่สามารถเชื่อมต่อได้";
@@ -52,6 +59,7 @@ namespace EV.Customer.ViewModels
                 else
                 {
                     string resultRefOtp = resultCaller.Model;
+                    await Application.Current.MainPage.Navigation.PushAsync(new PinPage(new OtpForgotPassViewModel(Email,resultRefOtp,birthDate)));
                     ////////////// ===========> Next page will show refOtp
                 }
                 if (!string.IsNullOrEmpty(error))
@@ -70,6 +78,20 @@ namespace EV.Customer.ViewModels
                 {
                     _birthDate = value;
                     OnPropertyChanged();
+
+                    if ((BirthDate.Length == 2 && beforeLength < 2) || BirthDate.Length == 3 && 
+                        beforeLength == 2 && BirthDate.Substring(2) != "/")
+                    {
+                        BirthDate = BirthDate.Insert(2, "/");
+                    }
+                    if ((BirthDate.Length == 5 && beforeLength < 5) || BirthDate.Length == 6 && 
+                        beforeLength == 5 && BirthDate.Substring(5) != "/")
+                    {
+                        BirthDate = BirthDate.Insert(5, "/");
+                    }
+
+                    beforeLength = BirthDate.Length;
+
                 }
             }
         }

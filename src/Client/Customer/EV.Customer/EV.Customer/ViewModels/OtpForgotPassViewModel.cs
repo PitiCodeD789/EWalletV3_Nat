@@ -1,4 +1,5 @@
 ﻿using EV.Customer.Helper;
+using EV.Customer.Views;
 using EV.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,14 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class OtpForgotPassViewModel : INotifyPropertyChanged
+    public class OtpForgotPassViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly AuthService _authService = new AuthService();
         private readonly PinService _pinService = new PinService();
         public OtpForgotPassViewModel(string passEmail, string passReference, DateTime passBirthDate)
         {
             title = "การยืนยัน OTP";
-            image = "";
+            image = "icon_mail";
             blackDetail = "กรุณาใส่ OTP\nเพื่อยืนยัน email ของคุณ";
             grayDetail = "เราได้ส่ง OTP ไปที่ email ของคุณแล้ว";
             referenceText = "ref. " + passReference;
@@ -28,6 +29,9 @@ namespace EV.Customer.ViewModels
             warningVisible = false;
             backVisible = true;
             fingerTabVisible = false;
+            OrangeTextTab = new Command(SentOtpAgain);
+            InputPin = new Command<string>(CheckOtp);
+            GoBack = new Command(BackPage);
             email = passEmail;
             reference = passReference;
             pin = "";
@@ -141,7 +145,6 @@ namespace EV.Customer.ViewModels
         private DateTime birthDate;
 
         public ICommand OrangeTextTab { get; set; }
-        //TODO : Input Name Page;
         public async void SentOtpAgain()
         {
             bool isExistEmail = Unities.CheckEmailFormat(email);
@@ -151,7 +154,7 @@ namespace EV.Customer.ViewModels
                 if (checkForgotData != null && !checkForgotData.IsError)
                 {
                     OtpForgotPassViewModel otpForgotPass = new OtpForgotPassViewModel(email, checkForgotData.Model, birthDate);
-                    //await Application.Current.MainPage.Navigation.PushAsync(new Page(otpForgotPass));
+                    await Application.Current.MainPage.Navigation.PushAsync(new PinPage(otpForgotPass));
                 }
                 else
                 {
@@ -178,8 +181,6 @@ namespace EV.Customer.ViewModels
         }
 
         public ICommand InputPin { get; set; }
-        //TODO : Input Name Page;
-        //TODO : Waiting Name of next view model
         public async void CheckOtp(string value)
         {
             if (value == "Delete")
@@ -219,7 +220,7 @@ namespace EV.Customer.ViewModels
                         if (checkOtpData.Model != null || checkOtpData.Model.IsValidateOtp)
                         {
                             SetPinForAuthViewModel setPinForAuth = new SetPinForAuthViewModel(email);
-                            //await Application.Current.MainPage.Navigation.PushAsync(new Page(setPinForAuth));
+                            await Application.Current.MainPage.Navigation.PushAsync(new PinPage(setPinForAuth));
                         }
                         else
                         {
@@ -244,6 +245,9 @@ namespace EV.Customer.ViewModels
                     }
                     else
                     {
+                        pin = "";
+                        countPin = pin.Length;
+                        HintColorChange(countPin);
                         WarningText = "ไม่สามารถเชื่อมต่อได้";
                         WarningVisible = true;
                         try
@@ -370,13 +374,6 @@ namespace EV.Customer.ViewModels
         public async void BackPage()
         {
             await Application.Current.MainPage.Navigation.PopToRootAsync();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
