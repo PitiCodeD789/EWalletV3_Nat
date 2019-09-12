@@ -91,7 +91,7 @@
             <Button Style="{StaticResource Key=NumPad}" Text="8" Grid.Row="4" Grid.Column="2" Command="{Binding InputPin}" CommandParameter="8"/>
             <Button Style="{StaticResource Key=NumPad}" Text="9" Grid.Row="4" Grid.Column="3" Command="{Binding InputPin}" CommandParameter="9"/>
             <Button Style="{StaticResource Key=NumPad}" Text="0" Grid.Row="5" Grid.Column="2" Command="{Binding InputPin}" CommandParameter="0"/>
-            <Image Grid.Row="5" Grid.Column="1" Source="icon_finger_white" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="30" IsVisible="{Binding fingerTabVisible}"/>
+            <Image Grid.Row="5" Grid.Column="1" Source="icon_finger_white" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="30" IsVisible="{Binding FingerTabVisible}"/>
             <Button Style="{StaticResource Key=NumPad}" BackgroundColor="Transparent" Grid.Row="5" Grid.Column="1" Command="{Binding Fingerprint}"/>
             <Image Grid.Row="5" Grid.Column="3" Source="icon_left_white" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="30"/>
             <Button Style="{StaticResource Key=NumPad}" BackgroundColor="Transparent" Grid.Row="5" Grid.Column="3" Command="{Binding InputPin}" CommandParameter="Delete"/>
