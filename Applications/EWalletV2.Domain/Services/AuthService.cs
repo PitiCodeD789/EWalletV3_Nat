@@ -208,5 +208,20 @@ namespace EWalletV2.Domain.Services
             bool isUpdate = _userRepository.Update(user);
             return isUpdate;
         }
+
+        public LoginByCustomerDto LoginByCustomer(string email, string pin)
+        {
+            UserEntity user = _userRepository.GetUserByEmail(email);
+            if (user == null)
+                return null;
+            string checkPassword = Generator.HashPassword(pin, user.Salt);
+            if (checkPassword == user.Pin)
+            {
+                LoginByCustomerDto loginUser = _mapper.Map<LoginByCustomerDto>(user);
+                return loginUser;
+            }
+
+            return null;
+        }
     }
 }

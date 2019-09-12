@@ -174,27 +174,27 @@ namespace EWalletV2.Api.Controllers
         //Login
         [AllowAnonymous]
         [HttpPost("LoginByCustomer")]
-        public IActionResult LoginByCustomer([FromBody] LoginUserAndPassCommand command)
+        public IActionResult LoginByCustomer([FromBody]LoginByCustomerCommand command)
         {
 
-            string username = command.Username;
-            string password = command.Password;
+            string email = command.Email;
+            string pin = command.Pin;
 
-            bool changePinResult= _authService.ChangePin(username, password);
+            bool changePinResult= _authService.ChangePin(email, pin);
             if (!changePinResult)
             {
                 return null;
             }
 
-            LoginUserAndPassDto loginUserAndPassDto = _authService.LoginWithUsernameAndPassword(username, password);
+            LoginByCustomerDto loginByCustomerDto = _authService.LoginByCustomer(email, pin);
 
-            if (loginUserAndPassDto == null)
+            if (loginByCustomerDto == null)
                 return NotFound();
             GetToken getToken = new GetToken(_configuration);
-            LoginUserAndPassViewModel model = _mapper.Map<LoginUserAndPassViewModel>(loginUserAndPassDto);
+            LoginByCustomerViewModel model = _mapper.Map<LoginByCustomerViewModel>(loginByCustomerDto);
 
             model.Token = getToken.Token;
-            model.RefreshToken = _authService.GetRefreshToken(username);
+            model.RefreshToken = _authService.GetRefreshToken(email);
 
             return Ok(model);
         }
