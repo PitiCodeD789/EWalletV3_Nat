@@ -40,7 +40,7 @@ namespace EWalletV2.DataAccess.Repositories
         {
             try
             {
-                return _context.Otps.FirstOrDefault(x => x.Email == email);
+                return _context.Otps.OrderBy(o => o.Id).LastOrDefault(x => x.Email == email);
             }
             catch
             {

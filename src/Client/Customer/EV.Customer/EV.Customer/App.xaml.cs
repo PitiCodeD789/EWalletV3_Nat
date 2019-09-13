@@ -28,16 +28,18 @@ namespace EV.Customer
         {
             // Handle when your app starts
 
-            var refreshToken = await SecureStorage.GetAsync("RefreshToken");
-            RefreshToken = refreshToken;
-            if (refreshToken != null)
-            {
-                MainPage = new NavigationPage(new PinPage(new LoginByPinViewModel()));
-            }
-            else
-            {
-                MainPage = new NavigationPage(new LoginPage());
-            }
+            MainPage = new NavigationPage(new LoginPage());
+
+            //var refreshToken = await SecureStorage.GetAsync("RefreshToken");
+            //RefreshToken = refreshToken;
+            //if (refreshToken != null)
+            //{
+            //    MainPage = new NavigationPage(new PinPage(new LoginByPinViewModel()));
+            //}
+            //else
+            //{
+            //    MainPage = new NavigationPage(new LoginPage());
+            //}
         }
 
         protected override void OnSleep()

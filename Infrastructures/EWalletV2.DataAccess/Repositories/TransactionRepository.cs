@@ -98,7 +98,7 @@ namespace EWalletV2.DataAccess.Repositories
             var transactions = _context.Transactions
                 .Include(x => x.UserCustomerEntity)
                 .Include(x => x.UserOtherEntity)
-                .Where(x => x.CustomerId == customerId || x.OtherId == customerId)
+                .Where(x => (x.CustomerId == customerId || x.OtherId == customerId ) && x.CustomerId != null)
                 .ToList();
 
             return transactions;
