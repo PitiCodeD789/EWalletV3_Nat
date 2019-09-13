@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class FingerprintPageViewModel : INotifyPropertyChanged
+    public class FingerprintPageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         public FingerprintPageViewModel()
         {
@@ -69,6 +69,7 @@ namespace EV.Customer.ViewModels
                         IsShowFingerButton = false;
                         IsShowLable = true;
                         OnPropertyChanged("IsShowFingerButton");
+                        
                     }
                     catch (Exception ex)
                     {
@@ -83,9 +84,7 @@ namespace EV.Customer.ViewModels
                 }
             }else
             {
-                await PopupNavigation.PushAsync(new Error(new ErrorViewModel("ไม่พบอุปกรณ์", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));
-
-            
+                await PopupNavigation.PushAsync(new Error(new ErrorViewModel("ไม่พบอุปกรณ์", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));          
             }
           
         }      
@@ -94,6 +93,22 @@ namespace EV.Customer.ViewModels
         {
             Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
         }
+
+
+        private bool _isProcess = false;
+        public bool IsProcess
+        {
+            get
+            {
+                return _isProcess;
+            }
+            set
+            {
+                _isProcess = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool isShowFingerButton;
 
         public bool IsShowFingerButton
@@ -108,16 +123,9 @@ namespace EV.Customer.ViewModels
         public bool IsShowLable
         {
             get { return isShowLable; }
-            set { isShowLable = value; OnPropertyChanged("IsShowLable"); }
+            set { isShowLable = value; OnPropertyChanged(); }
         }
 
-   
         public ICommand FingerprintClickCommand { get; set; }
-        public ICommand FingerprintAddClickCommand { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+        public ICommand FingerprintAddClickCommand { get; set; }    }
 }

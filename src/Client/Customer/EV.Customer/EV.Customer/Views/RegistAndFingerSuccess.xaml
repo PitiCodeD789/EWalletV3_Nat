@@ -11,61 +11,80 @@
         <bd:FingerprintPageViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
+      <Grid>
         <StackLayout Padding="20">
-            <StackLayout VerticalOptions="StartAndExpand"
-                         HorizontalOptions="CenterAndExpand"
-                         Margin="0,50,0,0">
-                <Image Source="icon_checked.png"
-                   WidthRequest="120"
-                   HeightRequest="120"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"/>
-                <Label Text="ลงทะเบียนสำเร็จแล้ว"
-                   FontSize="25"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   TextColor="Black"
-                   FontAttributes="Bold"/>
-            </StackLayout>
-            <Grid>
-                <Frame 
-                    BackgroundColor="White"
-                   HasShadow="True"
-                   CornerRadius="10"
-                   IsVisible="{Binding IsShowFingerButton}"
-                   HorizontalOptions="FillAndExpand"
-                   Padding="2"
-                   VerticalOptions="End">
-                    <Button
-                        Text="เพิ่ม Fingerprint"
-                        TextColor="#EAA200"
-                        FontSize="18"
-                        IsVisible="{Binding IsShowFingerButton}"
-                        Command="{Binding FingerprintAddClickCommand}"
-                        BackgroundColor="White"
-                        FontAttributes="Bold"/>
-                </Frame>
-                <Label  Margin="0,0,0,30"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="เพิ่ม FingerPrint เรียบร้อย"
-                        FontSize="18"
-                        TextColor="#EAA200"
-                        IsVisible="{Binding IsShowLable}"
-                        BackgroundColor="Transparent"
-                        FontAttributes="Bold"/>
-            </Grid>
-            <Frame BackgroundColor="#EAA200"
-                   HasShadow="True"
-                   CornerRadius="10"
-                   Padding="2"
-                   HorizontalOptions="FillAndExpand"
-                   VerticalOptions="End">
-                <Button Text="เสร็จสิ้น"
-                        TextColor="White"
-                        FontSize="18"
-                        Command="{Binding FingerprintClickCommand}"
-                        BackgroundColor="#EAA200"/>
+          <StackLayout VerticalOptions="StartAndExpand"
+                       HorizontalOptions="CenterAndExpand"
+                       Margin="0,50,0,0">
+            <Image Source="icon_checked.png"
+               WidthRequest="120"
+               HeightRequest="120"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+            <Label Text="ลงทะเบียนสำเร็จแล้ว"
+               FontSize="25"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="Black"
+               FontAttributes="Bold"/>
+          </StackLayout>
+          <Grid>
+            <Frame
+                BackgroundColor="White"
+               HasShadow="True"
+               CornerRadius="10"
+               IsVisible="{Binding IsShowFingerButton}"
+               HorizontalOptions="FillAndExpand"
+               Padding="2"
+               VerticalOptions="End">
+              <Button
+                  Text="เพิ่ม Fingerprint"
+                  TextColor="#EAA200"
+                  FontSize="18"
+                  IsVisible="{Binding IsShowFingerButton}"
+                  Command="{Binding FingerprintAddClickCommand}"
+                  BackgroundColor="White"
+                  FontAttributes="Bold"/>
             </Frame>
+            <Label  Margin="0,0,0,30"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="เพิ่ม FingerPrint เรียบร้อย"
+                    FontSize="18"
+                    TextColor="#EAA200"
+                    IsVisible="{Binding IsShowLable}"
+                    BackgroundColor="Transparent"
+                    FontAttributes="Bold"/>
+          </Grid>
+          <Frame BackgroundColor="#EAA200"
+                 HasShadow="True"
+                 CornerRadius="10"
+                 Padding="2"
+                 HorizontalOptions="FillAndExpand"
+                 VerticalOptions="End">
+            <Button Text="เสร็จสิ้น"
+                    TextColor="White"
+                    FontSize="18"
+                    Command="{Binding FingerprintClickCommand}"
+                    BackgroundColor="#EAA200"/>
+          </Frame>
+
         </StackLayout>
+        <ContentView IsVisible="{Binding IsProcess}"
+    HorizontalOptions="FillAndExpand"
+    VerticalOptions="FillAndExpand"
+    BackgroundColor="Black"
+    Opacity="0.5"
+                         >
+          <ActivityIndicator
+                         Color="Red"
+                         IsRunning="True"
+                         IsVisible="True"
+                             VerticalOptions="CenterAndExpand"
+                             HorizontalOptions="FillAndExpand"
+                               />
+        </ContentView>
+      </Grid>
+
     </ContentPage.Content>
+
 </ContentPage>

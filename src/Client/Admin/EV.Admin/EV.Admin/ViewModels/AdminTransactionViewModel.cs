@@ -23,7 +23,7 @@ namespace EV.Admin.ViewModels
             //Initial
             _transactionService = new TransactionServices();
             Email = App.Email;
-            FullName = App.FirstName + " " + App.LastName;
+            FullName = App.AdminName;
             AccountNumber = App.Account;
             LastestMonth = DateTime.Now;
             Transactionlist = new List<TransactionViewModel>();
@@ -62,13 +62,16 @@ namespace EV.Admin.ViewModels
         public async Task GetTransactions()
         {
             var result = await _transactionService.GetTransaction30Days(Email);
-            if (result.IsError != true)
+            if (result != null && result.IsError != true)
             {
-                Transactionlist = result.Model.Where(x => x.TransactionType == "TopUp").ToList();
-                LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
-                FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
-                SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
-                ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+                if (result.Model.Count != 0)
+                {
+                    Transactionlist = result.Model.Where(x => x.TransactionType == "TopUp").ToList();
+                    LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
+                    FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
+                    SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
+                    ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+                }
             }
             //If Error popup errorPopupPage
         }

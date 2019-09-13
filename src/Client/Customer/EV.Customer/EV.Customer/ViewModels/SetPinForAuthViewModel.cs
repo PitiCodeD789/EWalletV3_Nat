@@ -317,7 +317,7 @@ namespace EV.Customer.ViewModels
                         string birthDate = register.BirthDate.ToString("dd/MM/yyyy");
                         await SecureStorage.SetAsync("RefreshToken", registerData.Model.RefreshToken);
                         await SecureStorage.SetAsync("Token", registerData.Model.Token);
-                        await SecureStorage.SetAsync("AccountNumber", registerData.Model.Account);
+                        await SecureStorage.SetAsync("Account", registerData.Model.Account);
                         await SecureStorage.SetAsync("Email", register.Email);
                         await SecureStorage.SetAsync("FirstName", register.FirstName);
                         await SecureStorage.SetAsync("LastName", register.LastName);
