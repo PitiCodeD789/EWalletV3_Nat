@@ -8,5 +8,6 @@ namespace EWalletV2.Api.ViewModels.Auth
     {
         public bool IsExist { get; set; }
         public string RefNumber { get; set; }
+        public EW_Enumerations.EW_UserTypeEnum Role { get; set; }
     }
 }

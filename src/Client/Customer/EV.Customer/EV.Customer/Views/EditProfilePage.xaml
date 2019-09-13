@@ -40,7 +40,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="icon_left_black" Grid.Column="0" HeightRequest="30"  VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0">
                     <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BackButton}"/>
+                        <TapGestureRecognizer Command="{Binding BackToChildTab}"/>
                     </Image.GestureRecognizers>
                 </Image>
                 <Label Text="โปรไฟล์ " TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" VerticalOptions="Center" IsVisible="{Binding ShowEditButton}"/>

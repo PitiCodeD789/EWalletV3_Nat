@@ -271,7 +271,7 @@ namespace EV.Customer.ViewModels
                 }
                 if (countPin > 6)
                 {
-                    pin = pin.Substring(0, 6);
+                    pin = pin.Substring(0, 5);
                 }
             }
         }

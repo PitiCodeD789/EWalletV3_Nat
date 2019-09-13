@@ -30,6 +30,7 @@ namespace EV.Customer.ViewModels
             EditClickCommand = new Command(Edit);
             GendenRadioChangeCommand = new Command(GendenRadioChange);
             BackPageClickCommand = new Command(BackPageClick);
+            BackToChildTab = new Command(PushtoTab);
         }
 
         private void BackPageClick(object obj)
@@ -38,6 +39,11 @@ namespace EV.Customer.ViewModels
         }
 
         public ICommand BackPageClickCommand { get; set; }
+        public ICommand BackToChildTab { get; set; }
+        private void PushtoTab()
+        {
+            Application.Current.MainPage.Navigation.PushAsync(new UserTabbedPage(2));
+        }
         public ICommand EditClickCommand { get; set; }
         public ICommand GendenRadioChangeCommand { get; set; }
 
@@ -92,8 +98,7 @@ namespace EV.Customer.ViewModels
                         IsEditMode = false;
                         ShowEditButton = true;
                         await PopupNavigation.PushAsync(new SavedProfile());
-
-                        
+                        Application.Current.MainPage.Navigation.PushAsync(new EditProfilePage());
                     }
                 }
                 else

@@ -13,6 +13,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using EWalletV2.Api.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using EWalletV2.Api.ViewModels;
+using static EWalletV2.Api.ViewModels.EW_Enumerations;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -50,11 +52,20 @@ namespace EWalletV2.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
             }
 
+
+
             CheckEmailViewModel viewModel = new CheckEmailViewModel
             {
                 IsExist = isExist,
                 RefNumber = refNumer
             };
+
+            if (isExist)
+            {
+                var account = _userService.GetAccountDetailByEmail(email);
+                int roleNumber = Convert.ToInt32(account.AccountNumber.Remove(2));
+                viewModel.Role = (EW_UserTypeEnum)roleNumber;
+            }
 
             return Ok(viewModel);
         }
