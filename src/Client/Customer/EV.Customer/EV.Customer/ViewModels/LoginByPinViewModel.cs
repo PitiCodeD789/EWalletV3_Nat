@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -33,13 +34,23 @@ namespace EV.Customer.ViewModels
             backVisible = false;
             pin = "";
             countLogin = 0;
-            Fingerprint = new Command(LoginByFingerprint);
+            
             OrangeTextTab = new Command(GoToForgotPasswordPage);
             InputPin = new Command<string>(LoginByPin);
             
             try
             {
                 email = SecureStorage.GetAsync("Email").Result;
+                bool checkFingerPrint = Convert.ToBoolean(SecureStorage.GetAsync("IsFingerprintEnabled").Result);
+                if (checkFingerPrint)
+                {
+                    fingerTabVisible = true;
+                    Fingerprint = new Command(LoginByFingerprint);
+                }
+                else
+                {
+                    fingerTabVisible = false;
+                }
                 bool isExistEmail = Unities.CheckEmailFormat(email);
                 if (!isExistEmail)
                 {
@@ -58,15 +69,6 @@ namespace EV.Customer.ViewModels
             {
                 countLogin = 0;
             }
-            var available = CrossFingerprint.Current.IsAvailableAsync(true).Result;
-            if (available)
-            {
-                fingerTabVisible = true;
-            }
-            else
-            {
-                fingerTabVisible = false;
-            } 
         }
 
         private string title;
@@ -181,29 +183,66 @@ namespace EV.Customer.ViewModels
             {
                 try
                 {
-                    Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
+                    var refreshToken = await SecureStorage.GetAsync("RefreshToken"); ;
+                    var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
+                    if (tokenData != null || !tokenData.IsError)
+                    {
+                        if (tokenData.Model == null || tokenData.Model.Token == null)
+                        {
+                            ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, ForceLogout);
+                            await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
+                        }
+                        await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                        App.Account = await SecureStorage.GetAsync("Account");
+                        App.Email = await SecureStorage.GetAsync("Email");
+                        App.FirstName = await SecureStorage.GetAsync("FirstName");
+                        App.LastName = await SecureStorage.GetAsync("LastName");
+                        string preBirthDate = await SecureStorage.GetAsync("BirthDate");
+                        try
+                        {
+                            App.BirthDate = DateTime.Parse(preBirthDate);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                        App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
+                        int gender = 0;
+                        int.TryParse(await SecureStorage.GetAsync("Gender"), out gender);
+                        App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
+                        Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
+                    }
+                    else
+                    {
+                        pin = "";
+                        int countPin = pin.Length;
+                        HintColorChange(countPin);
+                        WarningText = "ไม่สามารถเชื่อมต่อได้";
+                        WarningVisible = true;
+                        try
+                        {
+                            Vibration.Vibrate();
+                            var duration = TimeSpan.FromSeconds(1);
+                            Vibration.Vibrate(duration);
+                        }
+                        catch (FeatureNotSupportedException ex)
+                        {
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    WarningText = "โปรดเข้าสู่ระบบโดยใช้ Pin";
-                    WarningVisible = true;
-                    try
-                    {
-                        Vibration.Vibrate();
-                        var duration = TimeSpan.FromSeconds(1);
-                        Vibration.Vibrate(duration);
-                    }
-                    catch (FeatureNotSupportedException e)
-                    {
-                    }
-                    catch (Exception e)
-                    {
-                    }
+                    ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
+                    await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                 }
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Wrong Fingerprint", "Ok");
+                ErrorViewModel errorViewModel = new ErrorViewModel("ลายนิ้วมือไม่ถูกต้อง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
             }
         }
 
@@ -259,7 +298,7 @@ namespace EV.Customer.ViewModels
                         {
                             try
                             {
-                                var refreshToken = await SecureStorage.GetAsync("RefreshToken");
+                                var refreshToken = await SecureStorage.GetAsync("RefreshToken"); ;
                                 var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
                                 if (tokenData != null || !tokenData.IsError)
                                 {
@@ -309,7 +348,7 @@ namespace EV.Customer.ViewModels
                                     }
                                 }
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 ErrorViewModel errorViewModel = new ErrorViewModel("โทรศัพท์ของท่านไม่สามารถใช้งานแอพพลิเคชั่นนี้ได้", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, CloseApp);
                                 await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
