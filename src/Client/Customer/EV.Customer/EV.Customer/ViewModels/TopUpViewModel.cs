@@ -27,7 +27,7 @@ namespace EV.Customer.ViewModels
             BackToHomeCommand = new Command(BackToHome);
             TopUpCommand = new Command(TopUp);
             FullName = App.FirstName + " " + App.LastName;
-
+            CustomerAccountNumber = App.Account;
             ToSlip = new Command(PushToTopupSlip);
 
 
