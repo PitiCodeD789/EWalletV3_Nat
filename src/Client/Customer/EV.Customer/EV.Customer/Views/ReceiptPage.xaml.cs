@@ -6,6 +6,7 @@ using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -58,6 +59,7 @@ namespace EV.Customer.Views
         {
             try
             {
+                receipt.CreateDate = receipt.CreateDate.ToLocalTime(); //= DateTime.SpecifyKind(receipt.CreateDate, DateTimeKind.Local);
                 ICreateReceipt photoLibrary = DependencyService.Get<ICreateReceipt>();
                 string filename = DateTime.Now.ToString("yyyyMMdd-hhmmss");
                 string extension = ".png";
@@ -172,7 +174,7 @@ namespace EV.Customer.Views
             canvas.DrawText(receipt.Amount.ToString("#,#.00#"),
                 bitmap.Width / 4 * 2, canvasHeight / scale * 10, amountBrush);
 
-            canvas.DrawText(receipt.CreateDate.ToString("dd MMM yyyy hh:mm:ss"),
+            canvas.DrawText(receipt.CreateDate.ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture),
                 bitmap.Width / 4 * 2, canvasHeight / scale * 11, dateBrush);
             canvas.DrawText("Ref. " + receipt.Reference,
                 bitmap.Width / 4 * 2, canvasHeight / scale * 12, dateBrush);

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -63,7 +64,16 @@ namespace EV.Customer.ViewModels
             {
                 Email = "";
             }
-            if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
+            if (!string.IsNullOrEmpty(MobileNumber))
+            {
+                MobileNumber = Regex.Replace(MobileNumber, @"[^\d]", "");
+            }
+            bool isValidatePhoneNumber = Unities.ValidateStringMobile(MobileNumber);
+            if (!isValidatePhoneNumber)
+            {
+                MobileNumber = "";
+            }
+            if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail && isValidatePhoneNumber)
             {
                 RegisterCommand register = new RegisterCommand
                 {
@@ -80,7 +90,8 @@ namespace EV.Customer.ViewModels
               
                 await Application.Current.MainPage.Navigation.PushAsync(new PinPage(authViewModel));
 
-            }else
+            }
+            else
             {
           
                 await PopupNavigation.PushAsync(new Error(new ErrorViewModel("กรอกข้อมูลไม่ถูกต้อง",(int)EW_Enumerations.EW_ErrorTypeEnum.Warning)));
