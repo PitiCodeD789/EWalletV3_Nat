@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class ProfilePageViewModel
+    public class ProfilePageViewModel : BaseViewModel
     {
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
@@ -22,6 +22,9 @@ namespace EV.Customer.ViewModels
             ViewProfileCommand = new Command(ViewProfile);
             SettingCommand = new Command(SettingAccount);
             LogoutCommand = new Command(Logout);
+            TelNumber = App.MobileNumber;
+            FullName = App.FirstName + " " + App.LastName;
+            Email = App.Email;
         }
         
 
