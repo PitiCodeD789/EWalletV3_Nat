@@ -13,7 +13,7 @@ namespace EV.Customer.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserTabbedPage : Xamarin.Forms.TabbedPage
     {
-        public UserTabbedPage()
+        public UserTabbedPage(int currentpage = 0)
         {
             InitializeComponent();
             On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
@@ -27,6 +27,10 @@ namespace EV.Customer.Views
             Children[1].IconImageSource = "history";
             Children[2].Title = "ข้อมูลส่วนตัว";
             Children[2].IconImageSource = "user";
+            if(currentpage == 2)
+            {
+                CurrentPage = Children[2];
+            }
         }
     }
 }

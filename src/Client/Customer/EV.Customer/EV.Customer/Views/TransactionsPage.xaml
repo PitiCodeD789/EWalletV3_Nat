@@ -41,8 +41,12 @@
                                                 <RowDefinition Height="auto"/>
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
-                                            <Label Text="{Binding TransactionType}" Grid.Row="0"/>
-                                            <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding TransactionType}" Grid.Row="0" Grid.Column="0"/>
+                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black" Grid.Column="0" LineBreakMode="TailTruncation">
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{Binding FirstName}"/>
@@ -51,8 +55,8 @@
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
-                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2" Grid.Column="0"/>
+                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
                                         </Grid>
                                     </Frame>
                             </DataTemplate>
@@ -72,8 +76,12 @@
                                                 <RowDefinition Height="auto"/>
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
-                                            <Label Text="{Binding TransactionType}" Grid.Row="0"/>
-                                            <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding TransactionType}" Grid.Row="0"/>
+                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black" Grid.Column="0" LineBreakMode="TailTruncation">
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{Binding FirstName}"/>
@@ -82,8 +90,8 @@
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
-                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2" Grid.Column="0"/>
+                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
                                         </Grid>
                                     </Frame>
                             </DataTemplate>
@@ -104,8 +112,12 @@
                                                 <RowDefinition Height="auto"/>
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
-                                        <Label Text="{Binding TransactionType}" Grid.Row="0"/>
-                                            <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding TransactionType}" Grid.Row="0" Grid.Column="0" />
+                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black" Grid.Column="0" LineBreakMode="TailTruncation" >
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                     <Span Text="{Binding FirstName}"/>
@@ -114,8 +126,8 @@
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
-                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2" Grid.Column="0"/>
+                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
                                         </Grid>
                                     </Frame>
                             </DataTemplate>

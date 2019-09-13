@@ -40,6 +40,9 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <EmbeddedResource Update="Views\ChangePasswordSuccess.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\EditProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
