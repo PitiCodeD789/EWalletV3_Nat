@@ -12,14 +12,14 @@ namespace EV.Merchant
         public static string FirstName { get; set; }
         public static string LastName { get; set; }
         public static string PhoneNumber { get; set; }
-        public static string Email { get; set; } = "pesor1985@gmail.com";
+        public static string Email { get; set; } 
         public static string StoreName { get; set; }
 
         public App()
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ChildHistoryTabPage());
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

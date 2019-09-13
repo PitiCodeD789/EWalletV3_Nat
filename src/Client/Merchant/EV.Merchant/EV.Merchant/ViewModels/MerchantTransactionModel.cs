@@ -208,7 +208,7 @@ namespace EV.Merchant.ViewModels
         public string FullName
         {
             get { return _fullName; }
-            set { _fullName = value; }
+            set { _fullName = App.StoreName; }
         }
 
         private string _accountNumber;

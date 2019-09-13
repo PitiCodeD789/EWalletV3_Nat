@@ -54,6 +54,7 @@ namespace EV.Admin.ViewModels
                 ReceiverImage = "AccountOrange";
                 ReceiverFullName = FullName;
                 ReceiverAccountNumber = AccountNumber;
+                TransactionReference = transaction.TransactionReference;
             }
             PopupNavigation.PushAsync(new Views.TransactionsOne(this));
         }
@@ -189,9 +190,17 @@ namespace EV.Admin.ViewModels
 
         public string TransactionName { get; set; }
         public decimal TransactionPaid { get; set; }
-        public string TransactionReference { get; set; }
+        private string transactionReference;
 
-        
+        public string TransactionReference
+        {
+            get { return transactionReference; }
+            set { transactionReference = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         private DateTime _createDate;
         public DateTime CreateDate
@@ -204,7 +213,9 @@ namespace EV.Admin.ViewModels
         public string FullName
         {
             get { return _fullName; }
-            set { _fullName = value; }
+            set { _fullName = App.AdminName;
+                OnPropertyChanged();
+            }
         }
 
         private string _accountNumber;
