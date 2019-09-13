@@ -76,7 +76,7 @@ namespace EV.Service.Services
                 else
                 {
                     client.Dispose();
-                    return null;
+                    resultService.IsError = true;
                 }
             }
             catch (Exception e)
@@ -148,7 +148,7 @@ namespace EV.Service.Services
                 else
                 {
                     client.Dispose();
-                    return null;
+                    resultService.IsError = true;
                 }
             }
             catch (Exception e)
