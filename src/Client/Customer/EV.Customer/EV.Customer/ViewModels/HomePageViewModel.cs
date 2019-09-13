@@ -7,6 +7,8 @@ using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.Transaction;
 using EWalletV2.Api.ViewModels.User;
 using Newtonsoft.Json;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -44,22 +46,36 @@ namespace EV.Customer.ViewModels
             //เปิดกล้อง อ่าน qrcode
             try
             {
-                var scanner = DependencyService.Get<IQrScanningService>();
-                var result = await scanner.ScanAsync();
-
-                if (result != null)
+                var cameraStatus = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
+                if (cameraStatus != PermissionStatus.Granted)
                 {
-                    GenerateTopupViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GenerateTopupViewModel>(result);
-                    if (CheckSum(QrCodeInfomation))
-                    {
-                        decimal Amount = QrCodeInfomation.Amount;
-                        string AdminName = QrCodeInfomation.FirstName + " " + QrCodeInfomation.LastName;
-                        string AccountNumber = QrCodeInfomation.AccountNumber;
-                        string qrcodeReference = QrCodeInfomation.ReferenceNumber;
-                        await PopupNavigation.PushAsync(new Views.ScanToTopupTwo(Amount, AdminName, AccountNumber, qrcodeReference));
-                    }
-                    //Wrong QRCode or QRCode expired
+                    cameraStatus = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
                 }
+
+                if (cameraStatus == PermissionStatus.Granted)
+                {
+                    var scanner = DependencyService.Get<IQrScanningService>();
+                    var result = await scanner.ScanAsync();
+
+                    if (result != null)
+                    {
+                        GenerateTopupViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GenerateTopupViewModel>(result);
+                        if (CheckSum(QrCodeInfomation))
+                        {
+                            decimal Amount = QrCodeInfomation.Amount;
+                            string AdminName = QrCodeInfomation.FirstName + " " + QrCodeInfomation.LastName;
+                            string AccountNumber = QrCodeInfomation.AccountNumber;
+                            string qrcodeReference = QrCodeInfomation.ReferenceNumber;
+                            await PopupNavigation.PushAsync(new Views.ScanToTopupTwo(Amount, AdminName, AccountNumber, qrcodeReference));
+                        }
+                        //Wrong QRCode or QRCode expired
+                    }
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sorry", "Can not use QR Scanner with out Camera Permission", "Ok");
+                }
+
             }
             catch (Exception ex)
             {
@@ -72,17 +88,31 @@ namespace EV.Customer.ViewModels
         {
             try
             {
-                var scanner = DependencyService.Get<IQrScanningService>();
-                var result = await scanner.ScanAsync();
-                if (result != null)
+                var cameraStatus = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
+                if (cameraStatus != PermissionStatus.Granted)
                 {
-                    GeneratePaymentViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GeneratePaymentViewModel>(result);
-                    if (CheckSum(QrCodeInfomation))
+                    cameraStatus = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
+                }
+
+                if (cameraStatus == PermissionStatus.Granted)
+                {
+
+                    var scanner = DependencyService.Get<IQrScanningService>();
+                    var result = await scanner.ScanAsync();
+                    if (result != null)
                     {
-                        string merchantName = QrCodeInfomation.FirstName;
-                        string merchantAccountNumber = QrCodeInfomation.AccountNumber;
-                        PopupNavigation.PushAsync(new Views.ScanToPayOne(merchantName, merchantAccountNumber));
+                        GeneratePaymentViewModel QrCodeInfomation = JsonConvert.DeserializeObject<GeneratePaymentViewModel>(result);
+                        if (CheckSum(QrCodeInfomation))
+                        {
+                            string merchantName = QrCodeInfomation.FirstName;
+                            string merchantAccountNumber = QrCodeInfomation.AccountNumber;
+                            PopupNavigation.PushAsync(new Views.ScanToPayOne(merchantName, merchantAccountNumber));
+                        }
                     }
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sorry", "Can not use QR Scanner with out Camera Permission", "Ok");
                 }
             }
             catch (Exception ex)

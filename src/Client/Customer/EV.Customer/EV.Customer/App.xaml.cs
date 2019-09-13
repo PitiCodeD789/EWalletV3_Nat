@@ -1,5 +1,7 @@
 ﻿using EV.Customer.ViewModels;
 using EV.Customer.Views;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -27,14 +29,19 @@ namespace EV.Customer
         {
             // Handle when your app starts
 
+
             var refreshToken = await SecureStorage.GetAsync("RefreshToken");
             if (refreshToken != null)
             {
                 MainPage = new NavigationPage(new PinPage(new LoginByPinViewModel()));
+                PermissionReq();
+
             }
             else
             {
                 MainPage = new NavigationPage(new LoginPage());
+                PermissionReq();
+
             }
         }
 
@@ -46,6 +53,35 @@ namespace EV.Customer
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+        private async void PermissionReq()
+        {
+            try
+            {
+                var cameraStatus = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
+                var storageStatus = await CrossPermissions.Current.CheckPermissionStatusAsync<StoragePermission>();
+
+                if (cameraStatus != PermissionStatus.Granted)
+                {
+                    cameraStatus = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
+                }
+                if (storageStatus != PermissionStatus.Granted)
+                {
+                    storageStatus = await CrossPermissions.Current.RequestPermissionAsync<StoragePermission>();
+                }
+
+                if (cameraStatus != PermissionStatus.Granted || storageStatus != PermissionStatus.Granted)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sorry", "Can not use EWallet Application with out Camera and Storage Permission", "Ok");
+                    Environment.Exit(0);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+               Environment.Exit(0);
+            }
         }
     }
 }
