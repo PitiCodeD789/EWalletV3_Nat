@@ -74,6 +74,7 @@ namespace EWalletV2.Domain.Services
                 transactionDetails = transactionEntities.Select(x => new TransactionDto()
                 {
                     TransactionId = x.Id,
+                    TransactionReference = x.TransactionReference,
                     Account = x.UserOtherEntity.Account,
                     TransactionType = x.TransactionType,
                     FirstName = x.UserOtherEntity.FirstName,

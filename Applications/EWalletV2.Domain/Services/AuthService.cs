@@ -138,7 +138,7 @@ namespace EWalletV2.Domain.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception Send Email =" + ex.ToString());
+                Console.WriteLine("Exception Sending Email =" + ex.ToString());
             }
 
         }
