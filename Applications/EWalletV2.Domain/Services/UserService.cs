@@ -50,7 +50,8 @@ namespace EWalletV2.Domain.Services
             AccountViewModel accountDetail = new AccountViewModel()
             {
                 AccountName = userData.FirstName + " " + userData.LastName,
-                Balance = userData.Balance
+                Balance = userData.Balance,
+                AccountNumber = userData.Account
             };
             return accountDetail;
         }
