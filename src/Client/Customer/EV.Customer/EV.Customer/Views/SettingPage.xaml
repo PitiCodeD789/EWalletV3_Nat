@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EV.Customer.Views.SettingPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HeightRequest="60" VerticalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="icon_left_black" Grid.Column="0" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BackButton}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label Text="ตั้งค่า" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" VerticalOptions="Center"/>
+            </Grid>
+            <Frame BackgroundColor="White" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="0" CornerRadius="0" Grid.Row="1">
+                <Grid HorizontalOptions="FillAndExpand" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid HorizontalOptions="FillAndExpand" Padding="20,0" Grid.Row="0" HeightRequest="50">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NarvigateToChangePasswordPageCommand}" CommandParameter="ChangePassword"/>
+                        </Grid.GestureRecognizers>
+                        <Label Text="เปลี่ยนรหัสผ่าน " TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Image Source="icon_left_black" Rotation="180" HeightRequest="30" HorizontalOptions="End"/>
+                    </Grid>
+                    <BoxView BackgroundColor="#F2F2F2" HeightRequest="1" HorizontalOptions="FillAndExpand" Grid.Row="1"/>
+                    <Grid HorizontalOptions="FillAndExpand" Padding="20,0" Grid.Row="2" HeightRequest="50">
+                        <Label Text="เปิดใช้ Fingerprint" TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Switch IsToggled="{Binding IsSwitchedToggled}">
+                        </Switch>
+                    </Grid>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

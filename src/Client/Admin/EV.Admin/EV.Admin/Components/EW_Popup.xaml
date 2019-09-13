@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EV.Admin.Components.EW_Popup">
+  <ContentView.Content>
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Frame BackgroundColor="White"
+                   CornerRadius="10"
+                   VerticalOptions="Center"                   
+                   HorizontalOptions="FillAndExpand"
+                   Margin="20,0"
+                   HeightRequest="250">
+                <StackLayout>
+                    <Image Source="Correct" HorizontalOptions="CenterAndExpand" Margin="0,30"/>
+                    <Label Text="{Binding TextSuccess}" x:Name="SuccessText" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="20"/>
+                    <Button BackgroundColor="#EAA200" TextColor="White" Text="ตกลง" HorizontalOptions="FillAndExpand"
+                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

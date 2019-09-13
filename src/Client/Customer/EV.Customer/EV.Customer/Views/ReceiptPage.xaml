@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:custom="clr-namespace:EV.Customer.Components"
+             xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="EV.Customer.Views.ReceiptPage">
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <forms:SKCanvasView x:Name="sKCanvasView" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Grid.Row="0"/>
+            <custom:EW_ButtonView TextButton="กลับสู่หน้าหลัก" TextColor="#EAA200" BackgroundButton="White" Grid.Row="1" Command="{Binding PopToRootCommand}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

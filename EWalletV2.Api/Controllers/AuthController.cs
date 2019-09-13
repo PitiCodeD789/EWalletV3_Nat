@@ -6,6 +6,13 @@ using EWalletV2.Api.ViewModels.Auth;
 using EWalletV2.Domain.Interfaces;
 using EWalletV2.Domain.DtoModels.Auth;
 using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using EWalletV2.Api.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EWalletV2.Api.Controllers
 {
@@ -16,30 +23,32 @@ namespace EWalletV2.Api.Controllers
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
+
 
         public AuthController(IAuthService authService,
                               IUserService userService,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IConfiguration configuration
+                              )
         {
             _authService = authService;
             _userService = userService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         //CheckEmail
+        [AllowAnonymous]
         [HttpGet("CheckEmail/{email}")]
         public IActionResult CheckEmail([EmailAddress]string email)
         {
             bool isExist = _userService.ExistingEmail(email);
-
             string refNumer = _authService.SaveOtp(email);
             if (string.IsNullOrEmpty(refNumer))
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
             }
-
-            //TODO: Con not send otp without otp, maybe move to service
-            Task.Run(() => SendOtp(email));
 
             CheckEmailViewModel viewModel = new CheckEmailViewModel
             {
@@ -50,13 +59,8 @@ namespace EWalletV2.Api.Controllers
             return Ok(viewModel);
         }
 
-        private void SendOtp(string email)
-        {
-            //TODO: send otp via email
-            //throw new NotImplementedException();
-        }
-
         //CheckOtp
+        [AllowAnonymous]
         [HttpPost("CheckOtp")]
         public IActionResult CheckOtp([FromBody]CheckOtpCommand command)
         {
@@ -75,6 +79,7 @@ namespace EWalletV2.Api.Controllers
         }
 
         //Register
+        [AllowAnonymous]
         [HttpPost("Register")]
         public IActionResult Register([FromBody]RegisterCommand command)
         {
@@ -90,10 +95,12 @@ namespace EWalletV2.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Error" });
             }
 
+            GetToken getToken = new GetToken(_configuration);
+
             RegisterViewModel viewModel = new RegisterViewModel
             {
                 RefreshToken = _authService.GetRefreshToken(email),
-                Token = GetToken(),
+                Token = getToken.Token,
                 Account = accountNumber
             };
 
@@ -101,12 +108,34 @@ namespace EWalletV2.Api.Controllers
 
         }
 
-        private string GetToken()
+        //GetTokenByRefreshToken
+        [AllowAnonymous]
+        [HttpPost("GetTokenByRefreshToken")]
+        public IActionResult GetTokenByRefreshToken([FromBody] GetTokenByRefreshTokenCommand command)
         {
-            return "";
+            string refeshToken = command.RefreshToken;
+            string email = command.Email?.ToLower();
+
+            bool isCorrectRefreshToken = _authService.CheckRefreshToken(email, refeshToken);
+
+            if (isCorrectRefreshToken)
+            {
+                GetToken getToken = new GetToken(_configuration);
+                var token = getToken.Token;
+
+                GetTokenByRefreshTokenViewModel viewModel = new GetTokenByRefreshTokenViewModel()
+                {
+                    Token = token
+                };
+
+                return Ok(viewModel);
+            }
+            
+            return BadRequest();
         }
 
         //Login
+        [AllowAnonymous]
         [HttpPost("Login")]
         public IActionResult LoginWithUsernameAndPassword([FromBody] LoginUserAndPassCommand command)
         {
@@ -116,11 +145,11 @@ namespace EWalletV2.Api.Controllers
             LoginUserAndPassDto loginUserAndPassDto = _authService.LoginWithUsernameAndPassword(username, password);
 
             if (loginUserAndPassDto == null)
-                return NotFound();
-
+                return BadRequest();
+            GetToken getToken = new GetToken(_configuration);
             LoginUserAndPassViewModel model = _mapper.Map<LoginUserAndPassViewModel>(loginUserAndPassDto);
 
-            model.Token = GetToken();
+            model.Token = getToken.Token;
             model.RefreshToken = _authService.GetRefreshToken(username);
 
             return Ok(model);
@@ -140,5 +169,33 @@ namespace EWalletV2.Api.Controllers
             return NoContent();
         }
 
+
+        //Login
+        [AllowAnonymous]
+        [HttpPost("LoginByCustomer")]
+        public IActionResult LoginByCustomer([FromBody]LoginByCustomerCommand command)
+        {
+
+            string email = command.Email;
+            string pin = command.Pin;
+
+            bool changePinResult= _authService.ChangePin(email, pin);
+            if (!changePinResult)
+            {
+                return null;
+            }
+
+            LoginByCustomerDto loginByCustomerDto = _authService.LoginByCustomer(email, pin);
+
+            if (loginByCustomerDto == null)
+                return NotFound();
+            GetToken getToken = new GetToken(_configuration);
+            LoginByCustomerViewModel model = _mapper.Map<LoginByCustomerViewModel>(loginByCustomerDto);
+
+            model.Token = getToken.Token;
+            model.RefreshToken = _authService.GetRefreshToken(email);
+
+            return Ok(model);
+        }
     }
 }

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="TransactionsPageView"
+                 xmlns:bindingViewModel="clr-namespace:EV.Merchant.ViewModels"
+             x:Class="EV.Merchant.Views.ChildHistoryTabPage">
+
+    <ContentPage.Content>
+        <Grid RowSpacing="0" BackgroundColor="#E2E2E2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" HeightRequest="150" Padding="0" CornerRadius="0">
+                <Grid >
+                    <Image Source="splash" Aspect="AspectFill" Grid.Column="0" Grid.Row="0"/>
+                </Grid>
+            </Frame>
+
+            <ScrollView Grid.Row="1" >
+                <StackLayout VerticalOptions="FillAndExpand" Margin="0" Spacing="0" Padding="10,0">
+                    <Label Text="{Binding LastestMonth,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding FirstMonth}"/>
+                    <StackLayout BindableLayout.ItemsSource="{Binding FirstTransactionList}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="5" VerticalOptions="Center" Margin="10,5" CornerRadius="5">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding BindingContext.ViewTransactionDetailCommand, Source={x:Reference TransactionsPageView}}" 
+                                                                   CommandParameter="{Binding TransactionId}"/>
+                                    </Frame.GestureRecognizers>
+                                    <Grid RowSpacing="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding TransactionType}" Grid.Row="0"/>
+                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding FirstName}"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="{Binding LastName}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
+                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <Label Text="{Binding Month2,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding SecondMonth}"/>
+                    <StackLayout BindableLayout.ItemsSource="{Binding SecondTransactionList}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="5" VerticalOptions="Center" Margin="10,5" CornerRadius="5">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding BindingContext.ViewTransactionDetailCommand, Source={x:Reference TransactionsPageView}}" CommandParameter="{Binding TransactionId}"/>
+                                    </Frame.GestureRecognizers>
+                                    <Grid RowSpacing="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding TransactionType}" Grid.Row="0"/>
+                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding FirstName}"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="{Binding LastName}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
+                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <Label Text="{Binding Month3,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding ThirdMonth}"/>
+                    <StackLayout BindableLayout.ItemsSource="{Binding ThridTransactionList}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="5" VerticalOptions="Center" Margin="10,5" CornerRadius="5">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding BindingContext.ViewTransactionDetailCommand, Source={x:Reference TransactionsPageView}}" CommandParameter="{Binding TransactionId}"/>
+                                    </Frame.GestureRecognizers>
+                                    <Grid RowSpacing="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding TransactionType}" Grid.Row="0"/>
+                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding FirstName}"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="{Binding LastName}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
+                                        <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <!--<ImageButton HorizontalOptions="End" VerticalOptions="End" Source="icon_refresh" HeightRequest="40" Margin="15" BackgroundColor="Transparent" Grid.Row="1" Command="{Binding RefreshCommand}"/>-->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
