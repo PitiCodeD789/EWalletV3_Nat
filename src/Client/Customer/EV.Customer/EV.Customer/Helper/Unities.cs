@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace EV.Customer.Helper
 {
@@ -82,7 +84,7 @@ namespace EV.Customer.Helper
                 return false;
             }
             string strRegex =
-                    @"^[a-zA-Z0-9ก-๋]{1,50}";
+                    @"^[a-zA-Zก-๋]{1,50}$";
             Regex re = new Regex(strRegex);
             if (re.IsMatch(name))
             {
@@ -102,21 +104,33 @@ namespace EV.Customer.Helper
             {
                 return false;
             }
-            if (date.Length < 1)
+            if (date.Length < 1 && date.Length > 10)
             {
                 return false;
             }
-            string strRegex =
-                    @"^([0-9]{2}).([0-9]{2}).([0-9]{4})$";
-            Regex re = new Regex(strRegex);
-            if (re.IsMatch(date))
+
+            try
             {
-                return true;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                DateTime BirthDate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
+
+                DateTime nowDate = DateTime.UtcNow;
+                if(nowDate > BirthDate.AddYears(15))
+                {
+                    return true;
+                }else
+                {
+                    return false;
+                }
+                
+               
             }
-            else
+            catch
             {
                 return false;
             }
+           
+            
 
         }
 

@@ -44,7 +44,7 @@ namespace EWalletV2.Api.Controllers
         public IActionResult CheckEmail([EmailAddress]string email)
         {
             bool isExist = _userService.ExistingEmail(email);
-            string refNumer = _authService.SaveOtp(email);
+            string refNumer = _authService.SaveOtp(email.ToLower());
             if (string.IsNullOrEmpty(refNumer))
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
@@ -83,7 +83,8 @@ namespace EWalletV2.Api.Controllers
         [HttpPost("Register")]
         public IActionResult Register([FromBody]RegisterCommand command)
         {
-            string email = command.Email;
+            string email = command.Email.ToLower();
+            command.Email = command.Email.ToLower();
 
             RegisterDtoCommand registerDtoCommand = _mapper.Map<RegisterDtoCommand>(command);
 
