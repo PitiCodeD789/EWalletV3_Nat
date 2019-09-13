@@ -31,16 +31,17 @@ namespace EV.Customer.ViewModels
             await Application.Current.MainPage.Navigation.PushAsync(new Views.EditProfilePage());
         }
         public ICommand SettingCommand { get; set; }
-        public void SettingAccount()
+        public async void SettingAccount()
         {
-            //ไปหน้าตั้งค่า
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.SettingPage());
         }
         public ICommand LogoutCommand { get; set; }
-        public void Logout()
+        public async void Logout()
         {
-            _authService.Logout(Email);
+            await _authService.Logout(Email);
             //กลับไปหน้าแรก
-           // Application.Current.MainPage = new MainPage();
+            Application.Current.MainPage = new NavigationPage( new Views.LoginPage());
+
         }
 
         private string _email;

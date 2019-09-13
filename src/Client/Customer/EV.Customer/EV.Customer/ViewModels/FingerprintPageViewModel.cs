@@ -49,7 +49,7 @@ namespace EV.Customer.ViewModels
                 {
                     try
                     {
-                        await SecureStorage.SetAsync("Active_FingerPrint", "True");
+                        await SecureStorage.SetAsync("IsFingerprintEnabled", "true");
                         IsShowFingerButton = false;
                         IsShowLable = true;
                         OnPropertyChanged("IsShowFingerButton");
