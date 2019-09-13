@@ -52,7 +52,7 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy HH:mm:ss}'}" Grid.Row="2"/>
                                         <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
                                     </Grid>
                                 </Frame>
@@ -87,7 +87,7 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy HH:mm:ss}'}" Grid.Row="2"/>
                                         <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
                                     </Grid>
                                 </Frame>
@@ -123,7 +123,7 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" Grid.Row="2"/>
+                                        <Label Text="{Binding CreateDateTime,StringFormat='{0:dd MMM yyyy HH:mm:ss}'}" Grid.Row="2"/>
                                         <Label Text="{Binding Balance,StringFormat='{0:n}'}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
                                     </Grid>
                                 </Frame>

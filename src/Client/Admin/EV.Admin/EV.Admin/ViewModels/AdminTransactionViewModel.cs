@@ -46,7 +46,7 @@ namespace EV.Admin.ViewModels
             TransactionName = transaction.TransactionType;
             TransactionPaid = transaction.Balance;
             TransactionReference = transaction.TransactionReference;
-            CreateDate = transaction.CreateDateTime;
+            CreateDate = transaction.CreateDateTime.ToLocalTime();
             if (transaction.TransactionType == "TopUp")
             {
                 //TopUp

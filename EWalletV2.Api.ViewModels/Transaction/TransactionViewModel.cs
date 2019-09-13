@@ -13,6 +13,17 @@ namespace EWalletV2.Api.ViewModels.Transaction
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal Balance { get; set; }
-        public DateTime CreateDateTime { get; set; }
+        //  public DateTime CreateDateTime { get; set; }
+        private DateTime _createDateTime;
+
+        public DateTime CreateDateTime
+        {
+            get { return _createDateTime; }
+            set {
+
+                _createDateTime = value.ToLocalTime();
+            }
+        }
+
     }
 }

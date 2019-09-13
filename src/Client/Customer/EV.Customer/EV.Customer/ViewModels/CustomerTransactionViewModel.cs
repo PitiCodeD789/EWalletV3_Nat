@@ -34,7 +34,7 @@ namespace EV.Customer.ViewModels
             AccountNumber = App.Account;
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
-            LastestMonth = DateTime.Now;
+            LastestMonth = DateTime.Now.ToLocalTime();
             Transactionlist = new List<TransactionViewModel>();
             FirstTransactionList = new List<TransactionViewModel>();
             SecondTransactionList = new List<TransactionViewModel>();
@@ -130,6 +130,7 @@ namespace EV.Customer.ViewModels
 
         public async Task GetTransactions()
         {
+           
             ResultServiceModel<List<TransactionViewModel>> result = await _transactionService.GetTransaction30Days(Email);
 
             if (result != null && result.IsError != true)
