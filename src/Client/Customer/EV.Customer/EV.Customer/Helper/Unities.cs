@@ -15,7 +15,11 @@ namespace EV.Customer.Helper
             try
             {
                 MailAddress m = new MailAddress(email);
-                return true;
+                if (Regex.IsMatch(email, "^[\\w\\.@]{0,64}$"))
+                {
+                    return true;
+                }
+                return false;
             }
             catch (FormatException)
             {
@@ -82,7 +86,7 @@ namespace EV.Customer.Helper
                 return false;
             }
             string strRegex =
-                    @"^[a-zA-Z0-9ก-๋]{1,50}";
+                    @"^[a-zA-Zก-๋]{1,50}$";
             Regex re = new Regex(strRegex);
             if (re.IsMatch(name))
             {
