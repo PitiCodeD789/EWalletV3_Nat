@@ -1,4 +1,5 @@
-﻿using EV.Service.Interfaces;
+﻿using EV.Customer.Helper;
+using EV.Service.Interfaces;
 using EV.Service.Models;
 using EV.Service.Services;
 using EWalletV2.Api.ViewModels;
@@ -59,6 +60,49 @@ namespace EV.Customer.ViewModels
             // รอข้อมูลชื่อนามสกุล จากพี่เสริท
             // AccountNumber , FullName 
         }
+
+        private string showLastMonth;
+        public string ShowLastMonth
+        {
+            get
+            {
+                return showLastMonth;
+            }
+            set
+            {
+                showLastMonth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string showLastTwoMonth;
+        public string ShowLastTwoMonth
+        {
+            get
+            {
+                return showLastTwoMonth;
+            }
+            set
+            {
+                showLastTwoMonth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string showLastThreeMonth;
+        public string ShowLastThreeMonth
+        {
+            get
+            {
+                return showLastThreeMonth;
+            }
+            set
+            {
+                showLastThreeMonth = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private DateTime lastMonth;
 
@@ -138,6 +182,9 @@ namespace EV.Customer.ViewModels
                     FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
                     SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
                     ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+                    ShowLastMonth = ((Status.Month)LastestMonth.Month).ToString() + " " + LastestMonth.ToString("yyyy");
+                    ShowLastTwoMonth = ((Status.Month)Month2.Month).ToString() + " " + Month2.ToString("yyyy");
+                    ShowLastThreeMonth = ((Status.Month)Month3.Month).ToString() + " " + Month3.ToString("yyyy");
                 }
             }
             //If Error popup errorPopupPage
