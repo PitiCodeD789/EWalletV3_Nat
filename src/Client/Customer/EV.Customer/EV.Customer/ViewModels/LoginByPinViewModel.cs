@@ -33,7 +33,6 @@ namespace EV.Customer.ViewModels
             warningVisible = false;
             backVisible = false;
             pin = "";
-            countLogin = 0;
             
             OrangeTextTab = new Command(GoToForgotPasswordPage);
             InputPin = new Command<string>(LoginByPin);
@@ -61,14 +60,7 @@ namespace EV.Customer.ViewModels
             {
                 ForceLogout();
             }
-            try
-            {
-                countLogin =  Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
-            }
-            catch(Exception e)
-            {
-                countLogin = 0;
-            }
+            countLogin = Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
         }
 
         private string title;
@@ -299,6 +291,7 @@ namespace EV.Customer.ViewModels
                         {
                             try
                             {
+                                await SecureStorage.SetAsync("CountLogin", "0");
                                 var refreshToken = await SecureStorage.GetAsync("RefreshToken"); ;
                                 var tokenData = await _authService.GetTokenByRefreshToken(email, refreshToken);
                                 if (tokenData != null || !tokenData.IsError)
@@ -376,7 +369,7 @@ namespace EV.Customer.ViewModels
                             }
                             countLogin++;
                             await SecureStorage.SetAsync("CountLogin", countLogin.ToString());
-                            if(countLogin >= 5)
+                            if (countLogin >= 5)
                             {
                                 ForceLogout();
                             }

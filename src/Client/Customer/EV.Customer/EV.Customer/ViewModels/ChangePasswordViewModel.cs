@@ -37,6 +37,7 @@ namespace EV.Customer.ViewModels
             newPin = "";
             repeatNewPin = "";
             email = App.Email;
+            countLogin = Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
             bool isExistEmail = Unities.CheckEmailFormat(email);
             if (!isExistEmail)
             {
@@ -173,6 +174,8 @@ namespace EV.Customer.ViewModels
 
         private string repeatNewPin;
 
+        private int countLogin;
+
         public ICommand OrangeTextTab { get; set; }
         public async void GoToForgotPasswordPage()
         {
@@ -255,7 +258,62 @@ namespace EV.Customer.ViewModels
                     }
                     else
                     {
-                        ChangeDataNewPin(); 
+                        var loginPinData = await _pinService.LoginByPin(pin, email);
+
+                        if (loginPinData != null && !loginPinData.IsError && loginPinData.Model != null)
+                        {
+                            if (loginPinData.Model.IsLogin)
+                            {
+                                await SecureStorage.SetAsync("CountLogin", "0");
+                                ChangeDataNewPin();
+                            }
+                            else
+                            {
+                                pin = "";
+                                countPin = pin.Length;
+                                HintColorChange(countPin);
+                                WarningText = "รหัสผ่านไม่ถูกต้อง";
+                                WarningVisible = true;
+                                try
+                                {
+                                    Vibration.Vibrate();
+                                    var duration = TimeSpan.FromSeconds(1);
+                                    Vibration.Vibrate(duration);
+                                }
+                                catch (FeatureNotSupportedException ex)
+                                {
+                                }
+                                catch (Exception ex)
+                                {
+                                }
+                                countLogin++;
+                                await SecureStorage.SetAsync("CountLogin", countLogin.ToString());
+                                if (countLogin >= 5)
+                                {
+                                    ForceLogout();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            pin = "";
+                            countPin = pin.Length;
+                            HintColorChange(countPin);
+                            WarningText = "ไม่สามารถเชื่อมต่อได้";
+                            WarningVisible = true;
+                            try
+                            {
+                                Vibration.Vibrate();
+                                var duration = TimeSpan.FromSeconds(1);
+                                Vibration.Vibrate(duration);
+                            }
+                            catch (FeatureNotSupportedException ex)
+                            {
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+                        }
                     }
                 }
             }
