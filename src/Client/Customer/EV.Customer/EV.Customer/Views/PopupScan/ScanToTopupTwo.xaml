@@ -48,8 +48,8 @@
                             <Image Source="Wallet" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                         </Frame>
-                        <Label Text="{Binding FullName}" HorizontalTextAlignment="Center" TextColor="Black" LineBreakMode="TailTruncation"/>
-                        <Label Text="{Binding CustomerAccountNumber}" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding AdminName}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding AdminAccountNumber}" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                     <Image Source="Next" Grid.Column="1" Margin="0,-50,0,0"/>
                     <StackLayout Grid.Column="2">
@@ -58,8 +58,8 @@
                             <Image Source="AccountOrange" Aspect="AspectFit" VerticalOptions="Center"
                            HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                         </Frame>
-                        <Label Text="{Binding AdminName}" HorizontalTextAlignment="Center" TextColor="Black" LineBreakMode="TailTruncation"/>
-                        <Label Text="{Binding AdminAccountNumber}" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding FullName}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding CustomerAccountNumber}" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </Grid>
                 <Grid VerticalOptions="EndAndExpand">
