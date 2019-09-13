@@ -52,7 +52,7 @@
                     <BoxView BackgroundColor="LightSlateGray" HeightRequest="1" HorizontalOptions="FillAndExpand" Grid.Row="3"/>
                     <Grid HorizontalOptions="FillAndExpand" Padding="20,0" Grid.Row="4" HeightRequest="50">
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SignOutCommand}"/>
+                            <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
                         </Grid.GestureRecognizers>
                         <Label Text="ออกจากระบบ " TextColor="Black" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
                     </Grid>
