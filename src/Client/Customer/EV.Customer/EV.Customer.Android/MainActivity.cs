@@ -9,6 +9,7 @@ using Android.OS;
 using Plugin.Fingerprint;
 using Plugin.CurrentActivity;
 using EV.Customer.Droid.CustomRender;
+using Plugin.Permissions;
 
 namespace EV.Customer.Droid
 {
@@ -21,6 +22,7 @@ namespace EV.Customer.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             ZXing.Mobile.MobileBarcodeScanner.Initialize(Application);
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
@@ -36,7 +38,10 @@ namespace EV.Customer.Droid
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
         }
 
         public override void OnBackPressed()
