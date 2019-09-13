@@ -62,27 +62,14 @@ namespace EV.Merchant.ViewModels
             }
             PopupNavigation.PushAsync(new Views.TransactionsOne(this));
         }
-        private void MockData()
-        {
-            Transactionlist = new List<TransactionViewModel>()
-            {
-                new TransactionViewModel(){ TransactionId = 2 , TransactionType = "Payment", TransactionReference = "Payment", FirstName = "test2", LastName = "test2", Account = "Acc222", CreateDateTime = DateTime.MaxValue.AddMonths(-1), Balance = 4444444},
-                new TransactionViewModel(){ TransactionId = 3 , TransactionType = "Payment", FirstName = "test3", LastName = "test3", Account = "Acc333", CreateDateTime = DateTime.MaxValue.AddMonths(-2), Balance = 66666},
-            };
-
-            LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
-            FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
-            SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
-            ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
-        }
 
         public async Task GetTransactions()
         {
-            var result = await _transactionService.GetTransaction30Days("nomustang11@gmail.com");
+            var result = await _transactionService.GetTransaction30Days(Email);
             var a = result.Model;
             if (result.IsError != true)
             {
-                Transactionlist = result.Model;
+                Transactionlist = result.Model.Where(x => x.TransactionType == "Payment").ToList();
                 LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
                 FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
                 SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
@@ -151,16 +138,17 @@ namespace EV.Merchant.ViewModels
                 OnPropertyChanged();
             }
         }
+        private DateTime lastMonth;
 
-        private DateTime _lastestMonth;
         public DateTime LastestMonth
-
         {
-            get { return _lastestMonth; }
+            get { return lastMonth; }
             set
             {
-                _lastestMonth = value;
+                lastMonth = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Month2));
+                OnPropertyChanged(nameof(Month3));
             }
         }
         public DateTime Month2
@@ -170,7 +158,7 @@ namespace EV.Merchant.ViewModels
         }
         public DateTime Month3
         {
-            get { return Month2.AddMonths(-1); }
+            get { return LastestMonth.AddMonths(-2); }
             set { Month3 = value; }
         }
 

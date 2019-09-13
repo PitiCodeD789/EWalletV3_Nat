@@ -23,6 +23,8 @@ namespace EV.Admin.ViewModels
             //Initial
             _transactionService = new TransactionServices();
             Email = App.Email;
+            FullName = App.FirstName + " " + App.LastName;
+            AccountNumber = App.Account;
             LastestMonth = DateTime.Now;
             Transactionlist = new List<TransactionViewModel>();
             FirstTransactionList = new List<TransactionViewModel>();
@@ -61,7 +63,7 @@ namespace EV.Admin.ViewModels
             var result = await _transactionService.GetTransaction30Days(Email);
             if (result.IsError != true)
             {
-                Transactionlist = result.Model;
+                Transactionlist = result.Model.Where(x => x.TransactionType == "TopUp").ToList();
                 LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
                 FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
                 SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
@@ -119,15 +121,17 @@ namespace EV.Admin.ViewModels
             }
         }
 
-        private DateTime _lastestMonth;
-        public DateTime LastestMonth
+        private DateTime lastMonth;
 
+        public DateTime LastestMonth
         {
-            get { return _lastestMonth; }
+            get { return lastMonth; }
             set
             {
-                _lastestMonth = value;
+                lastMonth = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Month2));
+                OnPropertyChanged(nameof(Month3));
             }
         }
         public DateTime Month2
@@ -137,7 +141,7 @@ namespace EV.Admin.ViewModels
         }
         public DateTime Month3
         {
-            get { return Month2.AddMonths(-1); }
+            get { return LastestMonth.AddMonths(-2); }
             set { Month3 = value; }
         }
 
