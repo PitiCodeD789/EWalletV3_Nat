@@ -15,7 +15,11 @@ namespace EV.Customer.Helper
             try
             {
                 MailAddress m = new MailAddress(email);
-                return true;
+                if (Regex.IsMatch(email, "^[\\w\\.@]{0,64}$"))
+                {
+                    return true;
+                }
+                return false;
             }
             catch (FormatException)
             {
