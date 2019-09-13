@@ -50,7 +50,7 @@ namespace EV.Customer.ViewModels
 
         public async Task GetTotalBalance()
         {
-            ResultServiceModel<AccountViewModel> account = await _userServices.GetBalance("pesor1985@gmail.com");
+            ResultServiceModel<AccountViewModel> account = await _userServices.GetBalance(Email);
             if (account != null)
             {
                 CustomerBalance = account.Model.Balance;
