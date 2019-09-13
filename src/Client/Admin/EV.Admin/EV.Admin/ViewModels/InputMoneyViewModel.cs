@@ -60,6 +60,15 @@ namespace EV.Admin.ViewModels
         private async void GenerateQrcode()
         {
             IsProgress = true;
+            if (Amount < 1)
+            {
+                ErrorViewModel errorView = new ErrorViewModel("จำนวนเงินไม่สามารถติดลบ หรือ เท่ากับ 0 ได้", (int)EWalletV2.Api.ViewModels.EW_Enumerations.EW_ErrorTypeEnum.Warning);
+                await PopupNavigation.Instance.PushAsync(new Error(errorView));
+                IsProgress = false;
+            }
+            else
+            {
+
             var accountNumber = App.Account;
             var callData = await _transactionService.GenerateTopup(accountNumber, Amount);
             var refNumber = callData.Model.ReferenceNumber;
@@ -85,6 +94,7 @@ namespace EV.Admin.ViewModels
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new QRcodePage(resultData));
                 IsProgress = false;
+            }
             }
         }
 
