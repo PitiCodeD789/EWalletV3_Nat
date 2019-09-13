@@ -58,9 +58,19 @@ namespace EV.Customer.ViewModels
             }
             catch(Exception e)
             {
+                Console.WriteLine("Get Email And Fingerprint in LoginViewModel : {0}",e);
                 ForceLogout();
             }
-            countLogin = Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
+            try
+            {
+                countLogin = Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
+            }
+            catch (Exception e)
+            {
+                countLogin = 0;
+                Console.WriteLine("countLogin in LoginViewModel : {0}", e);
+            }
+
         }
 
         private string title;
@@ -249,6 +259,8 @@ namespace EV.Customer.ViewModels
         public ICommand InputPin { get; set; }
         public async void LoginByPin(string value)
         {
+            WarningText = "";
+            WarningVisible = false;
             if (value == "Delete")
             {
                 if (pin.Length > 0)
@@ -395,6 +407,11 @@ namespace EV.Customer.ViewModels
                         {
                         }
                     }
+                }
+                if (countPin > 6)
+                {
+                    pin = pin.Substring(0, 5);
+                    HintColorChange(pin.Length);
                 }
             }
         }

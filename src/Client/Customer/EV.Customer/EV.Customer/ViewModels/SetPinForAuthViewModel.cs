@@ -187,6 +187,8 @@ namespace EV.Customer.ViewModels
         public ICommand InputPin { get; set; }
         public async void InputPinMethod(string value)
         {
+            WarningText = "";
+            WarningVisible = false;
             if (value == "Delete")
             {
                 if (pin.Length > 0)
@@ -295,6 +297,10 @@ namespace EV.Customer.ViewModels
                     {
                         await Application.Current.MainPage.Navigation.PopToRootAsync();
                     }
+                }
+                if (countPin > 6)
+                {
+                    pin = pin.Substring(0, 6);
                 }
             }
         }
@@ -427,7 +433,8 @@ namespace EV.Customer.ViewModels
             }
             else
             {
-                DataJoint();
+                SetPinForAuthViewModel setPinForAuth = new SetPinForAuthViewModel(email);
+                await Application.Current.MainPage.Navigation.PushAsync(new PinPage(setPinForAuth));
             }
         }
 
@@ -439,7 +446,8 @@ namespace EV.Customer.ViewModels
             }
             else
             {
-                DataJoint();
+                SetPinForAuthViewModel authViewModel = new SetPinForAuthViewModel(register);
+                await Application.Current.MainPage.Navigation.PushAsync(new PinPage(authViewModel));
             }
         }
 
