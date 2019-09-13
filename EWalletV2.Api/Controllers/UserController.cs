@@ -15,6 +15,7 @@ namespace EWalletV2.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -63,7 +64,6 @@ namespace EWalletV2.Api.Controllers
             return Ok(account);
         }
         //UpdateUser
-        [Authorize]
         [HttpPost("UpdateUser")]
         public IActionResult UpdateUser([FromBody] UpdateUserCommand user)
         {

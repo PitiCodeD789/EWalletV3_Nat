@@ -15,6 +15,7 @@ namespace EWalletV2.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionController : ControllerBase
     {
         private readonly IUserService _userService;
