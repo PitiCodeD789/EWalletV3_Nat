@@ -250,7 +250,8 @@ namespace EV.Customer.ViewModels
         public ICommand OrangeTextTab { get; set; }
         public async void GoToForgotPasswordPage()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new ForgotPassword());
+            await PopupNavigation.Instance.PushAsync(new ForgotPassword());
+    
         }
 
         public ICommand InputPin { get; set; }
