@@ -58,7 +58,7 @@ namespace EV.Customer.ViewModels
             else
             {
                 var resultCaller = await _pinService.CheckForgotPin(birthDate, Email);
-                if (resultCaller == null)
+                if (resultCaller == null || resultCaller.Model == null || string.IsNullOrEmpty(resultCaller.Model.RefNumber))
                 {
                     error = "ขออภัย! ไม่พบอีเมลล์ที่กรอกในระบบ";
 
