@@ -35,7 +35,7 @@
                        HorizontalTextAlignment="Center"/>
                 <BoxView BackgroundColor="Black" HeightRequest="1"/>
                 <Label Text="{Binding TransactionReference,StringFormat='Ref {0}'}" HorizontalOptions="Center"/>
-                <Label Text="{Binding CreateDate,StringFormat='{0:dd MMM yyyy hh:mm:ss}'}" HorizontalOptions="Center"/>
+                <Label Text="{Binding CreateDate,StringFormat='{0:dd MMM yyyy HH:mm:ss}'}" HorizontalOptions="Center"/>
                 <Grid Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

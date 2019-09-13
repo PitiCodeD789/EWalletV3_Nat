@@ -145,6 +145,10 @@ namespace EV.Customer.Helper
             {
                 return false;
             }
+            else
+            {
+                mobilePhone = Regex.Replace(mobilePhone, @"[^\d]", "");
+            }
             if (mobilePhone.Length < 1)
             {
                 return false;
