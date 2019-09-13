@@ -136,9 +136,6 @@ namespace EV.Customer.ViewModels
             {
                 Balance = account.Model.Balance;
             }
-
-            // รอข้อมูลชื่อนามสกุล จากพี่เสริท
-            // AccountNumber , FullName 
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
