@@ -21,7 +21,7 @@ namespace EV.Merchant.ViewModels
         {
             //Initial
             _transactionService = new TransactionServices();
-            FullName = App.FirstName + " " + App.LastName;
+            FullName = App.StoreName;
             AccountNumber = App.Account;
             Email = App.Email;
 

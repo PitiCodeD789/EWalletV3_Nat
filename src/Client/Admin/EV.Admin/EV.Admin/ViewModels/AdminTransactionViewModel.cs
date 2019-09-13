@@ -23,7 +23,7 @@ namespace EV.Admin.ViewModels
             //Initial
             _transactionService = new TransactionServices();
             Email = App.Email;
-            FullName = App.FirstName + " " + App.LastName;
+            FullName = App.AdminName;
             AccountNumber = App.Account;
             LastestMonth = DateTime.Now;
             Transactionlist = new List<TransactionViewModel>();

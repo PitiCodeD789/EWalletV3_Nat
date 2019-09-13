@@ -128,13 +128,17 @@ namespace EV.Customer.ViewModels
         public async Task GetTransactions()
         {
             ResultServiceModel<List<TransactionViewModel>> result = await _transactionService.GetTransaction30Days(Email);
-            if (result.IsError != true || result.Model.Count != 0)
+
+            if (result != null && result.IsError != true)
             {
-                Transactionlist = result.Model;
-                LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
-                FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
-                SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
-                ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+                if (result.Model.Count != 0)
+                {
+                    Transactionlist = result.Model;
+                    LastestMonth = Transactionlist.Max(x => x.CreateDateTime);
+                    FirstTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == LastestMonth.Month).ToList();
+                    SecondTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month2.Month).ToList();
+                    ThridTransactionList = Transactionlist.Where(x => x.CreateDateTime.Month == Month3.Month).ToList();
+                }
             }
             //If Error popup errorPopupPage
         }
