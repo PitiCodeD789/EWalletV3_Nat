@@ -31,6 +31,7 @@ namespace EV.Customer.ViewModels
             InputPaymentCommand = new Command(InputPayment);
             ToSlip = new Command(PushToSlip);
             FullName = App.FirstName + " " + App.LastName;
+            CustomerAccountNumber = App.Account;
         }
 
         public ICommand CancelCommand { get; set; }
@@ -54,7 +55,7 @@ namespace EV.Customer.ViewModels
                 ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount);
                 if (paymentResult == null || paymentResult.IsError) { 
                     //Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
-                    ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ \n กรุณาตรวจสอบเงินคงเหลือในบัญชี", (int)EW_ErrorTypeEnum.Error);
+                    ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ", (int)EW_ErrorTypeEnum.Error);
                     PopupNavigation.Instance.PushAsync(new Error(errorView));
 
                 }
@@ -169,7 +170,9 @@ namespace EV.Customer.ViewModels
         public string CustomerAccountNumber
         {
             get { return customerAccountNumber; }
-            set { customerAccountNumber = value; }
+            set { customerAccountNumber = value;
+                OnPropertyChanged();
+            }
         }
 
 
