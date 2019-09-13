@@ -24,9 +24,7 @@ namespace EV.Customer.ViewModels
             CancelButton = new Command(ClosePopup);
         }
 
-        public ICommand CancelButton;
-
-
+        public ICommand CancelButton { get; set; }
         private async void CheckPin()
         {
             IsProcess = true;
