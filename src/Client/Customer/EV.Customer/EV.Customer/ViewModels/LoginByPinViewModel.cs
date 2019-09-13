@@ -191,7 +191,7 @@ namespace EV.Customer.ViewModels
                     {
                         if (tokenData.Model == null || tokenData.Model.Token == null)
                         {
-                            ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, ForceLogout);
+                            ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Error, ForceLogoutForErrorPopup);
                             await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                         }
                         await SecureStorage.SetAsync("Token", tokenData.Model.Token);
@@ -310,7 +310,7 @@ namespace EV.Customer.ViewModels
                                 {
                                     if (tokenData.Model == null || tokenData.Model.Token == null)
                                     {
-                                        ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, ForceLogout);
+                                        ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Error, ForceLogoutForErrorPopup);
                                         await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                                     }
                                     await SecureStorage.SetAsync("Token", tokenData.Model.Token);

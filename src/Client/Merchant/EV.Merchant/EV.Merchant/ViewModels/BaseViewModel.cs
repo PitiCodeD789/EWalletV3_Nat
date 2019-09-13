@@ -1,4 +1,5 @@
 ﻿using EV.Merchant.Views;
+using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,8 +30,16 @@ namespace EV.Merchant.ViewModels
             Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
 
+        public virtual void ForceLogoutForErrorPopup()
+        {
+            SecureStorage.RemoveAll();
+            Application.Current.MainPage.Navigation.PopPopupAsync();
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
+        }
+
         public virtual void CloseApp()
         {
+            SecureStorage.RemoveAll();
             Environment.Exit(0);
         }
 
