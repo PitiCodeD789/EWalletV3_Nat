@@ -20,7 +20,7 @@
                 Margin="50,80"
                 Spacing="10"
                 >
-                <Image Source="walletIcon" WidthRequest="100" HeightRequest="100" Margin="0,0,0,30"/>
+                <Image Source="Wallet" WidthRequest="100" HeightRequest="100" Margin="0,0,0,30"/>
                 <components:EW_EntryView Placeholder="Username" TextEntry="{Binding Email}" />
                 <components:EW_ButtonView  TextButton="SIGN IN" TextColor="White" Command="{Binding SignInCommand}"/>
             </StackLayout>
