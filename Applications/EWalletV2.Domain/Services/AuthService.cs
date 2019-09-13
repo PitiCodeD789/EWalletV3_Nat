@@ -126,7 +126,7 @@ namespace EWalletV2.Domain.Services
                 mail.From = new MailAddress("student@enixer.net");
                 mail.To.Add(email);
                 mail.Subject = @"Otp Number";
-                mail.Body = $"ref : {otpNumber}, otp: {refOtp}";
+                mail.Body = $"ref : {refOtp}, otp: {otpNumber}"; 
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("student@enixer.net", "Gg123456789");
                 SmtpServer.EnableSsl = true;

@@ -52,6 +52,7 @@ namespace EV.Customer.ViewModels
         {
             try
             {
+                IsPaymentEnabled = false;
                 ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount);
                 if (paymentResult == null || paymentResult.IsError) { 
                     //Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
@@ -67,6 +68,7 @@ namespace EV.Customer.ViewModels
                     PopupNavigation.Instance.PopAllAsync();
                     PopupNavigation.Instance.PushAsync(new Views.ScanToPayThree(this));
                 }
+                IsPaymentEnabled = true;
             }
             catch (Exception e)
             {
@@ -75,6 +77,15 @@ namespace EV.Customer.ViewModels
             }
             
         }
+
+        private bool isPaymentEnabled = true;
+
+        public bool IsPaymentEnabled
+        {
+            get { return isPaymentEnabled; }
+            set { isPaymentEnabled = value; OnPropertyChanged(); }
+        }
+
         private async void InputPayment()
         {
             PopupNavigation.Instance.PopAllAsync();
@@ -140,7 +151,7 @@ namespace EV.Customer.ViewModels
         {
             IUserService _userService = new UserService();
 
-           var result = _userService.GetBalance("pesor1985@gmail.com").GetAwaiter();
+            var result = _userService.GetBalance(Email).GetAwaiter();
             result.OnCompleted(() => SetCustomerBalance(result.GetResult().Model.Balance));
         }
 

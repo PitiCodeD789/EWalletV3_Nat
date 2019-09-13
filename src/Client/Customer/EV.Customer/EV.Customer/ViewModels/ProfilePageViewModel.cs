@@ -43,7 +43,7 @@ namespace EV.Customer.ViewModels
         {
             await _authService.Logout(Email);
             //กลับไปหน้าแรก
-            Application.Current.MainPage = new NavigationPage( new Views.LoginPage());
+            ForceLogout();
 
         }
 

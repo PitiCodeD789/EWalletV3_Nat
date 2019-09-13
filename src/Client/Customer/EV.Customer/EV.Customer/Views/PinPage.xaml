@@ -64,9 +64,10 @@
 
             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1">
                 <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="50"/>
-
-                <Label Text="{Binding BlackDetail}" HorizontalOptions="Center" TextColor="Black" FontSize="Medium"/>
-                <Label Text="{Binding GrayDetail}" HorizontalOptions="Center" FontSize="Medium"/>
+                <Label Text="{Binding BlackDetail}" HorizontalTextAlignment="Center" 
+                       HorizontalOptions="Center" TextColor="Black" FontSize="Medium"/>
+                <Label Text="{Binding GrayDetail}" HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" FontSize="Medium"/>
                 <Label Text="{Binding ReferenceText}" HorizontalOptions="Center" FontSize="Medium" IsVisible="{Binding ReferenceVisible}"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0">
                     <Frame Style="{StaticResource Key=PasswordLength}" BackgroundColor="{Binding PwHint0}"/>
