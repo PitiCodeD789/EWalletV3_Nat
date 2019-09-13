@@ -65,12 +65,12 @@ namespace EV.Service.Services
                         }
                         else
                         {
-                            resultService.IsError = true;
+                            CloseApp();
                         }
                     }
                     catch (Exception e)
                     {
-                        resultService.IsError = true;
+                        CloseApp();
                     }
                 }
                 else
@@ -137,12 +137,12 @@ namespace EV.Service.Services
                         }
                         else
                         {
-                            resultService.IsError = true;
+                            CloseApp();
                         }
                     }
                     catch (Exception e)
                     {
-                        resultService.IsError = true;
+                        CloseApp();
                     }
                 }
                 else

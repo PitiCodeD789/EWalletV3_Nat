@@ -95,7 +95,7 @@ namespace EV.Admin.ViewModels
             try
             {
                 await SecureStorage.SetAsync("Account", viewModel.Account);
-                await SecureStorage.SetAsync("Username", Username);
+                await SecureStorage.SetAsync("Email", Username);
                 await SecureStorage.SetAsync("FirstName", viewModel.FirstName);
                 await SecureStorage.SetAsync("PhoneNumber", viewModel.PhoneNumber);
                 await SecureStorage.SetAsync("RefreshToken", viewModel.RefreshToken);

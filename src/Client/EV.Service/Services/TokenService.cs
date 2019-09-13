@@ -27,8 +27,8 @@ namespace EV.Service.Services
 
                 try
                 {
-                    refreshToken = await SecureStorage.GetAsync("RefreshToken");
-                    email = await SecureStorage.GetAsync("Email");
+                    refreshToken = SecureStorage.GetAsync("RefreshToken").Result;
+                    email = SecureStorage.GetAsync("Email").Result;
                 }
                 catch (Exception e)
                 {
@@ -62,7 +62,7 @@ namespace EV.Service.Services
                 else
                 {
                     client.Dispose();
-                    return null;
+                    CloseApp();
                 }
             }
             catch (Exception e)
