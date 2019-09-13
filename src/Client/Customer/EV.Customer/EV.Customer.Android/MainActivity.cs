@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Plugin.Fingerprint;
 using Plugin.CurrentActivity;
+using EV.Customer.Droid.CustomRender;
 
 namespace EV.Customer.Droid
 {
@@ -25,6 +26,7 @@ namespace EV.Customer.Droid
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
+            CrossFingerprint.SetDialogFragmentType<CustomDialogFragment>();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
