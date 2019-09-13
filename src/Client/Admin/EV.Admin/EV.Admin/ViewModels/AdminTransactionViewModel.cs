@@ -5,6 +5,7 @@ using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -25,11 +26,13 @@ namespace EV.Admin.ViewModels
             Email = App.Email;
             FullName = App.AdminName;
             AccountNumber = App.Account;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
             LastestMonth = DateTime.Now;
             Transactionlist = new List<TransactionViewModel>();
             FirstTransactionList = new List<TransactionViewModel>();
             SecondTransactionList = new List<TransactionViewModel>();
             ThridTransactionList = new List<TransactionViewModel>();
+
 
             //Command
             ViewTransactionDetailCommand = new Command<int>(ViewTransactionDetail);
@@ -54,6 +57,7 @@ namespace EV.Admin.ViewModels
                 ReceiverImage = "AccountOrange";
                 ReceiverFullName = FullName;
                 ReceiverAccountNumber = AccountNumber;
+                TransactionReference = transaction.TransactionReference;
             }
             PopupNavigation.PushAsync(new Views.TransactionsOne(this));
         }
@@ -192,9 +196,17 @@ namespace EV.Admin.ViewModels
 
         public string TransactionName { get; set; }
         public decimal TransactionPaid { get; set; }
-        public string TransactionReference { get; set; }
+        private string transactionReference;
 
-        
+        public string TransactionReference
+        {
+            get { return transactionReference; }
+            set { transactionReference = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         private DateTime _createDate;
         public DateTime CreateDate
@@ -207,7 +219,9 @@ namespace EV.Admin.ViewModels
         public string FullName
         {
             get { return _fullName; }
-            set { _fullName = value; }
+            set { _fullName = App.AdminName;
+                OnPropertyChanged();
+            }
         }
 
         private string _accountNumber;

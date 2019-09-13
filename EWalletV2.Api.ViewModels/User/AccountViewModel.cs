@@ -8,6 +8,6 @@ namespace EWalletV2.Api.ViewModels.User
     {
         public string AccountName { get; set; }
         public decimal Balance { get; set; }
-
+        public string AccountNumber { get; set; }
     }
 }

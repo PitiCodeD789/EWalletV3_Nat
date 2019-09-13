@@ -39,12 +39,12 @@
                                             <RowDefinition Height="auto"/>
                                         </Grid.RowDefinitions>
                                         <Label Text="{Binding TransactionType}" Grid.Row="0"/>
-                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black">
-                                            <Label.FormattedText>
-                                                <FormattedString>
+                                        <Label Grid.Row="1" FontAttributes="Bold" FontSize="Large" TextColor="Black" WidthRequest="50" LineBreakMode="TailTruncation" >
+                                            <Label.FormattedText LineBreakMode="TailTruncation">
+                                                <FormattedString >
                                                     <Span Text="{Binding FirstName}"/>
                                                     <Span Text=" "/>
-                                                    <Span Text="{Binding LastName}"/>
+                                                    <Span Text="{Binding LastName}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>

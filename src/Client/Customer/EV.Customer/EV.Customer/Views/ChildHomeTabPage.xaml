@@ -7,7 +7,6 @@
              NavigationPage.HasNavigationBar="False"
              xmlns:bd="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.ChildHomeTabPage">
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="MenuFrame" TargetType="Frame">
@@ -73,7 +72,7 @@
                                 VerticalTextAlignment="Center" HorizontalOptions="Start"
                                 Margin="10"/>
                     <!--<Label Text="{Binding CurrentBalance,StringFormat='{0:n} THB'}" TextColor="Orange" FontSize="25"-->
-                    <Label Text="{Binding Balance,StringFormat='{0:n} THB'}" TextColor="#EAA200" FontSize="25"
+                    <Label Text="{Binding Balance,StringFormat='{0:n}'}" TextColor="#EAA200" FontSize="25"
                             VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand"
                             FontAttributes="Bold"/>
                     <Label Text="THB" TextColor="#EAA200" FontSize="12"
