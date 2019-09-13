@@ -28,9 +28,25 @@ namespace EV.Customer.ViewModels
         private async void IsFingerPrint()
         {
             try
-            {            
+            {
+              
                 bool available = await CrossFingerprint.Current.IsAvailableAsync(true);
-                IsShowFingerButton = available;
+                if(available == true)
+                {
+                    string isFingerprint = await SecureStorage.GetAsync("IsFingerprintEnabled");
+                    if (isFingerprint != "true")
+                    {
+                        IsShowFingerButton = true;
+                    }else
+                    {
+                        IsShowFingerButton = false;
+                    }
+                }else
+                {
+                    IsShowFingerButton = false;
+                }
+                
+                
             }
             catch (Exception ex)
             {
