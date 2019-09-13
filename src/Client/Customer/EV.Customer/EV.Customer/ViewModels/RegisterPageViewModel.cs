@@ -63,11 +63,18 @@ namespace EV.Customer.ViewModels
             {
                 Email = "";
             }
-            if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail)
+
+            bool isValidateMobile = Unities.ValidateStringMobile(MobileNumber);
+            if(!isValidateMobile)
+            {
+                MobileNumber = "";
+            }
+                
+            if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail && isValidateMobile)
             {
                 RegisterCommand register = new RegisterCommand
                 {
-                    BirthDate = DateTime.Parse(BirthDate),
+                    BirthDate = DateTime.ParseExact(BirthDate,"dd/MM/yyyy",null),
                     Email = Email,
                     FirstName = FirstName,
                     LastName = LastName,
@@ -128,10 +135,36 @@ namespace EV.Customer.ViewModels
         }
 
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        
-        public string MobileNumber { get; set; }
+      
+
+        private string firstName;
+
+        public string FirstName
+        {
+            get { return firstName; }
+            set { firstName = value; OnPropertyChanged("FirstName"); }
+        }
+
+       
+
+        private string lastName;
+
+        public string LastName
+        {
+            get { return lastName; }
+            set { lastName = value; OnPropertyChanged("LastName"); }
+        }
+
+
+        private string mobileNumber;
+
+        public string MobileNumber
+        {
+            get { return mobileNumber; }
+            set { mobileNumber = value; OnPropertyChanged("MobileNumber"); }
+        }
+
+     
         public EW_Enumerations.EW_GenderEnum Gender { get; set; }
         public string Email { get; set; } = App.Email;
         public string Pin { get; set; }

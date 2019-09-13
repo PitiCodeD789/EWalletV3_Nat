@@ -88,7 +88,9 @@ namespace EV.Customer.ViewModels
                     {
                         //TODO: Show Completed Popup
                         StoreValue(updateUserCommand);
+                        
                         IsEditMode = false;
+                        ShowEditButton = true;
                         await PopupNavigation.PushAsync(new SavedProfile());
 
                         
