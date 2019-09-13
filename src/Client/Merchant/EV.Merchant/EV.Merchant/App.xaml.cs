@@ -19,7 +19,7 @@ namespace EV.Merchant
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ChildHistoryTabPage());
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

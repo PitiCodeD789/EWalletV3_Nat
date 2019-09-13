@@ -58,7 +58,7 @@
                             <TapGestureRecognizer Command="{Binding GoBack}"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <Label Text="{Binding Title}" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" VerticalOptions="Center"/>
+                    <Label Text="{Binding Title}" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="End" Grid.Column="1" VerticalOptions="Center"/>
                 </Grid>
             </Frame>
 
