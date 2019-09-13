@@ -82,7 +82,7 @@ namespace EV.Customer.Helper
                 return false;
             }
             string strRegex =
-                    @"^[a-zA-Z0-9ก-๋]{1,50}";
+                    @"^[a-zA-Zก-๋]{1,50}$";
             Regex re = new Regex(strRegex);
             if (re.IsMatch(name))
             {
