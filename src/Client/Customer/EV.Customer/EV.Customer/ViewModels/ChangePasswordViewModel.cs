@@ -239,7 +239,7 @@ namespace EV.Customer.ViewModels
                             if(updateData != null && !updateData.IsError)
                             {
 
-                                await PopupNavigation.Instance.PushAsync(new SavedProfile());
+                                await PopupNavigation.Instance.PushAsync(new ChangePasswordSuccess());
                                 await Application.Current.MainPage.Navigation.PopAsync();
                             }
                         }

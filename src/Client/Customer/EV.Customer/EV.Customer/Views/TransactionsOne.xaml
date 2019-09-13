@@ -7,8 +7,8 @@
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:components="clr-namespace:EV.Customer.Components"
-                 CloseWhenBackgroundIsClicked="False"
-                 xmlns:bindingViewModel="clr-namespace:EV.Customer.ViewModels"
+             CloseWhenBackgroundIsClicked="False"
+             xmlns:bindingViewModel="clr-namespace:EV.Customer.ViewModels"
              x:Class="EV.Customer.Views.TransactionsOne">
     <pages:PopupPage.BindingContext>
         <bindingViewModel:CustomerTransactionViewModel />
