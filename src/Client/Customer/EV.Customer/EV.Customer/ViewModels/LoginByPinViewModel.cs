@@ -194,25 +194,28 @@ namespace EV.Customer.ViewModels
                             ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, ForceLogout);
                             await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                         }
-                        await SecureStorage.SetAsync("Token", tokenData.Model.Token);
-                        App.Account = await SecureStorage.GetAsync("Account");
-                        App.Email = await SecureStorage.GetAsync("Email");
-                        App.FirstName = await SecureStorage.GetAsync("FirstName");
-                        App.LastName = await SecureStorage.GetAsync("LastName");
-                        string preBirthDate = await SecureStorage.GetAsync("BirthDate");
-                        try
+                        else
                         {
-                            App.BirthDate = DateTime.Parse(preBirthDate);
-                        }
-                        catch (Exception)
-                        {
+                            await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                            App.Account = await SecureStorage.GetAsync("Account");
+                            App.Email = await SecureStorage.GetAsync("Email");
+                            App.FirstName = await SecureStorage.GetAsync("FirstName");
+                            App.LastName = await SecureStorage.GetAsync("LastName");
+                            string preBirthDate = await SecureStorage.GetAsync("BirthDate");
+                            try
+                            {
+                                App.BirthDate = DateTime.Parse(preBirthDate);
+                            }
+                            catch (Exception)
+                            {
 
+                            }
+                            App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
+                            int gender = 0;
+                            int.TryParse(await SecureStorage.GetAsync("Gender"), out gender);
+                            App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
+                            Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                         }
-                        App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
-                        int gender = 0;
-                        int.TryParse(await SecureStorage.GetAsync("Gender"), out gender);
-                        App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
-                        Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                     }
                     else
                     {
@@ -313,25 +316,28 @@ namespace EV.Customer.ViewModels
                                         ErrorViewModel errorViewModel = new ErrorViewModel("กรุณาเข้าสู่ระบบอีกครั้ง", (int)EW_Enumerations.EW_ErrorTypeEnum.Warning, ForceLogout);
                                         await PopupNavigation.Instance.PushAsync(new Error(errorViewModel));
                                     }
-                                    await SecureStorage.SetAsync("Token", tokenData.Model.Token);
-                                    App.Account = await SecureStorage.GetAsync("Account");
-                                    App.Email = await SecureStorage.GetAsync("Email");
-                                    App.FirstName = await SecureStorage.GetAsync("FirstName");
-                                    App.LastName = await SecureStorage.GetAsync("LastName");
-                                    string preBirthDate = await SecureStorage.GetAsync("BirthDate");
-                                    try
+                                    else
                                     {
-                                        App.BirthDate = DateTime.Parse(preBirthDate);
-                                    }
-                                    catch (Exception)
-                                    {
+                                        await SecureStorage.SetAsync("Token", tokenData.Model.Token);
+                                        App.Account = await SecureStorage.GetAsync("Account");
+                                        App.Email = await SecureStorage.GetAsync("Email");
+                                        App.FirstName = await SecureStorage.GetAsync("FirstName");
+                                        App.LastName = await SecureStorage.GetAsync("LastName");
+                                        string preBirthDate = await SecureStorage.GetAsync("BirthDate");
+                                        try
+                                        {
+                                            App.BirthDate = DateTime.Parse(preBirthDate);
+                                        }
+                                        catch (Exception)
+                                        {
 
+                                        }
+                                        App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
+                                        int gender = 0;
+                                        int.TryParse(await SecureStorage.GetAsync("Gender"), out gender);
+                                        App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
+                                        Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                                     }
-                                    App.MobileNumber = await SecureStorage.GetAsync("MobileNumber");
-                                    int gender = 0;
-                                    int.TryParse(await SecureStorage.GetAsync("Gender"), out gender);
-                                    App.Gender = (EWalletV2.Api.ViewModels.EW_Enumerations.EW_GenderEnum)gender;
-                                    Application.Current.MainPage = new NavigationPage(new UserTabbedPage());
                                 }
                                 else
                                 {
