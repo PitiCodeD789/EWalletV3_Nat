@@ -86,48 +86,48 @@
                       HorizontalOptions="FillAndExpand">
                     <Frame Style="{StaticResource MenuFrame}"
                        Grid.Column="0"
-                       Grid.Row="0">
+                       Grid.Row="0" HeightRequest="130" VerticalOptions="Center">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer x:Name="TapPayment" NumberOfTapsRequired="1"                                               
                                                   Command="{Binding ScanToPayCommand}"/>
                         </Frame.GestureRecognizers>
                         <StackLayout>
                             <Image Source="qricon.png"
-                               Style="{StaticResource MenuIcon}"/>
+                               Style="{StaticResource MenuIcon}" Margin="0,20,0,0"/>
                             <Label Text="สแกนจ่าย"
                                Style="{StaticResource MenuText}"/>
                         </StackLayout>
                     </Frame>
                     <Frame Style="{StaticResource MenuFrame}"
                        Grid.Column="0"
-                       Grid.Row="1">
+                       Grid.Row="1"  HeightRequest="130" VerticalOptions="Center">
                         <StackLayout>
                             <Image Source="phoneicon.png"
-                               Style="{StaticResource MenuIcon}"/>
+                               Style="{StaticResource MenuIcon}" Margin="0,20,0,0"/>
                             <Label Text="Coming soon"
                                Style="{StaticResource MenuText}"/>
                         </StackLayout>
                     </Frame>
                     <Frame Style="{StaticResource MenuFrame}"
                        Grid.Column="1"
-                       Grid.Row="0">
+                       Grid.Row="0" HeightRequest="130" VerticalOptions="Center">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer x:Name="TapTopupFromAdminApp" NumberOfTapsRequired="1"                                              
                                                   Command="{Binding ScanToTopupCommand}"/>
                         </Frame.GestureRecognizers>
                         <StackLayout>
                             <Image Source="phoneicon.png"
-                               Style="{StaticResource MenuIcon}"/>
+                               Style="{StaticResource MenuIcon}" Margin="0,20,0,0"/>
                             <Label Text="เติมเงิน"
                                Style="{StaticResource MenuText}"/>
                         </StackLayout>
                     </Frame>
                     <Frame Style="{StaticResource MenuFrame}"
                        Grid.Column="1"
-                       Grid.Row="1">
+                       Grid.Row="1"  HeightRequest="130" VerticalOptions="Center">
                         <StackLayout>
                             <Image Source="phoneicon.png"
-                               Style="{StaticResource MenuIcon}"/>
+                               Style="{StaticResource MenuIcon}" Margin="0,20,0,0"/>
                             <Label Text="Coming soon"
                                Style="{StaticResource MenuText}"/>
                         </StackLayout>

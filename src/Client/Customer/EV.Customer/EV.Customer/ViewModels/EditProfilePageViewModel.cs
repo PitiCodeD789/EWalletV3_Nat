@@ -18,7 +18,7 @@ using Xamarin.Forms;
 
 namespace EV.Customer.ViewModels
 {
-    public class EditProfilePageViewModel : INotifyPropertyChanged
+    public class EditProfilePageViewModel :BaseViewModel, INotifyPropertyChanged
     {
         private readonly IUserService _userService;
         public EditProfilePageViewModel()
@@ -65,7 +65,8 @@ namespace EV.Customer.ViewModels
                 bool isValidateLastName = Unities.ValidateName(LastName);
                 bool isValidateDate = Unities.ValidateStringDateFormat(BirthDate);
                 bool isValidateEmail = Unities.CheckEmailFormat(Email);
-                if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail )
+                bool isValidatePhoneNum = Unities.ValidateStringMobile(MobileNumber);
+                if (isValidateName && isValidateLastName && isValidateDate && isValidateEmail && isValidatePhoneNum )
                 {
                     UpdateUserCommand updateUserCommand = new UpdateUserCommand
                     {

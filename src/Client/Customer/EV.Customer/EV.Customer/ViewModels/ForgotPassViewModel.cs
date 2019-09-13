@@ -24,9 +24,7 @@ namespace EV.Customer.ViewModels
             CancelButton = new Command(ClosePopup);
         }
 
-        public ICommand CancelButton;
-
-
+        public ICommand CancelButton { get; set; }
         private async void CheckPin()
         {
             IsProcess = true;
@@ -60,19 +58,21 @@ namespace EV.Customer.ViewModels
             else
             {
                 var resultCaller = await _pinService.CheckForgotPin(birthDate, Email);
-                if (resultCaller.IsError)
+                if (resultCaller == null)
+                {
+                    error = "ขออภัย! ไม่พบอีเมลล์ที่กรอกในระบบ";
+
+                }
+                else if (resultCaller.IsError)
                 {
                     error = "ขออภัย! ไม่สามารถเชื่อมต่อได้";
                     errorType = 1;
-                }
-                else if (resultCaller == null)
-                {
-                    error = "ขออภัย! ไม่พบอีเมลล์ที่กรอกในระบบ";
                 }
                 else
                 {
                     IsProcess = false;
                     string resultRefOtp = resultCaller.Model.RefNumber;
+                    await PopupNavigation.Instance.PopAllAsync();
                     await Application.Current.MainPage.Navigation.PushAsync(new PinPage(new OtpForgotPassViewModel(Email,resultRefOtp,birthDate)));
                 }
                 if (!string.IsNullOrEmpty(error))
