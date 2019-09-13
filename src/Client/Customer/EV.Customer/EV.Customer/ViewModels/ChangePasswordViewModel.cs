@@ -27,7 +27,7 @@ namespace EV.Customer.ViewModels
             orangeVisible = true;
             warningText = "";
             warningVisible = false;
-            backVisible = false;
+            backVisible = true;
             fingerTabVisible = false;
             OrangeTextTab = new Command(GoToForgotPasswordPage);
             InputPin = new Command<string>(InputPinMethod);
@@ -37,11 +37,19 @@ namespace EV.Customer.ViewModels
             newPin = "";
             repeatNewPin = "";
             email = App.Email;
-            countLogin = Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
             bool isExistEmail = Unities.CheckEmailFormat(email);
             if (!isExistEmail)
             {
                 ForceLogout();
+            }
+            try
+            {
+                countLogin = Int32.Parse(SecureStorage.GetAsync("CountLogin").Result);
+            }
+            catch (Exception e)
+            {
+                countLogin = 0;
+                Console.WriteLine("countLogin in ChangePasswordViewModel : {0}", e);
             }
         }
 
@@ -186,6 +194,8 @@ namespace EV.Customer.ViewModels
         public ICommand InputPin { get; set; }
         public async void InputPinMethod(string value)
         {
+            WarningText = "";
+            WarningVisible = false;
             if (value == "Delete")
             {
                 if (pin.Length > 0)
@@ -228,6 +238,8 @@ namespace EV.Customer.ViewModels
                             var updateData = await _pinService.UpdatePin(newPin, oldPin, email);
                             if(updateData != null && !updateData.IsError)
                             {
+
+                                await PopupNavigation.Instance.PushAsync(new SavedProfile());
                                 await Application.Current.MainPage.Navigation.PopAsync();
                             }
                         }
@@ -316,6 +328,10 @@ namespace EV.Customer.ViewModels
                         }
                     }
                 }
+                if (countPin > 6)
+                {
+                    pin = pin.Substring(0, 6);
+                }
             }
         }
 
@@ -326,10 +342,16 @@ namespace EV.Customer.ViewModels
             {
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
-            else if (oldPin == "")
+            else if (newPin == "")
             {
+                BlackDetail = "ใส่รหัสผ่าน";
+                GrayDetail = "ใส่รหัสผ่านของคุณ";
+                oldPin = "";
                 newPin = "";
-                ChangeDataRepeatNewPin();
+                repeatNewPin = "";
+                pin = "";
+                int countPin = pin.Length;
+                HintColorChange(countPin);
             }
             else
             {
@@ -344,6 +366,8 @@ namespace EV.Customer.ViewModels
             GrayDetail = "ใส่รหัสผ่านของคุณ";
             oldPin = pin;
             pin = "";
+            int countPin = pin.Length;
+            HintColorChange(countPin);
         }
 
         public void ChangeDataRepeatNewPin()
@@ -352,6 +376,8 @@ namespace EV.Customer.ViewModels
             GrayDetail = "ใส่รหัสผ่านของคุณอีกครั้ง";
             newPin = pin;
             pin = "";
+            int countPin = pin.Length;
+            HintColorChange(countPin);
         }
 
         private void HintColorChange(int length)

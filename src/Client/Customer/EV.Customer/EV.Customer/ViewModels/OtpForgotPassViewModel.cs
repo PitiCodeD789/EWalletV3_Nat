@@ -183,6 +183,8 @@ namespace EV.Customer.ViewModels
         public ICommand InputPin { get; set; }
         public async void CheckOtp(string value)
         {
+            WarningText = "";
+            WarningVisible = false;
             if (value == "Delete")
             {
                 if (pin.Length > 0)
@@ -266,6 +268,10 @@ namespace EV.Customer.ViewModels
                         {
                         }
                     }
+                }
+                if (countPin > 6)
+                {
+                    pin = pin.Substring(0, 6);
                 }
             }
         }
