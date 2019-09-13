@@ -64,7 +64,7 @@
                     <Label Text="{Binding Amount}" HorizontalOptions="FillAndExpand"
                        HorizontalTextAlignment="Center" Grid.Column="0" FontSize="45"/>                
                 <Grid VerticalOptions="EndAndExpand">
-                    <components:EW_ButtonView TextButton="ยืนยัน" Grid.Column="1" Command="{Binding PaymentCommand}"/>
+                    <components:EW_ButtonView TextButton="ยืนยัน" IsEnabled="{Binding IsPaymentEnabled} " Grid.Column="1" Command="{Binding PaymentCommand}"/>
                     <components:EW_ButtonView TextButton="ยกเลิก" Grid.Column="0" BackgroundButton="#B8B8B8" Command="{Binding CancelCommand}"/>
                 </Grid>
             </StackLayout>
