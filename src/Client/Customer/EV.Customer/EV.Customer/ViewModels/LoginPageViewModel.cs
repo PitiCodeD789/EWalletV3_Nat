@@ -40,6 +40,14 @@ namespace EV.Customer.ViewModels
                 }
                 else
                 {
+                    if (result.Model.Role != 0)
+                    {
+                        ErrorViewModel errorView = new ErrorViewModel("กรุณาใช้แอพพลิเคชั่นสำหรับผู้ค้าหรือแอดมิน");
+                        IsProcess = false;
+                        await PopupNavigation.Instance.PushAsync(new Error(errorView));
+                        return;
+                    }
+
                     App.Email = Email;
 
                     if (result.Model.IsExist == true)
