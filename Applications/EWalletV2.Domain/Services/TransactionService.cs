@@ -89,6 +89,7 @@ namespace EWalletV2.Domain.Services
                 {
                     TransactionId = x.Id,
                     Account = x.UserCustomerEntity.Account,
+                    TransactionReference = x.TransactionReference,
                     TransactionType = x.TransactionType,
                     FirstName = x.UserCustomerEntity.FirstName,
                     LastName = x.UserCustomerEntity.LastName,
