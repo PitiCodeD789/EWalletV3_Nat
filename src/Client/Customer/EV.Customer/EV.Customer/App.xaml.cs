@@ -10,7 +10,6 @@ namespace EV.Customer
 
     public partial class App : Application
     {
-        public static string RefreshToken { get; set; }
         public static decimal CustomerBalance { get; set; }
         public static string Account { get; set; }// = "011111111100";
         public static string Email { get; set; }// = "pesor1985@gmail.com";
@@ -29,7 +28,6 @@ namespace EV.Customer
             // Handle when your app starts
 
             var refreshToken = await SecureStorage.GetAsync("RefreshToken");
-            RefreshToken = refreshToken;
             if (refreshToken != null)
             {
                 MainPage = new NavigationPage(new PinPage(new LoginByPinViewModel()));
