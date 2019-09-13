@@ -151,7 +151,7 @@ namespace EV.Customer.ViewModels
         {
             IUserService _userService = new UserService();
 
-           var result = _userService.GetBalance("pesor1985@gmail.com").GetAwaiter();
+            var result = _userService.GetBalance(Email).GetAwaiter();
             result.OnCompleted(() => SetCustomerBalance(result.GetResult().Model.Balance));
         }
 
