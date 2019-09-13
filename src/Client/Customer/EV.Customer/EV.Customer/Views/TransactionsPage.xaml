@@ -26,7 +26,7 @@
 
             <ScrollView Grid.Row="1" >
                 <StackLayout VerticalOptions="FillAndExpand" Margin="0" Spacing="0" Padding="10,0">
-                    <Label Text="{Binding LastestMonth,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding FirstMonth}"/>
+                    <Label Text="{Binding ShowLastMonth,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding FirstMonth}"/>
                     <StackLayout BindableLayout.ItemsSource="{Binding FirstTransactionList}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
@@ -62,7 +62,7 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
-                    <Label Text="{Binding Month2,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding SecondMonth}"/>
+                    <Label Text="{Binding ShowLastTwoMonth,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding SecondMonth}"/>
                     <StackLayout BindableLayout.ItemsSource="{Binding SecondTransactionList}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
@@ -98,7 +98,7 @@
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
 
-                    <Label Text="{Binding Month3,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding ThirdMonth}"/>
+                    <Label Text="{Binding ShowLastThreeMonth,StringFormat='{0:MMM yyyy}'}" TextColor="#A2A2A2" FontAttributes="Bold" Margin="0,20,0,0" FontSize="Medium" IsVisible="{Binding ThirdMonth}"/>
                     <StackLayout BindableLayout.ItemsSource="{Binding ThridTransactionList}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>

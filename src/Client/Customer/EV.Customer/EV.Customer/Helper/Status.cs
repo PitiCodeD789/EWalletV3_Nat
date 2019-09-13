@@ -11,5 +11,22 @@ namespace EV.Customer.Helper
             Login,
             Register            
         };
+
+        public enum Month
+        {
+            Null,
+            Jan,
+            Feb,
+            Mar,
+            Apr,
+            May,
+            Jun,
+            Jul,
+            Aug,
+            Sep,
+            Oct,
+            Nov,
+            Dec
+        };
     }
 }
