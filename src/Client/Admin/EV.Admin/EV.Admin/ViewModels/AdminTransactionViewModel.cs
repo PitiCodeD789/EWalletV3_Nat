@@ -5,6 +5,7 @@ using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -25,11 +26,13 @@ namespace EV.Admin.ViewModels
             Email = App.Email;
             FullName = App.AdminName;
             AccountNumber = App.Account;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
             LastestMonth = DateTime.Now;
             Transactionlist = new List<TransactionViewModel>();
             FirstTransactionList = new List<TransactionViewModel>();
             SecondTransactionList = new List<TransactionViewModel>();
             ThridTransactionList = new List<TransactionViewModel>();
+
 
             //Command
             ViewTransactionDetailCommand = new Command<int>(ViewTransactionDetail);

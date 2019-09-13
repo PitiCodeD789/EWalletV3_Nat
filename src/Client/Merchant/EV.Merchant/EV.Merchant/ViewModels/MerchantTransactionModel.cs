@@ -5,6 +5,7 @@ using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -24,6 +25,7 @@ namespace EV.Merchant.ViewModels
             FullName = App.StoreName;
             AccountNumber = App.Account;
             Email = App.Email;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
             LastestMonth = DateTime.Now;
             Transactionlist = new List<TransactionViewModel>();

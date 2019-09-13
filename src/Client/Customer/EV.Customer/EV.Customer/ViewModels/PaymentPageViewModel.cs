@@ -88,8 +88,16 @@ namespace EV.Customer.ViewModels
 
         private async void InputPayment()
         {
-            PopupNavigation.Instance.PopAllAsync();
-            PopupNavigation.Instance.PushAsync(new ScanToPayTwo(this)); 
+            if (Amount > 0)
+            {
+                PopupNavigation.Instance.PopAllAsync();
+                PopupNavigation.Instance.PushAsync(new ScanToPayTwo(this));
+            }
+            else
+            {
+                ErrorViewModel errorView = new ErrorViewModel("จำนวนเงินต้องมากกว่าศูนย์", (int)EW_ErrorTypeEnum.Warning);
+                await PopupNavigation.Instance.PushAsync(new Error(errorView));
+            }
         }
         private async void PushToSlip()
         {
@@ -135,7 +143,6 @@ namespace EV.Customer.ViewModels
             }
         }
 
-        private decimal _customerBalance;
         private decimal customerBalance;
 
         public decimal CustomerBalance
