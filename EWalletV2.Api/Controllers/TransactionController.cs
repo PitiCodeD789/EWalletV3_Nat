@@ -66,7 +66,7 @@ namespace EWalletV2.Api.Controllers
                 return BadRequest();
             }
 
-            PaymentDto payment = _transactionService.Payment(email, merchantAccNo, pay);
+            PaymentDto payment = _transactionService.Payment(email, merchantAccNo, pay,command.TransactionReference);
 
             if(payment == null)
             {

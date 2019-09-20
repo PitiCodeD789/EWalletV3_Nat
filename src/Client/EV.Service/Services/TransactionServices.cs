@@ -18,13 +18,14 @@ namespace EV.Service.Services
             return await Get<List<TransactionViewModel>>(url);
         }
 
-        public async Task<ResultServiceModel<PaymentViewModel>> Payment(string email, string merchantAccountNo, decimal pay)
+        public async Task<ResultServiceModel<PaymentViewModel>> Payment(string email, string merchantAccountNo, decimal pay, string reference = null)
         {
             PaymentCommand model = new PaymentCommand()
             {
                 Email = email,
                 MerchantAccountNo = merchantAccountNo,
-                Pay = pay
+                Pay = pay,
+                TransactionReference = reference
             };
 
             string url = serviceUrl + "payment";

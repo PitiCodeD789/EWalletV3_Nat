@@ -52,15 +52,13 @@ namespace EV.Customer.ViewModels
             try
             {
                 IsPaymentEnabled = false;
-                ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount);
+                ResultServiceModel<PaymentViewModel> paymentResult = await _transactionServices.Payment(Email, MerchantAccountNumber, Amount, TransactionReference);
                 if (paymentResult == null || paymentResult.IsError) { 
                     //Application.Current.MainPage.DisplayAlert("Error", "Payment Fail", "Ok");
                     ErrorViewModel errorView = new ErrorViewModel("ทำรายการไม่สำเร็จ", (int)EW_ErrorTypeEnum.Error);
                     PopupNavigation.Instance.PushAsync(new Error(errorView));
-
                 }
                 else
-                
                 {
                     CreateDate = paymentResult.Model.CreateDatetime;
                     Reference = paymentResult.Model.Reference;
@@ -76,6 +74,15 @@ namespace EV.Customer.ViewModels
             }
             
         }
+
+        private string _transactionReference;
+
+        public string TransactionReference
+        {
+            get { return _transactionReference; }
+            set { _transactionReference = value; }
+        }
+
 
         private bool isPaymentEnabled = true;
 

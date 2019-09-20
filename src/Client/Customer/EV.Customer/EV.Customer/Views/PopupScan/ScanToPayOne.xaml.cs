@@ -15,10 +15,9 @@ namespace EV.Customer.Views
     {
         private int textLength = 0;
         private int currentMargin = -20;
-        public ScanToPayOne(string merchantName, string merchantAccountNumber, decimal amount)
+        public ScanToPayOne(string merchantName, string merchantAccountNumber, decimal amount, string TransactionReference)
         {
             InitializeComponent();
-            amount = 500;
             bool isNotFixedAmount = true;
             if (amount > 0)
                 isNotFixedAmount = false;
@@ -27,7 +26,8 @@ namespace EV.Customer.Views
                 MerchantName = merchantName,
                 MerchantAccountNumber = merchantAccountNumber,
                 Amount = amount,
-                IsNotFixedAmount = isNotFixedAmount
+                IsNotFixedAmount = isNotFixedAmount,
+                TransactionReference = TransactionReference
             };
             BindingContext = payment;
             //(BindingContext as PaymentPageViewModel).MerchantName = merchantName;

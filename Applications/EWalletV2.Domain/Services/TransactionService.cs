@@ -101,7 +101,7 @@ namespace EWalletV2.Domain.Services
             return transactionDetails;
         }
 
-        public PaymentDto Payment(string email, string merchantAccNo, decimal pay)
+        public PaymentDto Payment(string email, string merchantAccNo, decimal pay, string transactionReference)
         {
             string referenceNumber = GenerateReferenceNumber(18);
             bool isReference = _transactionRepository.CheckReference(referenceNumber);
@@ -129,6 +129,10 @@ namespace EWalletV2.Domain.Services
             if (amount > customer.Balance)
                 return null;
 
+            if (!string.IsNullOrEmpty(transactionReference))
+            {
+                referenceNumber = transactionReference;
+            }
 
             bool isPayment = _transactionRepository.CreateNewPayment(otherId, customerId, amount, referenceNumber);
             if (!isPayment)

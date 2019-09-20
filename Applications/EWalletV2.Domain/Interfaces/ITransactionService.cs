@@ -10,7 +10,7 @@ namespace EWalletV2.Domain.Interfaces
     {
         TopupDto Topup(string email, string referenceNumber);
         TopupResultDTO GenerateTopUp(string account, decimal amount);
-        PaymentDto Payment(string email, string merchantAccNo, decimal pay);
+        PaymentDto Payment(string email, string merchantAccNo, decimal pay, string transactionReference = null);
         //TransactionDto GetDetailTransaction(string email, int transactionId);
         List<TransactionDto> GetTransaction30Days(string email);
     }

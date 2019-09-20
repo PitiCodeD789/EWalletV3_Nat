@@ -10,7 +10,7 @@ namespace EV.Service.Interfaces
     public interface ITransactionServices
     {
         Task<ResultServiceModel<List<TransactionViewModel>>> GetTransaction30Days(string email);
-        Task<ResultServiceModel<PaymentViewModel>> Payment(string email, string merchantAccountNo, decimal pay);
+        Task<ResultServiceModel<PaymentViewModel>> Payment(string email, string merchantAccountNo, decimal pay, string reference = null);
         Task<ResultServiceModel<TopupViewModel>> Topup(string email, string referenceNumber);
         Task<ResultServiceModel<GenerateTopupViewModel>> GenerateTopup(string account, decimal amount);
     }

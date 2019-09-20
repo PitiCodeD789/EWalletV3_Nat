@@ -13,5 +13,6 @@ namespace EWalletV2.Api.ViewModels.Transaction
         public string MerchantAccountNo { get; set; }
         [Required]
         public decimal Pay { get; set; }
+        public string TransactionReference { get; set; }
     }
 }
