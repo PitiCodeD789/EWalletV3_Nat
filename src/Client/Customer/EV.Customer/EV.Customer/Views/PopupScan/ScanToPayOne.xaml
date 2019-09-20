@@ -68,6 +68,7 @@
                        HorizontalTextAlignment="Center"
                        WidthRequest="120"
                        MaxLength="7"
+                       IsEnabled="{Binding IsNotFixedAmount}"
                        Text="{Binding Amount}"/>
                     <Label x:Name="thbTag" Text="THB" Margin="-10,20,0,0"/>
                 </StackLayout>

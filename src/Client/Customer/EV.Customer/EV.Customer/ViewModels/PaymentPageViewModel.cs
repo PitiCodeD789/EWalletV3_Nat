@@ -19,7 +19,6 @@ namespace EV.Customer.ViewModels
         private readonly ITransactionServices _transactionServices;
         public PaymentPageViewModel()
         {
-
             GetTotalBalance();
             //Initial
             _transactionServices = new TransactionServices();
@@ -153,6 +152,12 @@ namespace EV.Customer.ViewModels
             }
         }
 
+        private bool _isNotFixedAmount;
+        public bool IsNotFixedAmount
+        {
+            get { return _isNotFixedAmount; }
+            set { _isNotFixedAmount = value; OnPropertyChanged(); }
+        }
 
         public void GetTotalBalance()
         {

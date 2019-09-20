@@ -15,13 +15,19 @@ namespace EV.Customer.Views
     {
         private int textLength = 0;
         private int currentMargin = -20;
-        public ScanToPayOne(string merchantName, string merchantAccountNumber)
+        public ScanToPayOne(string merchantName, string merchantAccountNumber, decimal amount)
         {
             InitializeComponent();
+            amount = 500;
+            bool isNotFixedAmount = true;
+            if (amount > 0)
+                isNotFixedAmount = false;
             PaymentPageViewModel payment = new PaymentPageViewModel()
             {
                 MerchantName = merchantName,
-                MerchantAccountNumber = merchantAccountNumber
+                MerchantAccountNumber = merchantAccountNumber,
+                Amount = amount,
+                IsNotFixedAmount = isNotFixedAmount
             };
             BindingContext = payment;
             //(BindingContext as PaymentPageViewModel).MerchantName = merchantName;
