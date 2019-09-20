@@ -164,7 +164,7 @@ namespace EV.Customer.Views
                 bitmap.Width / 4, canvasHeight / scale * 6, accountName);
             canvas.DrawText(receipt.OtherName,
                 bitmap.Width / 4 * 3, canvasHeight / scale * 6, accountName);
-            canvas.DrawText("XXX-2-XXXXX-XC",
+            canvas.DrawText(App.Account,
                 bitmap.Width / 4, canvasHeight / scale * 7, accountNumber);
             canvas.DrawText(receipt.OtherAccountNumber,
                 bitmap.Width / 4 * 3, canvasHeight / scale * 7, accountNumber);
