@@ -45,6 +45,7 @@ namespace EWalletV2.Api.Controllers
                 return BadRequest();
             }
         }
+
         //Payment
         [HttpPost("payment")]
         public IActionResult Payment([FromBody]PaymentCommand command)
@@ -78,9 +79,7 @@ namespace EWalletV2.Api.Controllers
                 Reference = payment.Reference,
                 CreateDatetime = payment.CreateDatetime
             };
-
             return Ok(result);
-
         }
 
         //Topup 
@@ -145,5 +144,13 @@ namespace EWalletV2.Api.Controllers
             return Ok(viewModel);
         }
 
+        [AllowAnonymous]
+        [HttpGet("CheckReference/{referenceNumber}")]
+        public IActionResult CheckReference(string referenceNumber)
+        {
+            bool referenceExist = _transactionService.CheckReference(referenceNumber);
+
+            return Ok(referenceExist);
+        }
     }
 }

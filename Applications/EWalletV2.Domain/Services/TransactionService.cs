@@ -193,5 +193,17 @@ namespace EWalletV2.Domain.Services
             return dto;
         }
 
+        public bool CheckReference(string referenceNumber)
+        {
+            try
+            {
+                bool isReference = _transactionRepository.CheckReference(referenceNumber);
+                return isReference;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

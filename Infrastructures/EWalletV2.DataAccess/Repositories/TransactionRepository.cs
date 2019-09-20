@@ -20,12 +20,12 @@ namespace EWalletV2.DataAccess.Repositories
 
         public bool CheckReference(string reference)
         {            
-            var transactionRef = _context.Transactions.Where(x => x.TransactionReference == reference);
-            if(transactionRef != null)
+            var transactionRef = _context.Transactions.Where(x => x.TransactionReference == reference).ToList();
+            if(transactionRef.Count != 0)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         public bool CreateNewTopUp(string referenceNumber, int otherId, decimal amount)

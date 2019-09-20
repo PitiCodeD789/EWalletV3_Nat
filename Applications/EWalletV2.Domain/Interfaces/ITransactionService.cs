@@ -13,5 +13,6 @@ namespace EWalletV2.Domain.Interfaces
         PaymentDto Payment(string email, string merchantAccNo, decimal pay, string transactionReference = null);
         //TransactionDto GetDetailTransaction(string email, int transactionId);
         List<TransactionDto> GetTransaction30Days(string email);
+        bool CheckReference(string referenceNumber);
     }
 }
