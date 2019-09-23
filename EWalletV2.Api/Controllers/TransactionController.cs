@@ -54,7 +54,7 @@ namespace EWalletV2.Api.Controllers
             string merchantAccNo = command.MerchantAccountNo;
             decimal pay = command.Pay;
 
-            if (Int32.Parse(merchantAccNo.Substring(0, 2)) != (int)EW_Enumerations.EW_UserTypeEnum.Merchant)
+            if (Int32.Parse(merchantAccNo.Substring(0, 2)) != (int)EW_Enumerations.EW_UserTypeEnum.Customer)
             {
                 return BadRequest();
             }
