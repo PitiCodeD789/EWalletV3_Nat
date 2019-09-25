@@ -52,8 +52,6 @@ namespace EWalletV2.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error" });
             }
 
-
-
             CheckEmailViewModel viewModel = new CheckEmailViewModel
             {
                 IsExist = isExist,

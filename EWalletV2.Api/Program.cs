@@ -19,7 +19,7 @@ namespace EWalletV2.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            .UseUrls("http://*:30000")
+            .UseUrls("http://*:20000")
                 .UseStartup<Startup>();
     }
 }
