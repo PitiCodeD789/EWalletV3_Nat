@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using EWalletV2.Api.ViewModels;
 using EWalletV2.Api.ViewModels.User;
 using EWalletV2.Domain.DtoModels.User;
 using EWalletV2.Domain.Interfaces;
@@ -78,6 +80,22 @@ namespace EWalletV2.Api.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("userbyaccno/{accountNo}")]
+        public IActionResult CheckMerchantbyAccountNo(string accountNo)
+        {
+            if (Int32.Parse(accountNo.Substring(0, 2)) != (int)EW_Enumerations.EW_UserTypeEnum.Merchant || Regex.IsMatch(accountNo, @"^(\d){10}$"))
+            {
+                return BadRequest();
+            }
+
+            bool isMerchant = _userService.ExistAccountNo(accountNo);
+            MerchantbyAccountViewModel model = new MerchantbyAccountViewModel()
+            {
+                CheckMerchant = isMerchant
+            };
+            return Ok(model);
         }
     }
 }
