@@ -81,7 +81,7 @@ namespace EWalletV2.Api.Controllers
 
             return NoContent();
         }
-
+        [AllowAnonymous]
         [HttpGet("userbyaccno/{accountNo}")]
         public IActionResult CheckMerchantbyAccountNo(string accountNo)
         {
